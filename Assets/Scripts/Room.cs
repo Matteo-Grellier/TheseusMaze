@@ -20,7 +20,7 @@ public class Room : MonoBehaviour
     void Update()
     {
         if (caseIteration !< roomSize * roomSize)
-        {
+        { 
             GameObject newCase = Instantiate(casePrefab, new Vector3( pos.x + (1 * caseColumn), 1, pos.z + caseRow), Quaternion.Euler(new Vector3(0, 0, 0)));
             bool isWallShown = (Random.Range(0, 3) == 0) ? true : false; 
             newCase.gameObject.GetComponent<Case>().wallObject.SetActive(isWallShown);
