@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "YjtPe315Rcb6MdLVw1Xr0Fpf3YslkSMVB4egWGfSMYunpUOcylLdXtfo4DiaspX+6Cna+130FFc8Y0eY3sNlWQ==",
+  "success": true,
+  "projectFilePath": "/home/matteog/Documents/TheseusDatabase/TheseusDatabase.csproj",
+  "expectedPackageFiles": [
+    "/home/matteog/.nuget/packages/microsoft.extensions.logging.abstractions/6.0.0/microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
+    "/home/matteog/.nuget/packages/npgsql/7.0.2/npgsql.7.0.2.nupkg.sha512",
+    "/home/matteog/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.3/microsoft.aspnetcore.app.ref.7.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
