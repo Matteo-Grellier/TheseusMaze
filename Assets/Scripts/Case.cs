@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class Case : MonoBehaviour
 {
-    public GameObject wallObject; 
+    public GameObject wallObject;
+    public GameObject debugCase;
 }
