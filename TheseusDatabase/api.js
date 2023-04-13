@@ -16,8 +16,6 @@ app.pool = new Pool({
 });
 
 router.get('/apiGetAll', async (ctx) => {
-    // get datas from maze table, room and cases table, a maze is composed of rooms and rooms are composed of cases and write them to data.json
-    // [{"Mazeid,"rooms": [{"roomid","mazeid", "leftdoor",cases:[{},{}]}]}]
     const client = await app.pool.connect();
     try {
         const res = await client.query('SELECT * FROM maze');
