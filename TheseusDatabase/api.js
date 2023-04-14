@@ -24,13 +24,17 @@ router.get('/apiGetAll', async (ctx) => {
             const res = await client.query('SELECT * FROM room WHERE mazeid = $1', [maze.mazeid]);
             const rooms = res.rows;
             const roomsWithCases = await Promise.all(rooms.map(async (room) => {
-                const res = await client.query('SELECT * FROM cases WHERE roomid = $1', [room.roomid]);
+                const res = await client.query('SELECT * FROM cell WHERE roomid = $1', [room.roomid]);
                 const cases = res.rows;
                 return { ...room, cases };
             }));
             return { ...maze, rooms: roomsWithCases };
         }));
-        fs.writeFileSync('data.json', JSON.stringify(mazesWithRooms));
+        // create a JSON file containing the mazes at ../Scripts
+        fs.writeFile('../Assets/Scripts/maze.json', JSON.stringify(mazesWithRooms), (err) => {
+            if (err) throw err;
+            console.log('The file has been saved!');
+        });
         ctx.body = mazesWithRooms;
     }
     finally {

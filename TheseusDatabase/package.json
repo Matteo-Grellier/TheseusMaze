@@ -1,17 +1,18 @@
 {
-  "name": "theseusdatabase",
-  "version": "1.0.0",
-  "description": "Theseus API",
-  "main": "api.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Mattéo Grellier (matteogrellier@gmail.com)",
-  "license": "ISC",
-  "dependencies": {
-    "koa": "^2.14.2",
-    "koa-logger": "^3.2.1",
-    "koa-router": "^12.0.0",
-    "pg": "^8.10.0"
-  }
+    "name": "theseusdatabase",
+    "version": "1.0.0",
+    "description": "Theseus API",
+    "main": "api.js",
+    "scripts": {
+        "start": "node api.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Mattéo Grellier (matteogrellier@gmail.com)",
+    "license": "ISC",
+    "dependencies": {
+        "koa": "^2.14.2",
+        "koa-logger": "^3.2.1",
+        "koa-router": "^12.0.0",
+        "pg": "^8.10.0"
+    }
 }
