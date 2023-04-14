@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 713244740}
   - component: {fileID: 713244739}
-  - component: {fileID: 713244741}
   m_Layer: 0
   m_Name: Maze
   m_TagString: Untagged
@@ -154,8 +153,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomPrefab: {fileID: 1732912637463812642, guid: f484120dc79bf764d9265af294fb4d8f, type: 3}
-  mazeSize: 3
-  roomSize: 9
+  jsonReader: {fileID: 0}
+  isRandomelyGenerated: 0
+  mazeSize: 2
+  roomSize: 7
+  jsonText: {fileID: 4900000, guid: 29a393ea7f66ed5418c9e3d863b3ef5f, type: 3}
 --- !u!4 &713244740
 Transform:
   m_ObjectHideFlags: 0
@@ -171,22 +173,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &713244741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 713244738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e23ae5ecfd554f24aa0b05752724abe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jsonText: {fileID: 4900000, guid: 29a393ea7f66ed5418c9e3d863b3ef5f, type: 3}
-  maze:
-    MazeID: 0
-    rooms: []
 --- !u!1 &1004900916
 GameObject:
   m_ObjectHideFlags: 0

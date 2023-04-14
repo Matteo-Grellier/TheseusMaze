@@ -22,19 +22,17 @@ public class JsonReader : MonoBehaviour
         public bool rightDoor;
         public bool downDoor;
         public bool isEndRoom;
-        public Case[] cases;
+        public List<Case> cases;
     }
 
     [System.Serializable]
     public class Maze 
     {
         public int MazeID;
-        public Room[] rooms;
+        public List<Room> rooms;
     }
 
     public Maze maze = new Maze();
-
-    // public class
 
     private void Start() {
         maze = JsonUtility.FromJson<Maze>(jsonText.text);
