@@ -155,8 +155,8 @@ MonoBehaviour:
   roomPrefab: {fileID: 1732912637463812642, guid: f484120dc79bf764d9265af294fb4d8f, type: 3}
   jsonReader: {fileID: 0}
   isRandomelyGenerated: 0
-  mazeSize: 2
-  roomSize: 7
+  mazeSize: 4
+  roomSize: 13
   jsonText: {fileID: 4900000, guid: 29a393ea7f66ed5418c9e3d863b3ef5f, type: 3}
 --- !u!4 &713244740
 Transform:
