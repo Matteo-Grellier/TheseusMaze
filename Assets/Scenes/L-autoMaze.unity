@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -153,10 +153,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomPrefab: {fileID: 1732912637463812642, guid: f484120dc79bf764d9265af294fb4d8f, type: 3}
-  isRandomelyGenerated: 0
+  isRandomlyGenerated: 0
   mazeSize: 2
-  roomSize: 10
-  jsonText: {fileID: 4900000, guid: 29a393ea7f66ed5418c9e3d863b3ef5f, type: 3}
+  roomSize: 7
+  jsonText: {fileID: 4900000, guid: e5752a691de4d4249b1ac9319b6e976e, type: 3}
 --- !u!4 &713244740
 Transform:
   m_ObjectHideFlags: 0

@@ -5,14 +5,10 @@ using UnityEngine;
 
 public class buttonGet : MonoBehaviour
 {
-    public Button button;
-    private string url = "http://86.217.108.20:4000/apiGetAll";
-    private void Start()
-    {
-        button.onClick.AddListener(SendRequest);
-    }
+    [Tooltip("API URL")]
+    [SerializeField] private string url = "http://86.217.108.20:4000/apiGetAll";
 
-    private void SendRequest()
+    public void SendRequest()
     {
         StartCoroutine(GetRequest());
     }

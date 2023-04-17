@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: 3402441826392578869}
   - component: {fileID: 3402441826392578868}
   - component: {fileID: 3402441826392578871}
+  - component: {fileID: 3258075463421231112}
   m_Layer: 5
   m_Name: ButtonGet
   m_TagString: Untagged
@@ -357,4 +358,28 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3402441826392578868}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3258075463421231112}
+        m_TargetAssemblyTypeName: buttonGet, Assembly-CSharp
+        m_MethodName: SendRequest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3258075463421231112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3402441826392578865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a22bd2d9c2afe21d7a4ef361715d92dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
