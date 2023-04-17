@@ -231,18 +231,18 @@ MonoBehaviour:
       m_ExpandedIDs: 7a51e8ffbc69e8ffc272e8ff3686e8ff0896e8ff22b2e8ff7abde8ff82dfe8ff5614f8ff4615f8ff5c1df8ff1e1ff8ff086bfcff306afdfff2e5fdff12e5feff30e5feffc6e6feffb6eafeffd4eafefff2ebfeff7aeefeff3eeffeffdcf0fefffcf0feff4afbfeff8afbfeff9afbfeff0afcfeff2cfcfeffa2fcfeffb2fcfeffe2fcfeff22fdfeff32fdfeff82fdfeffa2fdfeffb2fdfeff22fefeff32fefeff42fefeffa2fefeffb2fefeff54fffeff64fffeff1c01ffff2c01ffff6e01ffff7e01ffff1804ffff2804ffff6a04ffff7a04fffffc07ffff0c08ffff4e08ffff5e08ffffc40bffffe40ffffff40fffff7616ffff1429ffffce2affff38fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: Ennemies
+        m_OriginalName: Ennemies
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: -10720
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 5}
       m_SearchString: 
