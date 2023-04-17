@@ -30,7 +30,7 @@ public class Room : MonoBehaviour
         if (caseIteration < roomSize * roomSize)
         { 
             // + 0.5f otherwise it will be slightly offcentered, -roomSize/2 to place it on the left of the cube wich is CENTERED on 0,0,0 (same for the Z), divide by 2.0f to give back an float (an not a rounded int)
-            Vector3 newCasePosition = new Vector3( (pos.x + 0.5f) - (roomSize/2.0f) + (1 * caseColumn), 0.55f, ( pos.z - 0.5f ) + (roomSize/2.0f) + caseRow);
+            Vector3 newCasePosition = new Vector3((pos.x + 0.5f) - (roomSize/2.0f) + (1 * caseColumn), 0.55f, (pos.z - 0.5f) + (roomSize/2.0f) + caseRow);
             GameObject newCase = Instantiate(casePrefab, newCasePosition , Quaternion.Euler(new Vector3(0, 0, 0)));
             Case newCaseScript = newCase.gameObject.GetComponent<Case>();
 
@@ -65,7 +65,5 @@ public class Room : MonoBehaviour
                 caseColumn = 0; 
             }
         }
-
-        // place the walls around
     }
 }

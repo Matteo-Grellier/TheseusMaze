@@ -61,8 +61,6 @@ public class Maze : MonoBehaviour
 
     private void Start() 
     {
-        // numberOfRooms = (isGenerated) ? mazeSize*mazeSize : 0;
-
         if (!isRandomelyGenerated) 
         {
             maze = JsonUtility.FromJson<MazeObject>(jsonText.text);
@@ -78,11 +76,11 @@ public class Maze : MonoBehaviour
         {
             if (iteration < numberOfRooms)
             {
-                GameObject room = Instantiate(roomPrefab, new Vector3( (0 + roomSize + 2) * rowPosition, 0, (0 + roomSize + 2) * columnPosition), Quaternion.Euler(new Vector3(0, 0, 0))); // +2 to let places for the walls all around
+                GameObject room = Instantiate(roomPrefab, new Vector3( (0 + roomSize) * rowPosition, 0, (0 + roomSize) * columnPosition), Quaternion.Euler(new Vector3(0, 0, 0)));
                 room.GetComponent<Room>().roomSize = roomSize;
                 if(!isRandomelyGenerated)
                     room.GetComponent<Room>().room = maze.rooms[iteration];
-                room.transform.localScale = new Vector3(roomSize + 2, 1, roomSize + 2); // +2 to let places for the walls all around
+                room.transform.localScale = new Vector3(roomSize, 1, roomSize);
                 iteration++;
                 columnPosition = iteration % mazeSize;
                 if (columnPosition == 0 )
