@@ -8,10 +8,10 @@ const app = new Koa();
 const router = new Router();
 
 app.pool = new Pool({
-    user: 'postgres',
+    user: 'matteo',
     host: 'localhost',
-    database: 'postgres',
-    password: 'postgres', // Password is empty be default
+    database: 'theseusdatabase',
+    password: 'matteo', // Password is empty be default
     port: 5432, // Default port
 });
 
@@ -40,7 +40,6 @@ router.get('/apiGetAll', async (ctx) => {
     finally {
         client.release();
     }
-
 });
 
 // Development logging
@@ -48,6 +47,6 @@ app.use(Logger());
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-app.listen(3000, () => {
-    console.log('Server running on port 3000');
+app.listen(3001, () => {
+    console.log('Server running on port 3001');
 });
