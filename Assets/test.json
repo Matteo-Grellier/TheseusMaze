@@ -1,0 +1,196 @@
+{      
+    "MazeID": 0,
+    "rooms": [
+        {
+            "roomID": 0,
+            "mazeID": 0,
+            "leftDoor": false,
+            "upDoor": false,
+            "rightDoor": true,
+            "downDoor": true,
+            "isEndRoom": false,
+            "cases": [
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "wall",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                },
+                {
+                    "caseID": 0,
+                    "stateID": "path",
+                    "roomID": 0
+                }
+            ]
+        }
+    ]
+}
