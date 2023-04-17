@@ -16,6 +16,7 @@ public class Room : MonoBehaviour
     // is set in the Maze that creates it, but only if the Maze is generating randomely, otherwise it will be an empty object
     public Maze.RoomObject room;
 
+    // NOTE : the room is set bigger in the Maze script to let some place for the walls all around  (+2)
     private void Awake()
     {
         pos = gameObject.transform.position;
@@ -25,9 +26,12 @@ public class Room : MonoBehaviour
 
     void Update()
     {
+        // cases
         if (caseIteration < roomSize * roomSize)
         { 
-            GameObject newCase = Instantiate(casePrefab, new Vector3( pos.x - (roomSize/2) + (1 * caseColumn), 0.55f, pos.z + (roomSize/2) + caseRow), Quaternion.Euler(new Vector3(0, 0, 0)));
+            // + 0.5f otherwise it will be slightly offcentered, -roomSize/2 to place it on the left of the cube wich is CENTERED on 0,0,0 (same for the Z), divide by 2.0f to give back an float (an not a rounded int)
+            Vector3 newCasePosition = new Vector3( (pos.x + 0.5f) - (roomSize/2.0f) + (1 * caseColumn), 0.55f, ( pos.z - 0.5f ) + (roomSize/2.0f) + caseRow);
+            GameObject newCase = Instantiate(casePrefab, newCasePosition , Quaternion.Euler(new Vector3(0, 0, 0)));
             Case newCaseScript = newCase.gameObject.GetComponent<Case>();
 
             bool isWallShown;
@@ -61,5 +65,7 @@ public class Room : MonoBehaviour
                 caseColumn = 0; 
             }
         }
+
+        // place the walls around
     }
 }

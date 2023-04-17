@@ -6,7 +6,6 @@ public class Maze : MonoBehaviour
 {
     [Tooltip("Mandatory !")]
     [SerializeField] private GameObject roomPrefab;
-    [SerializeField] private JsonReader jsonReader;
 
     [Tooltip("check if the maze should be randomly generated, and uncheck if it must use data from a JSON object")]
     [SerializeField] private bool isRandomelyGenerated;
@@ -79,11 +78,11 @@ public class Maze : MonoBehaviour
         {
             if (iteration < numberOfRooms)
             {
-                GameObject room = Instantiate(roomPrefab, new Vector3(0 + roomSize * rowPosition,0, 0 + roomSize * columnPosition), Quaternion.Euler(new Vector3(0, 0, 0)));
+                GameObject room = Instantiate(roomPrefab, new Vector3( (0 + roomSize + 2) * rowPosition, 0, (0 + roomSize + 2) * columnPosition), Quaternion.Euler(new Vector3(0, 0, 0))); // +2 to let places for the walls all around
                 room.GetComponent<Room>().roomSize = roomSize;
                 if(!isRandomelyGenerated)
                     room.GetComponent<Room>().room = maze.rooms[iteration];
-                room.transform.localScale = new Vector3(roomSize, 1, roomSize);
+                room.transform.localScale = new Vector3(roomSize + 2, 1, roomSize + 2); // +2 to let places for the walls all around
                 iteration++;
                 columnPosition = iteration % mazeSize;
                 if (columnPosition == 0 )
