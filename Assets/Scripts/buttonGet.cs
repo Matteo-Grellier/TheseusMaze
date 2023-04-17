@@ -22,25 +22,15 @@ public class buttonGet : MonoBehaviour
         UnityWebRequest www = UnityWebRequest.Get(url);
         yield return www.SendWebRequest();
 
-
-
-        switch (www.result)
-            {
-                case UnityWebRequest.Result.ConnectionError:
-                case UnityWebRequest.Result.DataProcessingError:
-                    Debug.LogError(www.error);
-                    break;
-                case UnityWebRequest.Result.ProtocolError:
-                    Debug.LogError(www.error);
-                    break;
-                case UnityWebRequest.Result.Success:
-                    Debug.Log(www.downloadHandler.text);
-                    break;
-            }
-
-        var jsonDatas = www.downloadHandler.text;
-        jsonDatas = JsonUtility.ToJson(jsonDatas);
-
-        Debug.Log(jsonDatas[0]);
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Request sent successfully");
+            var jsonDatas = www.downloadHandler.text;
+            Debug.Log(jsonDatas);
+        }
+        else
+        {
+            Debug.Log("Error sending request: " + www.error);
+        }
     }
 }
