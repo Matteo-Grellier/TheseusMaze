@@ -157,6 +157,7 @@ MonoBehaviour:
   mazeSize: 2
   roomSize: 7
   jsonText: {fileID: 4900000, guid: e5752a691de4d4249b1ac9319b6e976e, type: 3}
+  useDebugJSON: 0
 --- !u!4 &713244740
 Transform:
   m_ObjectHideFlags: 0

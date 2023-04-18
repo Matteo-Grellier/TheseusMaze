@@ -9,7 +9,7 @@ public class APIManager : MonoBehaviour
 
     public static IEnumerator GetAllMazeFromAPI(Maze mazeReference)
     {
-        UnityWebRequest www = UnityWebRequest.Get(APIUrl + "/apiGetAll");
+        UnityWebRequest www = UnityWebRequest.Get(APIUrl + "/getAllMazes");
         yield return www.SendWebRequest();
 
         if (www.result == UnityWebRequest.Result.Success)
