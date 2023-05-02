@@ -45,6 +45,9 @@ public class Maze : MonoBehaviour
     [Tooltip("just for debug")]
     [SerializeField] private bool useDebugJSON;
 
+    [Tooltip("just for debug")]
+    [SerializeField] private int idOfMazeToCreateFromAPI;
+
     [System.Serializable]
     public class CaseObject
     {
@@ -82,7 +85,7 @@ public class Maze : MonoBehaviour
 
     #endregion
 
-    private MazeObject maze = new MazeObject();
+    public MazeObject maze = new MazeObject();
 
     private void Start() 
     {
@@ -114,10 +117,13 @@ public class Maze : MonoBehaviour
                 room.GetComponent<Room>().roomSize = roomSize;
                 room.GetComponent<Room>().roomArray = new string [roomSize, roomSize];
                 if(!isRandomlyGenerated)
+                {
                     room.GetComponent<Room>().room = maze.rooms[iteration];
+                }
+                room.GetComponent<Room>().roomID = iteration;
+                room.GetComponent<Room>().mazeReference = this;
                 room.transform.localScale = new Vector3(roomSize, 1, roomSize);
-                // Debug.Log(iteration);
-                Debug.Log("mazeRoomsArray = " + mazeRoomsArray.Length);
+
                 mazeRoomsArray[iteration] = room.GetComponent<Room>();
                 iteration++;
                 columnPosition = iteration % mazeSize;
@@ -137,8 +143,11 @@ public class Maze : MonoBehaviour
     public void SetMazeValues(string _jsonText)
     {
         MazeList mazes = (useDebugJSON) ? JsonUtility.FromJson<MazeList>(jsonText.text) : JsonUtility.FromJson<MazeList>(_jsonText);
+        if (idOfMazeToCreateFromAPI < mazes.mazes.Count )
+            maze = mazes.mazes[idOfMazeToCreateFromAPI]; //set the maze as the fetched datas
+        else
+            maze = mazes.mazes[0];
 
-        maze = mazes.mazes[0]; //set the maze as the fetched datas
         mazeSize = (int)Mathf.Round(Mathf.Sqrt(maze.rooms.Count)); // mazeSize is a sqrt of maze.rooms beacause it is supposed to be the number of rooms on one side
         roomSize = (int)Mathf.Round(Mathf.Sqrt(maze.rooms[0].cases.Count)); // same here
         numberOfRooms = maze.rooms.Count;
@@ -163,7 +172,7 @@ public class Maze : MonoBehaviour
                     innerX = 0;
                     room++;
                 }
-                Debug.Log("mazeArray[" + x + "," + y +"] = roomArray[" + innerX + "," + y + "]" );
+                // Debug.Log("mazeArray[" + x + "," + y +"] = roomArray[" + innerX + "," + y + "]" );
                 mazeArray[x,y] = mazeRoomsArray[room].roomArray[innerX,y];
                 x++;
                 innerX++;
@@ -179,7 +188,7 @@ public class Maze : MonoBehaviour
         }
         else 
         {
-            Print2DStringArray(mazeArray);
+            // Print2DStringArray(mazeArray);
             isDoneGenerating = true;
         }
     }

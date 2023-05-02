@@ -5,13 +5,16 @@ using UnityEngine;
 public class Case : MonoBehaviour
 {
     [Header("Mandatory References")]
-
     public GameObject wallObject;
     public GameObject debugCase;
+    
+    public int caseId;
+    public int RoomId;
 
+    public Maze caseMazeReference; // set in the Case
     private GameManager gameManager;
 
-    private void Awake() 
+    private void Awake()
     {
         gameManager = GameManager.instance;
     }
@@ -19,13 +22,18 @@ public class Case : MonoBehaviour
     void OnMouseDown()
     {
         CaseClicked();
-    }   
+    }
 
     public void CaseClicked()
     {
         if (gameManager.isEditMode == true)
         {
             wallObject.SetActive(!wallObject.gameObject.activeInHierarchy);
+            
+            if (caseMazeReference.maze.rooms[RoomId].cases[caseId].state == "wall")
+                caseMazeReference.maze.rooms[RoomId].cases[caseId].state = "path";
+            else
+                caseMazeReference.maze.rooms[RoomId].cases[caseId].state =  "wall";
         }
     }
 }

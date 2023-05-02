@@ -7,7 +7,8 @@ public class Room : MonoBehaviour
 {
     [SerializeField] private GameObject casePrefab;
     public int roomSize;
-    private int roomID;
+    public int roomID = 0;
+    
     private int caseIteration = 0;
     private int caseColumn = 0;
     private int caseRow = 0;
@@ -16,8 +17,8 @@ public class Room : MonoBehaviour
 
     private Vector3 pos;
     private Material roomMaterial; // his size is set in the Maze
-
     public string[ , ] roomArray; // his size is set in the Maze
+    public Maze mazeReference; // set in the Maze
 
     // is set in the Maze that creates it, but only if the Maze is generating randomely, otherwise it's empty
     public Maze.RoomObject room;
@@ -27,7 +28,6 @@ public class Room : MonoBehaviour
         pos = gameObject.transform.position;
         roomMaterial = new Material(Shader.Find("Specular"));
         roomMaterial.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
-        roomID = Random.Range(0,10000);
     }
 
     void Update()
@@ -40,6 +40,9 @@ public class Room : MonoBehaviour
             Vector3 newCasePosition = new Vector3((pos.x + 0.5f) - (roomSize/2.0f) + (1 * caseColumn), 0.55f, (pos.z - 0.5f) + (roomSize/2.0f) + (-caseRow) );
             GameObject newCase = Instantiate(casePrefab, newCasePosition , Quaternion.Euler(new Vector3(0, 0, 0)));
             newCase.transform.parent = gameObject.transform; //set the case as child of the room
+            newCase.GetComponent<Case>().caseId = caseIteration;
+            newCase.GetComponent<Case>().RoomId = roomID;
+            newCase.GetComponent<Case>().caseMazeReference = mazeReference;
             Case newCaseScript = newCase.gameObject.GetComponent<Case>();
 
             bool isWallShown;
@@ -85,7 +88,7 @@ public class Room : MonoBehaviour
             if ( !isAfterGenerationCodeExecuted )
             {
                 gameObject.transform.parent.GetComponent<Maze>().RoomsStillGenerating--;
-                Debug.Log("room " + roomID + " : " + roomArray[0,0] + " : " + roomArray[1,0] + " : " + roomArray[0,1] + " : " + roomArray[1,1]);
+                //Debug.Log("room " + roomID + " : " + roomArray[0,0] + " : " + roomArray[1,0] + " : " + roomArray[0,1] + " : " + roomArray[1,1]);
                 isAfterGenerationCodeExecuted = true;
             }
         }

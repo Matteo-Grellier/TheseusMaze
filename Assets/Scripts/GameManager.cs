@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     [Tooltip("If checked, will let the player click on the cases to edit them, must be set in editor")]
     public bool isEditMode;
 
+    private Maze mazeReference; // will auto get the reference of the ONLY Maze on the scene
+
     void Start()
     {
         // if null, set itself as the instance of the GameManager class
@@ -17,5 +19,13 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+
+        mazeReference = GameObject.Find("Maze").GetComponent<Maze>();
+    }
+
+    // activated by clicking on the save button
+    public void BtnSaveMap()
+    {
+        StartCoroutine(APIManager.PostMazeToAPI(mazeReference.maze));
     }
 }

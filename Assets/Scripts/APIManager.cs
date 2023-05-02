@@ -40,4 +40,26 @@ public class APIManager : MonoBehaviour
             Debug.LogError("Error sending request: " + www.error);
         }
     }
+
+    public static IEnumerator PostMazeToAPI(Maze.MazeObject mazeReference)
+    {
+        string jsonData = "{ \"mazes\": [" +  JsonUtility.ToJson(mazeReference) + "]}";
+        Debug.Log("jsonData = " + jsonData);
+
+        var uwr = new UnityWebRequest(APIUrl + "/createMaze", "POST");
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);
+        uwr.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        uwr.SetRequestHeader("Content-Type", "application/json");
+
+        yield return uwr.SendWebRequest();
+
+        if (uwr.result == UnityWebRequest.Result.ConnectionError)
+        {
+            Debug.LogError("Error sending request Post : " + uwr.error);
+        }
+        else
+        {
+            Debug.Log("Request Post sent successfully ! ");
+        }
+    }
 }
