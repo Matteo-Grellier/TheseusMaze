@@ -98,8 +98,8 @@ public class Maze : MonoBehaviour
             isDataFetched = true; // if is randomely generated, there is no data to fetch
             numberOfRooms = mazeSize * mazeSize;
             roomsStillGenerating = numberOfRooms;
-            int sizeOfMazeArray = ((roomSize * roomSize) * numberOfRooms) / 2;
-            mazeArray = new string[sizeOfMazeArray, sizeOfMazeArray];
+            mazeArray = new string[roomSize * (int)Mathf.Sqrt(numberOfRooms), roomSize * (int)Mathf.Sqrt(numberOfRooms)]; // Sqrt because we need the number of room on one size
+            mazeRoomsArray = new Room[numberOfRooms];
         }
     }
 
@@ -116,6 +116,8 @@ public class Maze : MonoBehaviour
                 if(!isRandomlyGenerated)
                     room.GetComponent<Room>().room = maze.rooms[iteration];
                 room.transform.localScale = new Vector3(roomSize, 1, roomSize);
+                // Debug.Log(iteration);
+                Debug.Log("mazeRoomsArray = " + mazeRoomsArray.Length);
                 mazeRoomsArray[iteration] = room.GetComponent<Room>();
                 iteration++;
                 columnPosition = iteration % mazeSize;
@@ -141,8 +143,7 @@ public class Maze : MonoBehaviour
         roomSize = (int)Mathf.Round(Mathf.Sqrt(maze.rooms[0].cases.Count)); // same here
         numberOfRooms = maze.rooms.Count;
         roomsStillGenerating = numberOfRooms;
-        mazeArray = new string[numberOfRooms/2,numberOfRooms/2];
-        Debug.Log("mazeArray: " + numberOfRooms/2);
+        mazeArray = new string[roomSize * mazeSize, roomSize * mazeSize];
         mazeRoomsArray = new Room[numberOfRooms];
         isDataFetched = true; // let the generation begin
     }

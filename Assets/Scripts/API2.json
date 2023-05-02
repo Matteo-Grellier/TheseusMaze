@@ -21,7 +21,7 @@
                     {
                     "cellid": "1",
                     "roomid": "0",
-                    "state": "path"
+                    "state": "wall"
                     },
                     {
                     "cellid": "2",
@@ -57,7 +57,7 @@
                     {
                     "cellid": "2",
                     "roomid": "0",
-                    "state": "wall"
+                    "state": "path"
                     },
                     {
                     "cellid": "3",
@@ -83,12 +83,12 @@
                         {
                         "cellid": "5",
                         "roomid": "1",
-                        "state": "wall"
+                        "state": "path"
                         },
                         {
                         "cellid": "2",
                         "roomid": "0",
-                        "state": "wall"
+                        "state": "path"
                         },
                         {
                         "cellid": "3",
@@ -109,17 +109,17 @@
                         {
                         "cellid": "4",
                         "roomid": "1",
-                        "state": "wall"
+                        "state": "path"
                         },
                         {
                         "cellid": "5",
                         "roomid": "1",
-                        "state": "wall"
+                        "state": "path"
                         },
                         {
                         "cellid": "2",
                         "roomid": "0",
-                        "state": "wall"
+                        "state": "path"
                         },
                         {
                         "cellid": "3",
