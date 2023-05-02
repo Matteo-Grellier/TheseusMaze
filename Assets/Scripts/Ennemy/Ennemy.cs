@@ -6,9 +6,11 @@ public class Ennemy : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public Pathfinding pathfinding = new Pathfinding();
+    private Pathfinding pathfinding;
     void Start()
     {
+
+        pathfinding = new Pathfinding();
 
         string[,] graph = {
             {"path", "path", "path", "wall", "path"},
@@ -19,9 +21,9 @@ public class Ennemy : MonoBehaviour
         };
 
         Vector3 destination = new Vector3(4, 0, 2);
-        Vector3 start = new Vector3(0, 0, 0);
+        Vector3 start = new Vector3(2, 0, 4);
 
-        pathfinding.GetPath(graph, start, destination);
+        StartCoroutine(pathfinding.GetPath(graph, start, destination));
 
     }
 
