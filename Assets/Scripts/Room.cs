@@ -32,17 +32,18 @@ public class Room : MonoBehaviour
             // + 0.5f otherwise it will be slightly offcentered, -roomSize/2 to place it on the left of the cube wich is CENTERED on 0,0,0 (same for the Z), divide by 2.0f to give back an float (an not a rounded int)
             Vector3 newCasePosition = new Vector3((pos.x + 0.5f) - (roomSize/2.0f) + (1 * caseColumn), 0.55f, (pos.z - 0.5f) + (roomSize/2.0f) + caseRow);
             GameObject newCase = Instantiate(casePrefab, newCasePosition , Quaternion.Euler(new Vector3(0, 0, 0)));
+            newCase.transform.parent = gameObject.transform; //set the case as child of the room
             Case newCaseScript = newCase.gameObject.GetComponent<Case>();
 
             bool isWallShown;
             if (room.cases.Count != 0)  // if room is not set by the Maze (meaning the maze is being randomely generated) his count will be equal to 0
             {
-                switch (room.cases[caseIteration].stateID) 
+                switch (room.cases[caseIteration].state) 
                 {
-                    case "wall" :
+                    case "mur" :
                         isWallShown = true;
                         break;
-                    case "path" :
+                    case "sol" :
                         isWallShown = false;
                         break;
                     default :
