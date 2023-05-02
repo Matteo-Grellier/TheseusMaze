@@ -23,4 +23,21 @@ public class APIManager : MonoBehaviour
             Debug.LogError("Error sending request: " + www.error);
         }
     }
+
+    public static IEnumerator GetOneMazeFromAPI(int mazeID, Maze mazeReference)
+    {
+        UnityWebRequest www = UnityWebRequest.Get(APIUrl + "/getSingleMaze/" + mazeID);
+        yield return www.SendWebRequest();
+
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            var jsonDatas = www.downloadHandler.text;
+            Debug.Log("Request sent successfully : " + jsonDatas);
+            mazeReference.SetMazeValues(jsonDatas);
+        }
+        else
+        {
+            Debug.LogError("Error sending request: " + www.error);
+        }
+    }
 }
