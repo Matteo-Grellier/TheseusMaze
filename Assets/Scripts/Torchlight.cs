@@ -17,7 +17,7 @@ public class Torchlight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(blinkTimeLeft);
+        //Debug.Log(blinkTimeLeft);
         if (Input.GetKeyDown(KeyCode.F))
         {
             isLightUp = !isLightUp;
