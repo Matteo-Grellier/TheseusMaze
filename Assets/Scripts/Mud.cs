@@ -5,7 +5,6 @@ using UnityEngine;
 public class Mud : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other) {
-        Debug.Log("SUPERRRRRRRRRRRRRRRRR");
         if (other.gameObject.tag == "Player")
         {
             other.gameObject.GetComponent<Player>().speed = 1f;
@@ -16,13 +15,7 @@ public class Mud : MonoBehaviour
 
         if (other.gameObject.tag == "Player")
         {
-            other.gameObject.GetComponent<Player>().speed = 3f;
+            other.gameObject.GetComponent<Player>().speed = 5f;
         }
     }
-
-    private void OnCollisionEnter(Collision other) {
-        Debug.Log("JADORE LA DROITE");
-    }
-
-
 }
