@@ -34,8 +34,8 @@ public class Room : MonoBehaviour
     {
         // cases
         if (caseIteration < roomSize * roomSize)
-        { 
-            // + 0.5f otherwise it will be slightly offcentered, -roomSize/2.0f to place it on the left of the cube wich is CENTERED on 0,0,0 (same for the Z), 
+        {
+            // + 0.5f otherwise it will be slightly offcentered, -roomSize/2.0f to place it on the left of the cube wich is CENTERED on 0,0,0 (same for the Z),
             // divide by 2.0f to get a float (not a rounded int), (-caseRow) beacause caseRow is spositive and should be place under
             Vector3 newCasePosition = new Vector3((pos.x + 0.5f) - (roomSize/2.0f) + (1 * caseColumn), 0.55f, (pos.z - 0.5f) + (roomSize/2.0f) + (-caseRow) );
             GameObject newCase = Instantiate(casePrefab, newCasePosition , Quaternion.Euler(new Vector3(0, 0, 0)));
@@ -45,7 +45,7 @@ public class Room : MonoBehaviour
             bool isWallShown;
             if (room.cases.Count != 0)  // if room is not set by the Maze (meaning the maze is being randomely generated) his count will be equal to 0
             {
-                switch (room.cases[caseIteration].state) 
+                switch (room.cases[caseIteration].state)
                 {
                     case "wall" :
                         isWallShown = true;
@@ -58,16 +58,16 @@ public class Room : MonoBehaviour
 
                     default :
                         isWallShown = false;
-                        Debug.LogWarning("What the fuck is a " +  room.cases[caseIteration].state + " ???? I put a \"path\" instead ");
+                        // Debug.LogWarning("What the fuck is a " +  room.cases[caseIteration].state + " ???? I put a \"path\" instead ");
                         roomArray[caseColumn,caseRow] = "path";
                         break;
                 }
             }
-            else 
+            else
             {
                 isWallShown = (Random.Range(0, 4) == 0) ? true : false;
                 roomArray[caseColumn,caseRow] = (isWallShown) ? "wall" : "path";
-                Debug.Log( "room " + roomID + " : " + "caseColumn : " + caseColumn + " caseRow : " + caseRow + " value :" + roomArray[caseColumn,caseRow]);
+                // Debug.Log( "room " + roomID + " : " + "caseColumn : " + caseColumn + " caseRow : " + caseRow + " value :" + roomArray[caseColumn,caseRow]);
             }
 
             newCaseScript.wallObject.SetActive(isWallShown);
@@ -77,7 +77,7 @@ public class Room : MonoBehaviour
             if (caseIteration != 0 && caseColumn == roomSize)
             {
                 caseRow++;
-                caseColumn = 0; 
+                caseColumn = 0;
             }
         }
         else
@@ -85,7 +85,7 @@ public class Room : MonoBehaviour
             if ( !isAfterGenerationCodeExecuted )
             {
                 gameObject.transform.parent.GetComponent<Maze>().RoomsStillGenerating--;
-                Debug.Log("room " + roomID + " : " + roomArray[0,0] + " : " + roomArray[1,0] + " : " + roomArray[0,1] + " : " + roomArray[1,1]);
+                // Debug.Log("room " + roomID + " : " + roomArray[0,0] + " : " + roomArray[1,0] + " : " + roomArray[0,1] + " : " + roomArray[1,1]);
                 isAfterGenerationCodeExecuted = true;
             }
         }

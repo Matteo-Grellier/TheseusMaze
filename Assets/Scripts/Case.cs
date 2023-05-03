@@ -11,7 +11,7 @@ public class Case : MonoBehaviour
 
     private GameManager gameManager;
 
-    private void Awake() 
+    private void Awake()
     {
         gameManager = GameManager.instance;
     }
@@ -19,7 +19,7 @@ public class Case : MonoBehaviour
     void OnMouseDown()
     {
         CaseClicked();
-    }   
+    }
 
     public void CaseClicked()
     {

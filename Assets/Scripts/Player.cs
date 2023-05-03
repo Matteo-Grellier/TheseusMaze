@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public CharacterController controller;
 
-    public float speed = 12f;
+    public bool hasKey = false;
+
+    public float speed = 5f;
     public float gravity = -9.81f;
 
     public Transform groundCheck;

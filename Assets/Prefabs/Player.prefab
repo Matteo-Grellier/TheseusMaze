@@ -352,11 +352,11 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 3.76
+  m_Radius: 0.94
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_StepOffset: 1
+  m_SkinWidth: 2.98
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7353626100529670203
@@ -372,13 +372,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 7353626100529670196}
+  hasKey: 0
   speed: 5
   gravity: -9.81
-  groundCheck: {fileID: 7353626101385383518}
+  groundCheck: {fileID: 0}
   groundDistance: 0.4
   groundMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
 --- !u!1 &7353626101385383517
 GameObject:
   m_ObjectHideFlags: 0
