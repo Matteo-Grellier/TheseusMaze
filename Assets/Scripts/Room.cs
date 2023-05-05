@@ -66,6 +66,11 @@ public class Room : MonoBehaviour
                         break;
                 }
             }
+            else if (GameManager.instance.isEditMode == true) // if in edit mode set all walls to path
+            {
+                isWallShown = false;
+                roomArray[caseColumn,caseRow] = "path";
+            }
             else 
             {
                 isWallShown = (Random.Range(0, 4) == 0) ? true : false;

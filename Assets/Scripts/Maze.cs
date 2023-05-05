@@ -116,7 +116,7 @@ public class Maze : MonoBehaviour
                 room.transform.parent = gameObject.transform; //set the room as child of the maze object
                 room.GetComponent<Room>().roomSize = roomSize;
                 room.GetComponent<Room>().roomArray = new string [roomSize, roomSize];
-                if(!isRandomlyGenerated)
+                if(!isRandomlyGenerated && !GameManager.instance.isEditMode) // do not fill room if generated or edit mode
                 {
                     room.GetComponent<Room>().room = maze.rooms[iteration];
                 }

@@ -20,6 +20,7 @@ public class MenueManager : MonoBehaviour
 
     public void BtnEditNewMap()
     {
+        GameManager.instance.isEditMode = true;
         GameManager.instance.LoadScene("EditScene");
     } 
 

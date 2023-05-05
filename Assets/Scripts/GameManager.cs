@@ -44,9 +44,9 @@ public class GameManager : MonoBehaviour
         }
         else if (!asLaunchedGeneration && SceneManager.GetActiveScene().name == "EditScene")
         {
-            saveMapBtn = GameObject.Find("SaveMapBtn");
-            isEditMode = true;
-            saveMapBtn?.SetActive(true);
+            mazeReference = GameObject.Find("Maze").GetComponent<Maze>();
+            mazeReference.SetGenerationInformations(true, 0);
+            mazeReference.StartMazeGeneration();
             asLaunchedGeneration = true;
         }
 
