@@ -23,7 +23,7 @@ public class Ennemy : MonoBehaviour
         Vector3 destination = new Vector3(4, 0, 2);
         Vector3 start = new Vector3(2, 0, 4);
 
-        StartCoroutine(pathfinding.GetPath(graph, start, destination));
+        StartCoroutine(pathfinding.GraphSearch(graph, start, destination));
 
     }
 
