@@ -9,12 +9,15 @@ public class SaveMapBtn : MonoBehaviour
 
     private void Start() 
     {
-        if ( GameManager.instance.isEditMode == true)
+        if (GameManager.instance.isEditMode)
             saveBtn.SetActive(true);
     }
 
     public void BtnSaveMap() 
     {
-        GameManager.instance.BtnSaveMap();
+        if (GameManager.instance.isEditingNewlyCreatedMap)
+            GameManager.instance.SaveNewMap();
+        else
+            GameManager.instance.UpdateMap();
     }
 }

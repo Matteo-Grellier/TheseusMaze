@@ -114,17 +114,26 @@ public class Maze : MonoBehaviour
             {
                 GameObject room = Instantiate(roomPrefab, new Vector3( (0 + roomSize) * rowPosition, 0, (0 + roomSize) * columnPosition), Quaternion.Euler(new Vector3(0, 0, 0)));
                 room.transform.parent = gameObject.transform; //set the room as child of the maze object
-                room.GetComponent<Room>().roomSize = roomSize;
-                room.GetComponent<Room>().roomArray = new string [roomSize, roomSize];
-                if(!isRandomlyGenerated && !GameManager.instance.isEditMode) // do not fill room if generated or edit mode
+                Room newlyCreatedRoomScript = room.GetComponent<Room>();
+                newlyCreatedRoomScript.mazeReference = this;
+                newlyCreatedRoomScript.roomSize = roomSize;
+                newlyCreatedRoomScript.roomArray = new string [roomSize, roomSize];
+                if(!isRandomlyGenerated && !GameManager.instance.isEditMode) // do not fill room if not generated and not edit mode
                 {
-                    room.GetComponent<Room>().room = maze.rooms[iteration];
+                    newlyCreatedRoomScript.room = maze.rooms[iteration];
                 }
-                room.GetComponent<Room>().roomID = iteration;
-                room.GetComponent<Room>().mazeReference = this;
+                else if (GameManager.instance.isEditMode) // if is generated but in edit mode
+                {
+                    RoomObject newRoomObject = new RoomObject();
+                    newRoomObject.roomid = iteration;
+                    newlyCreatedRoomScript.room = newRoomObject;
+                    newRoomObject.cases = new List<CaseObject>();
+                    maze.rooms.Add(newRoomObject);
+                }
+                newlyCreatedRoomScript.roomID = iteration;
                 room.transform.localScale = new Vector3(roomSize, 1, roomSize);
 
-                mazeRoomsArray[iteration] = room.GetComponent<Room>();
+                mazeRoomsArray[iteration] = newlyCreatedRoomScript;
                 iteration++;
                 columnPosition = iteration % mazeSize;
                 if (columnPosition == 0 )
@@ -142,7 +151,7 @@ public class Maze : MonoBehaviour
 
     public void SetMazeValues(string _jsonText)
     {
-        MazeObject maze = (useDebugJSON) ? JsonUtility.FromJson<MazeObject>(jsonText.text) : JsonUtility.FromJson<MazeObject>(_jsonText);
+        maze = (useDebugJSON) ? JsonUtility.FromJson<MazeObject>(jsonText.text) : JsonUtility.FromJson<MazeObject>(_jsonText);
         // if (mazeToGenerateID < mazes.mazes.Count )
         //     maze = mazes.mazes[mazeToGenerateID]; //set the maze as the fetched datas
         // else

@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     [Tooltip("If checked, will let the player click on the cases to edit them, must be set in editor")]
     public bool isEditMode;
+    public bool isEditingNewlyCreatedMap = false;
     public bool isRandomlyGenerated = true;
     public int mapToGenerateId = 0;
 
@@ -50,7 +51,7 @@ public class GameManager : MonoBehaviour
             asLaunchedGeneration = true;
         }
 
-        Debug.Log("ActiveScene = " + SceneManager.GetActiveScene().name);
+        // Debug.Log("ActiveScene = " + SceneManager.GetActiveScene().name);
     }
 
     // called when changing the active scene
@@ -59,10 +60,14 @@ public class GameManager : MonoBehaviour
         Debug.Log("switching to " + next.name + " Scene");
     }
 
-    // activated by clicking on the save button
-    public void BtnSaveMap()
+    public void SaveNewMap()
     {
         StartCoroutine(APIManager.PostMazeToAPI(mazeReference.maze));
+    }
+
+    public void UpdateMap()
+    {
+        StartCoroutine(APIManager.UpdateMazeInAPI(mazeReference.maze.mazeid, mazeReference.maze));
     }
 
     public void LoadScene(string sceneName)

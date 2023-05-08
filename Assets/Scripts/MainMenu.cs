@@ -21,8 +21,9 @@ public class MenueManager : MonoBehaviour
     public void BtnEditNewMap()
     {
         GameManager.instance.isEditMode = true;
+        GameManager.instance.isEditingNewlyCreatedMap = true;
         GameManager.instance.LoadScene("EditScene");
-    } 
+    }
 
     public void BtnBackToMainMenu()
     {

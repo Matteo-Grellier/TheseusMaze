@@ -46,7 +46,7 @@ public class Room : MonoBehaviour
             Case newCaseScript = newCase.gameObject.GetComponent<Case>();
 
             bool isWallShown;
-            if (room.cases.Count != 0)  // if room is not set by the Maze (meaning the maze is being randomely generated) his count will be equal to 0
+            if (!GameManager.instance.isEditMode && !GameManager.instance.isRandomlyGenerated)  // if not in editmode and not randomelygenerated
             {
                 switch (room.cases[caseIteration].state) 
                 {
@@ -66,10 +66,14 @@ public class Room : MonoBehaviour
                         break;
                 }
             }
-            else if (GameManager.instance.isEditMode == true) // if in edit mode set all walls to path
+            else if (GameManager.instance.isEditMode && GameManager.instance.isEditingNewlyCreatedMap) // if editing a newly created map set all walls to path
             {
                 isWallShown = false;
                 roomArray[caseColumn,caseRow] = "path";
+                Maze.CaseObject newCaseObject = new Maze.CaseObject();
+                newCaseObject.cellid = caseIteration;
+                newCaseObject.state = "path";
+                mazeReference.maze.rooms[roomID].cases.Add(newCaseObject);
             }
             else 
             {
