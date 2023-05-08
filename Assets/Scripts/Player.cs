@@ -5,6 +5,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
+    public bool hasTrap = false;
+
     public bool hasKey = false;
 
     public float speed = 5f;
