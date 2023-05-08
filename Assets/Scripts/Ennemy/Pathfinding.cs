@@ -21,8 +21,12 @@ public class Pathfinding : MonoBehaviour
 
     private List<Vector3> neighbors;
 
+    private bool pathFound = false;
+
     public IEnumerator GraphSearch(string[,] graph, Vector3 start, Vector3 destination) //array[x][z]
     {
+        pathFound = false;
+
         queue = new Queue();
         queue.Enqueue(start);
         currentCell = start;
@@ -58,9 +62,7 @@ public class Pathfinding : MonoBehaviour
             yield return null;
         }
 
-        // Debug.Log("oui");
-
-        CreatePath(graph, start, destination);
+        pathFound = true;
 
         yield return null;
     }
@@ -72,30 +74,6 @@ public class Pathfinding : MonoBehaviour
 
         int graphZLength = graph.GetLength(0);
         int graphXLength = graph.GetLength(1);
-
-        // if(currentCell.x <= 0) // || graph[(int)(currentCell.x + Vector3.left.x), (int)currentCell.z] == "wall" 
-        // {
-        //     neighbors.Add(currentCell + Vector3.right);
-        // } else if (currentCell.x >= graphXLength - 1) // || graph[(int)(currentCell.x + Vector3.right.x), (int)currentCell.z] == "wall"
-        // {
-        //     neighbors.Add(currentCell + Vector3.left);
-        // } else 
-        // {
-        //     neighbors.Add(currentCell + Vector3.right);
-        //     neighbors.Add(currentCell + Vector3.left);
-        // }
-
-        // if(currentCell.z <= 0)
-        // {
-        //     neighbors.Add(currentCell + Vector3.forward);
-        // } else if (currentCell.z >= graphZLength - 1) 
-        // {
-        //     neighbors.Add(currentCell + Vector3.back);
-        // } else
-        // {
-        //     neighbors.Add(currentCell + Vector3.forward);
-        //     neighbors.Add(currentCell + Vector3.back);
-        // }
 
         //TODO : Refactor the code to be more readable.
         if(currentCell.x != 0 && graph[(int)(currentCell.x - 1), (int)currentCell.z] != "wall" )
@@ -121,8 +99,16 @@ public class Pathfinding : MonoBehaviour
         return neighbors;
     }
 
-    private void CreatePath(string[,] graph, Vector3 start, Vector3 destination)
-    {
+    // private void CreatePath(string[,] graph, Vector3 start, Vector3 destination) // Idea : To know the vector to go on the center of cells, we can do Vector3 +/* sizeOfCells/2.
+    // {
+        
+    // }
 
+    public Vector3 GetNextDirection(Vector3 currentPosition)
+    {
+        if(!pathFound) return currentPosition;
+
+        // Debug.Log(positionNodes[currentPosition]);
+        return positionNodes[currentPosition];
     }
 }

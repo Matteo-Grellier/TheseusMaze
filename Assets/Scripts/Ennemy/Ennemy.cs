@@ -7,6 +7,10 @@ public class Ennemy : MonoBehaviour
     // Start is called before the first frame update
 
     private Pathfinding pathfinding;
+
+    private Vector3 currentGraphPosition;
+    public Vector3 destination;
+
     void Start()
     {
 
@@ -20,16 +24,17 @@ public class Ennemy : MonoBehaviour
             {"path", "path", "path", "path", "path"},
         };
 
-        Vector3 destination = new Vector3(4, 0, 2);
-        Vector3 start = new Vector3(2, 0, 4);
+        destination = new Vector3(4, 0, 2);
+        currentGraphPosition = new Vector3(2, 0, 4);
 
-        StartCoroutine(pathfinding.GraphSearch(graph, start, destination));
+        StartCoroutine(pathfinding.GraphSearch(graph, currentGraphPosition, destination));
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        currentGraphPosition = pathfinding.GetNextDirection(currentGraphPosition);
+        Debug.Log("NEXT DIRECTION" + currentGraphPosition);
     }
 }
