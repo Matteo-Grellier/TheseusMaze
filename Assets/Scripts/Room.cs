@@ -46,7 +46,7 @@ public class Room : MonoBehaviour
             Case newCaseScript = newCase.gameObject.GetComponent<Case>();
 
             bool isWallShown;
-            if (!GameManager.instance.isEditMode && !GameManager.instance.isRandomlyGenerated)  // if not in editmode and not randomelygenerated
+            if (!GameManager.instance.isEditingNewlyCreatedMap && !GameManager.instance.isRandomlyGenerated)  // if not in editing new map and not randomelygenerated
             {
                 switch (room.cases[caseIteration].state)
                 {

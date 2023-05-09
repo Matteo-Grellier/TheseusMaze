@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public int mapToGenerateId = 0;
 
     private GameObject saveMapBtn;
-    private Maze mazeReference = null; // will auto get the reference of the ONLY Maze on the scene
+    public Maze mazeReference = null; // will auto get the reference of the ONLY Maze on the scene
     private bool asLaunchedGeneration = false;
 
     private void Awake() 
@@ -60,13 +60,15 @@ public class GameManager : MonoBehaviour
         Debug.Log("switching to " + next.name + " Scene");
     }
 
-    public void SaveNewMap()
+    public void SaveNewMap(string mazeName)
     {
+        mazeReference.maze.mazeName = mazeName;
         StartCoroutine(APIManager.PostMazeToAPI(mazeReference.maze));
     }
 
-    public void UpdateMap()
+    public void UpdateMap(string mazeName)
     {
+        mazeReference.maze.mazeName = mazeName;
         StartCoroutine(APIManager.UpdateMazeInAPI(mazeReference.maze.mazeid, mazeReference.maze));
     }
 
