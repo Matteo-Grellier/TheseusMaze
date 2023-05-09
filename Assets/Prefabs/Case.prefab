@@ -428,6 +428,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6512706862377062812}
     m_Modifications:
+    - target: {fileID: 2238624437475408, guid: e757c510b0dd5efa8809b4eeb2b888db, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 59acabd7951a9b7f2855344c711dd04f, type: 2}
     - target: {fileID: 1174552029129761599, guid: e757c510b0dd5efa8809b4eeb2b888db, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -492,3 +496,15 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1947534659928603013, guid: e757c510b0dd5efa8809b4eeb2b888db, type: 3}
   m_PrefabInstance: {fileID: 8292951270528258769}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6479283365542995702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498901618154810196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7c762c203e443ad78cc461b17f35f59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
