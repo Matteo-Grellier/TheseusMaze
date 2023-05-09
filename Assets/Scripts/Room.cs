@@ -15,6 +15,8 @@ public class Room : MonoBehaviour
 
     private bool isTrapShown = false;
     private bool isWallShown = false;
+    private bool isGravelShown = false;
+    private bool isMudShown = false;
 
 
     private bool isAfterGenerationCodeExecuted = false;
@@ -85,22 +87,46 @@ public class Room : MonoBehaviour
                 {
                     isTrapShown = false;
                     isWallShown = true;
+                    isGravelShown = false;
+                    isMudShown = false;
+
                 }
                 else if(randomNumber == 10)
                 {
                     isWallShown = false;
                     isTrapShown = true;
+                    isGravelShown = false;
+                    isMudShown = false;
+
+                }
+                else if (randomNumber == 11)
+                {
+                    isWallShown = false;
+                    isTrapShown = false;
+                    isGravelShown = true;
+                    isMudShown = false;
+                }
+                else if (randomNumber == 12)
+                {
+                    isWallShown = false;
+                    isTrapShown = false;
+                    isGravelShown = false;
+                    isMudShown = true;
                 }
                 else
                 {
                     isTrapShown = false;
                     isWallShown = false;
+                    isGravelShown = false;
+                    isMudShown = false;
                 }
                 // Debug.Log( "room " + roomID + " : " + "caseColumn : " + caseColumn + " caseRow : " + caseRow + " value :" + roomArray[caseColumn,caseRow]);
             }
 
             newCaseScript.wallObject.SetActive(isWallShown);
             newCaseScript.trapObject.SetActive(isTrapShown);
+            newCaseScript.gravelObject.SetActive(isGravelShown);
+            newCaseScript.mudObject.SetActive(isMudShown);
             newCaseScript.debugCase.GetComponent<MeshRenderer>().material = roomMaterial;
             caseIteration++;
             caseColumn++;

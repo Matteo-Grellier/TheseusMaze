@@ -6,6 +6,8 @@ public class Case : MonoBehaviour
 {
     [Header("Mandatory References")]
     public GameObject wallObject;
+    public GameObject gravelObject;
+    public GameObject mudObject;
     public GameObject trapObject;
     public GameObject debugCase;
 
