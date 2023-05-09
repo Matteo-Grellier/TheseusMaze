@@ -87,7 +87,7 @@ public class Maze : MonoBehaviour
         mazeToGenerateID = _mazeToGenerateID;
     }
 
-    public void StartMazeGeneration() 
+    public void StartMazeGeneration()
     {
         if (!isRandomlyGenerated)
         {

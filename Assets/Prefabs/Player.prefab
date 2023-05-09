@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBody: {fileID: 7353626100529670202}
-  mouseSensitivity: 100
+  mouseSensitivity: 400
 --- !u!1 &6209778332451051105
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,7 +304,7 @@ GameObject:
   - component: {fileID: 7385295825756683737}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -323,7 +323,6 @@ Transform:
   m_Children:
   - {fileID: 6209778332451051100}
   - {fileID: 6209778332107209412}
-  - {fileID: 7353626101385383518}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -339,8 +338,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0935dfee118bd36539baec72e9d5f3b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasTrap: 0
   hasKey: 0
   speed: 5
+  move: {x: 0, y: 0, z: 0}
   cam: {fileID: 6209778332107209414}
 --- !u!54 &1753470463094111215
 Rigidbody:
@@ -368,38 +369,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.92541087
+  m_Radius: 0.9441896
   m_Height: 3.7581263
   m_Direction: 1
-  m_Center: {x: -0.29153427, y: 0.00850045, z: 0.004696929}
---- !u!1 &7353626101385383517
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7353626101385383518}
-  m_Layer: 0
-  m_Name: GroundCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7353626101385383518
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7353626101385383517}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.9, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7353626100529670202}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.0013377075, y: 0.00850045, z: 0.004696929}

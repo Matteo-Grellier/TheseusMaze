@@ -6,8 +6,11 @@ public class Case : MonoBehaviour
 {
     [Header("Mandatory References")]
     public GameObject wallObject;
+    public GameObject gravelObject;
+    public GameObject mudObject;
+    public GameObject trapObject;
     public GameObject debugCase;
-    
+
     public int caseId;
     public int RoomId;
 
@@ -29,7 +32,7 @@ public class Case : MonoBehaviour
         if (gameManager.isEditMode == true)
         {
             wallObject.SetActive(!wallObject.gameObject.activeInHierarchy);
-            
+
             if (caseMazeReference.maze.rooms[RoomId].cases[caseId].state == "wall")
                 caseMazeReference.maze.rooms[RoomId].cases[caseId].state = "path";
             else
