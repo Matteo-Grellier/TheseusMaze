@@ -16,22 +16,22 @@
                     {
                     "cellid": "0",
                     "roomid": "0",
-                    "state": "boue"
+                    "state": "wall"
                     },
                     {
                     "cellid": "1",
                     "roomid": "0",
-                    "state": "sol"
+                    "state": "wall"
                     },
                     {
                     "cellid": "2",
                     "roomid": "0",
-                    "state": "boue"
+                    "state": "wall"
                     },
                     {
                     "cellid": "3",
                     "roomid": "0",
-                    "state": "sol"
+                    "state": "path"
                     }
                 ]
                 },
@@ -47,30 +47,92 @@
                     {
                     "cellid": "4",
                     "roomid": "1",
-                    "state": "boue"
+                    "state": "wall"
                     },
                     {
                     "cellid": "5",
                     "roomid": "1",
-                    "state": "boue"
+                    "state": "wall"
                     },
                     {
                     "cellid": "2",
                     "roomid": "0",
-                    "state": "boue"
+                    "state": "path"
                     },
                     {
                     "cellid": "3",
                     "roomid": "0",
-                    "state": "sol"
+                    "state": "boue"
                     }
                 ]
+                },
+                {
+                    "roomid": "1",
+                    "mazeid": "0",
+                    "leftDoor": false,
+                    "upDoor": false,
+                    "rightDoor": false,
+                    "downDoor": false,
+                    "isEndRoom": false,
+                    "cases": [
+                        {
+                        "cellid": "4",
+                        "roomid": "1",
+                        "state": "wall"
+                        },
+                        {
+                        "cellid": "5",
+                        "roomid": "1",
+                        "state": "path"
+                        },
+                        {
+                        "cellid": "2",
+                        "roomid": "0",
+                        "state": "path"
+                        },
+                        {
+                        "cellid": "3",
+                        "roomid": "0",
+                        "state": "boue"
+                        }
+                    ]
+                },
+                {
+                    "roomid": "1",
+                    "mazeid": "0",
+                    "leftDoor": false,
+                    "upDoor": false,
+                    "rightDoor": false,
+                    "downDoor": false,
+                    "isEndRoom": false,
+                    "cases": [
+                        {
+                        "cellid": "4",
+                        "roomid": "1",
+                        "state": "path"
+                        },
+                        {
+                        "cellid": "5",
+                        "roomid": "1",
+                        "state": "path"
+                        },
+                        {
+                        "cellid": "2",
+                        "roomid": "0",
+                        "state": "path"
+                        },
+                        {
+                        "cellid": "3",
+                        "roomid": "0",
+                        "state": "boue"
+                        }
+                    ]
                 }
             ]
             },
             {
             "mazeid": "1",
-            "mazename": "Labyrinthe de la MORT",
+            "mazeName": "Labyrinthe de la MORT",
             "rooms": [
                 {
                 "roomid": "2",
@@ -84,37 +146,37 @@
                     {
                     "cellid": "6",
                     "roomid": "2",
-                    "state": "boue"
+                    "state": "wall"
                     },
                     {
                     "cellid": "7",
                     "roomid": "2",
-                    "state": "sol"
+                    "state": "path"
                     },
                     {
                     "cellid": "8",
                     "roomid": "2",
-                    "state": "sol"
+                    "state": "path"
                     },
                     {
                     "cellid": "9",
                     "roomid": "2",
-                    "state": "sol"
+                    "state": "path"
                     },
                     {
                     "cellid": "10",
                     "roomid": "2",
-                    "state": "flaque"
+                    "state": "path"
                     },
                     {
                     "cellid": "11",
                     "roomid": "2",
-                    "state": "flaque"
+                    "state": "wall"
                     },
                     {
                     "cellid": "12",
                     "roomid": "2",
-                    "state": "flaque"
+                    "state": "path"
                     }
                 ]
                 }

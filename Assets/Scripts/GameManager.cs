@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,18 @@ public class GameManager : MonoBehaviour
 
     [Tooltip("If checked, will let the player click on the cases to edit them, must be set in editor")]
     public bool isEditMode;
+    public bool isEditingNewlyCreatedMap = false;
+    public bool isRandomlyGenerated = true;
+    public int mapToGenerateId = 0;
+
+    private GameObject saveMapBtn;
+    private Maze mazeReference = null; // will auto get the reference of the ONLY Maze on the scene
+    private bool asLaunchedGeneration = false;
+
+    private void Awake() 
+    {
+        DontDestroyOnLoad(this.gameObject); // put the GameManager int he don't destroy on load
+    }
 
     void Start()
     {
@@ -17,5 +30,48 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+
+        SceneManager.activeSceneChanged += OnActiveSceneChange; // subscribe to the activeSceneChanged event
+    }
+
+    private void Update() 
+    {
+        if (!asLaunchedGeneration && SceneManager.GetActiveScene().name == "GameScene" && mazeReference == null)
+        {
+            mazeReference = GameObject.Find("Maze").GetComponent<Maze>();
+            mazeReference.SetGenerationInformations(isRandomlyGenerated, mapToGenerateId);
+            mazeReference.StartMazeGeneration();
+            asLaunchedGeneration = true;
+        }
+        else if (!asLaunchedGeneration && SceneManager.GetActiveScene().name == "EditScene")
+        {
+            mazeReference = GameObject.Find("Maze").GetComponent<Maze>();
+            mazeReference.SetGenerationInformations(true, 0);
+            mazeReference.StartMazeGeneration();
+            asLaunchedGeneration = true;
+        }
+
+        // Debug.Log("ActiveScene = " + SceneManager.GetActiveScene().name);
+    }
+
+    // called when changing the active scene
+    private void OnActiveSceneChange(Scene current, Scene next)
+    {
+        Debug.Log("switching to " + next.name + " Scene");
+    }
+
+    public void SaveNewMap()
+    {
+        StartCoroutine(APIManager.PostMazeToAPI(mazeReference.maze));
+    }
+
+    public void UpdateMap()
+    {
+        StartCoroutine(APIManager.UpdateMazeInAPI(mazeReference.maze.mazeid, mazeReference.maze));
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }
