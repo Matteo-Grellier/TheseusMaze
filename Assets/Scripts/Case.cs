@@ -10,6 +10,7 @@ public class Case : MonoBehaviour
     public GameObject mudObject;
     public GameObject trapObject;
     public GameObject debugCase;
+    public GameObject previewObject;
 
     public int caseId;
     public int RoomId;

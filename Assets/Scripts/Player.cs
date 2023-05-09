@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
 
     public float speed = 2f;
 
+    private int previousCase;
+    private int currentCase;
+
     public Vector3 move;
 
     public GameObject Trap;
@@ -38,6 +41,8 @@ public class Player : MonoBehaviour
         {
             takeTrap();
         }
+
+        showPreviewPlacement();
     }
 
     void takeTrap()
@@ -58,6 +63,26 @@ public class Player : MonoBehaviour
                     hit.collider.gameObject.GetComponent<Case>().trapObject.SetActive(true);
                     hasTrap = false;
                 }
+            }
+        }
+    }
+    void showPreviewPlacement()
+    {
+        RaycastHit hit;
+        Physics.Raycast(transform.position, transform.forward, out hit, 2f);
+        currentCase = hit.collider.gameObject.GetComponent<Case>().GetInstanceID();
+        if (hasTrap == true)
+        {
+            if (previousCase == currentCase)
+            {
+                Debug.Log("SUPERRRRRRRRRRRRRR");
+                hit.collider.gameObject.GetComponent<Case>().previewObject.SetActive(true);
+                previousCase = currentCase;
+            }
+            else
+            {
+                Debug.Log("NOOOOOOOOOOOOOOOOoo");
+                hit.collider.gameObject.GetComponent<Case>().previewObject.SetActive(false);
             }
         }
     }
