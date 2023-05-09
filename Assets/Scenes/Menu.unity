@@ -312,6 +312,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEditMode: 0
+  isEditingNewlyCreatedMap: 0
+  isRandomlyGenerated: 1
+  mapToGenerateId: 0
 --- !u!4 &307855852
 Transform:
   m_ObjectHideFlags: 0
