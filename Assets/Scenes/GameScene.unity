@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: ad04e3e5f670557558e32394cad2436b, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44658792, g: 0.49642283, b: 0.5748252, a: 1}
+  m_IndirectSpecularColor: {r: 0.04280605, g: 0.05403384, b: 0.07376435, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -153,11 +153,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomPrefab: {fileID: 1732912637463812642, guid: f484120dc79bf764d9265af294fb4d8f, type: 3}
-  isRandomlyGenerated: 1
   mazeSize: 4
   roomSize: 7
-  jsonText: {fileID: 4900000, guid: e5752a691de4d4249b1ac9319b6e976e, type: 3}
-  useDebugJSON: 0
+  maze:
+    mazeid: 0
+    mazeName: 
+    rooms: []
 --- !u!4 &713244740
 Transform:
   m_ObjectHideFlags: 0
@@ -267,7 +268,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1001 &1678993673
+--- !u!1001 &1218862529
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -278,25 +279,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 7353626100529670201, guid: f580868fc3cf84280850ccb522fd4883, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 7353626100529670202, guid: f580868fc3cf84280850ccb522fd4883, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7353626100529670202, guid: f580868fc3cf84280850ccb522fd4883, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.022866756
       objectReference: {fileID: 0}
     - target: {fileID: 7353626100529670202, guid: f580868fc3cf84280850ccb522fd4883, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.95
+      value: 9.716
       objectReference: {fileID: 0}
     - target: {fileID: 7353626100529670202, guid: f580868fc3cf84280850ccb522fd4883, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.02552995
       objectReference: {fileID: 0}
     - target: {fileID: 7353626100529670202, guid: f580868fc3cf84280850ccb522fd4883, type: 3}
       propertyPath: m_LocalRotation.w
@@ -326,6 +323,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7353626100529670203, guid: f580868fc3cf84280850ccb522fd4883, type: 3}
+      propertyPath: Trap
+      value: 
+      objectReference: {fileID: 1947534659928603013, guid: e757c510b0dd5efa8809b4eeb2b888db, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f580868fc3cf84280850ccb522fd4883, type: 3}
 --- !u!1 &1974364684
@@ -357,7 +358,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3710279919fbd5c469196a2adbb6b1f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEditMode: 1
+  isEditMode: 0
+  isEditingNewlyCreatedMap: 0
+  isRandomlyGenerated: 1
+  mapToGenerateId: 0
 --- !u!4 &1974364686
 Transform:
   m_ObjectHideFlags: 0

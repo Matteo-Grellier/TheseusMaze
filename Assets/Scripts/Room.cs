@@ -8,10 +8,14 @@ public class Room : MonoBehaviour
     [SerializeField] private GameObject casePrefab;
     public int roomSize;
     public int roomID = 0;
-    
+
     private int caseIteration = 0;
     private int caseColumn = 0;
     private int caseRow = 0;
+
+    private bool isTrapShown = false;
+    private bool isWallShown = false;
+
 
     private bool isAfterGenerationCodeExecuted = false;
 
@@ -45,7 +49,6 @@ public class Room : MonoBehaviour
             newCase.GetComponent<Case>().caseMazeReference = mazeReference;
             Case newCaseScript = newCase.gameObject.GetComponent<Case>();
 
-            bool isWallShown;
             if (!GameManager.instance.isEditMode && !GameManager.instance.isRandomlyGenerated)  // if not in editmode and not randomelygenerated
             {
                 switch (room.cases[caseIteration].state)
@@ -75,14 +78,29 @@ public class Room : MonoBehaviour
                 newCaseObject.state = "path";
                 mazeReference.maze.rooms[roomID].cases.Add(newCaseObject);
             }
-            else 
+            else
             {
-                isWallShown = (Random.Range(0, 4) == 0) ? true : false;
-                roomArray[caseColumn,caseRow] = (isWallShown) ? "wall" : "path";
+                int randomNumber = Random.Range(0,30);
+                if (randomNumber >= 0 && randomNumber <= 7)
+                {
+                    isTrapShown = false;
+                    isWallShown = true;
+                }
+                else if(randomNumber == 10)
+                {
+                    isWallShown = false;
+                    isTrapShown = true;
+                }
+                else
+                {
+                    isTrapShown = false;
+                    isWallShown = false;
+                }
                 // Debug.Log( "room " + roomID + " : " + "caseColumn : " + caseColumn + " caseRow : " + caseRow + " value :" + roomArray[caseColumn,caseRow]);
             }
 
             newCaseScript.wallObject.SetActive(isWallShown);
+            newCaseScript.trapObject.SetActive(isTrapShown);
             newCaseScript.debugCase.GetComponent<MeshRenderer>().material = roomMaterial;
             caseIteration++;
             caseColumn++;
