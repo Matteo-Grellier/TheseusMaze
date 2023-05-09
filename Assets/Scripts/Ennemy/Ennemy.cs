@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ennemy : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float speed = 1f;
 
     private Pathfinding pathfinding;
 
@@ -42,7 +42,18 @@ public class Ennemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentGraphPosition = pathfinding.GetNextDirection(currentGraphPosition);
-        Debug.Log("NEXT DIRECTION" + currentGraphPosition);
+        Vector3 nextGraphPosition = transform.position;
+
+        if(transform.position == currentGraphPosition)
+        {
+            nextGraphPosition = pathfinding.GetNextDirection(currentGraphPosition);
+            Debug.Log("NEXT DIRECTION" + currentGraphPosition);
+        }
+
+        Vector3 direction = nextGraphPosition - currentGraphPosition;
+        Debug.Log(direction);
+        currentGraphPosition = nextGraphPosition;
+
+        transform.Translate(direction * speed * Time.deltaTime, Space.World);
     }
 }
