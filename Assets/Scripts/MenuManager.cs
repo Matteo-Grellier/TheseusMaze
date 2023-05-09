@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MenueManager : MonoBehaviour
+public class MenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject savedMapsMenu;
@@ -31,11 +31,11 @@ public class MenueManager : MonoBehaviour
         mainMenu.SetActive(true);
     } 
 
-    public void BtnLaunchMap(int mapId)
-    {
-        GameManager.instance.mapToGenerateId = mapId;
-        GameManager.instance.isRandomlyGenerated = false;
-        GameManager.instance.LoadScene("GameScene");
-    } 
+    // public void BtnLaunchMap(int mapId)
+    // {
+    //     GameManager.instance.mapToGenerateId = mapId;
+    //     GameManager.instance.isRandomlyGenerated = false;
+    //     GameManager.instance.LoadScene("GameScene");
+    // } 
 
 }

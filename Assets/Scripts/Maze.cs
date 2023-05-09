@@ -92,7 +92,10 @@ public class Maze : MonoBehaviour
         if (!isRandomlyGenerated)
         {
             if (!useDebugJSON)
+            {
+                Debug.Log("THIS IS IT YES");
                 StartCoroutine(APIManager.GetOneMazeFromAPI(mazeToGenerateID, this)); // get the map from the API utils
+            }
             else
                 SetMazeValues(""); // shortcut when using DebugJson
         }
@@ -118,7 +121,7 @@ public class Maze : MonoBehaviour
                 newlyCreatedRoomScript.mazeReference = this;
                 newlyCreatedRoomScript.roomSize = roomSize;
                 newlyCreatedRoomScript.roomArray = new string [roomSize, roomSize];
-                if(!isRandomlyGenerated && !GameManager.instance.isEditMode) // do not fill room if not generated and not edit mode
+                if(!isRandomlyGenerated) // && !GameManager.instance.isEditMode) // fill room if not randomely generated and not edit mode 
                 {
                     newlyCreatedRoomScript.room = maze.rooms[iteration];
                 }

@@ -497,6 +497,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7348449076267573032, guid: 64999b231322ed74bb71067725d1a6a2, type: 3}
+      propertyPath: mazeSize
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7348449076267573032, guid: 64999b231322ed74bb71067725d1a6a2, type: 3}
+      propertyPath: roomSize
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7348449076267573032, guid: 64999b231322ed74bb71067725d1a6a2, type: 3}
       propertyPath: useDebugJSON
       value: 0
       objectReference: {fileID: 0}

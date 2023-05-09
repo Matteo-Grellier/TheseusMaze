@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         else if (!asLaunchedGeneration && SceneManager.GetActiveScene().name == "EditScene")
         {
             mazeReference = GameObject.Find("Maze").GetComponent<Maze>();
-            mazeReference.SetGenerationInformations(true, 0);
+            mazeReference.SetGenerationInformations(isRandomlyGenerated, mapToGenerateId);
             mazeReference.StartMazeGeneration();
             asLaunchedGeneration = true;
         }
