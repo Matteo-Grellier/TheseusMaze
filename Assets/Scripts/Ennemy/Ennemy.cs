@@ -47,34 +47,15 @@ public class Ennemy : MonoBehaviour
 
     void Update()
     {
-        // if(nextGraphPosition == null && movementDirection == null)
-        // {
-        //     Debug.Log("here");
-        //     nextGraphPosition = ConvertPositionToGraphPosition(transform.position);
-        //     movementDirection = Vector3.zero;
-        // }
-
-        // nextGraphPosition = (nextGraphPosition != null) ? nextGraphPosition : ConvertPositionToGraphPosition(transform.position);
-        // movementDirection = (movementDirection != null) ? movementDirection : Vector3.zero;
-
         if(ConvertPositionToGraphPosition(transform.position) == nextGraphPosition 
         && nextGraphPosition != destination)
         {
             currentGraphPosition = nextGraphPosition;
-            Debug.Log("CURRENT GRAPH POSITION: " + currentGraphPosition);
             nextGraphPosition = pathfinding.GetNextDirection(currentGraphPosition);
-            Debug.Log("NEXT DIRECTION" + nextGraphPosition);
-
-            // movementDirection = ConvertGraphPositionToPosition(nextGraphPosition, transform.position.y) - ConvertGraphPositionToPosition(currentGraphPosition, transform.position.y);
             movementDirection = ConvertGraphPositionToPosition(nextGraphPosition, transform.position.y);
-            Debug.Log(movementDirection);
         }
         
-        Debug.Log("TRANSFORM POSITION" + transform.position);
-
-        // transform.Translate(movementDirection * speed * Time.deltaTime, Space.World);
         transform.position = Vector3.MoveTowards(transform.position, movementDirection, speed * Time.deltaTime);
-        // transform.position = Vector3.Lerp(transform.position, movementDirection, speed * Time.deltaTime);
     }
 
     private Vector3 ConvertGraphPositionToPosition(Vector3 graphPosition, float yPosition)

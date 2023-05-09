@@ -50,6 +50,13 @@ public class GameManager : MonoBehaviour
             mazeReference.StartMazeGeneration();
             asLaunchedGeneration = true;
         }
+        else if (!asLaunchedGeneration && SceneManager.GetActiveScene().name == "Mathéo")
+        {
+            mazeReference = GameObject.Find("Maze").GetComponent<Maze>();
+            mazeReference.SetGenerationInformations(true, 0);
+            mazeReference.StartMazeGeneration();
+            asLaunchedGeneration = true;
+        }
 
         // Debug.Log("ActiveScene = " + SceneManager.GetActiveScene().name);
     }

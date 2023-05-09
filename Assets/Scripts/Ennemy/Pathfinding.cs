@@ -32,15 +32,13 @@ public class Pathfinding : MonoBehaviour
         queue.Enqueue(start);
         currentCell = start;
 
-        while (!queue.Equals(null)) // pas sûr
+        while (!queue.Equals(null))
         {
 
             currentCell = (Vector3) queue.Dequeue();
-            // Debug.Log("currentCell" + currentCell); 
 
             if(currentCell.x == destination.x && currentCell.z == destination.z) 
             {
-                // Debug.Log("WE FIND THE END OF THE WORLD");
                 break;
             }
 
@@ -51,13 +49,9 @@ public class Pathfinding : MonoBehaviour
 
                 if(!verifiedNodes.ContainsKey(neighbor)) //maybe an error with instance of class ?
                 {
-                    // Debug.Log("neighbor of " + currentCell + "is " + neighbor);
                     queue.Enqueue(neighbor);
                     verifiedNodes.Add(neighbor, currentCell);
                 }
-
-                // yield return null;
-
             }
 
             yield return null;
@@ -100,7 +94,7 @@ public class Pathfinding : MonoBehaviour
         return neighbors;
     }
 
-    private void CreatePath(Vector3 start, Vector3 destination) // Idea : To know the vector to go on the center of cells, we can do Vector3 +/* sizeOfCells/2.
+    private void CreatePath(Vector3 start, Vector3 destination)
     {
 
         pathNodes = new Dictionary<Vector3, Vector3>();
@@ -124,8 +118,6 @@ public class Pathfinding : MonoBehaviour
     {
         if(!pathFound || !pathNodes.ContainsKey(currentPosition)) return currentPosition;
 
-        // Debug.Log(verifiedNodes[currentPosition]);
-        // return pathNodes[currentPosition];
         return pathNodes.First(x => x.Value == currentPosition).Key;
     }
 }
