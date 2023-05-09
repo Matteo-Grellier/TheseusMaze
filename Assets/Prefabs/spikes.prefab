@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6516780089786045887}
   m_Layer: 0
   m_Name: spikes
-  m_TagString: Untagged
+  m_TagString: Trap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,8 +109,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.81, y: 0.24999999, z: 0.79999995}
-  m_Center: {x: 0, y: 0.12499999, z: 0}
+  m_Size: {x: 0.020726772, y: 0.24999999, z: 0.020425925}
+  m_Center: {x: -0.00557804, y: 0.12499999, z: 0.0109232785}
 --- !u!1 &4500409643641689441
 GameObject:
   m_ObjectHideFlags: 0
