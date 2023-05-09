@@ -6,12 +6,11 @@ public class Maze : MonoBehaviour
 {
     [Tooltip("Mandatory !")]
     [SerializeField] private GameObject roomPrefab;
-
     [Tooltip("check if the maze should be randomly generated, and uncheck if it must use data from a JSON object")]
-    [SerializeField] private bool isRandomlyGenerated;
+    /*[SerializeField]*/ private bool isRandomlyGenerated;
+    private int mazeToGenerateID = 0;
 
     [Header("Generation Settings")]
-
     [Tooltip("Number of rooms in a side of the maze, if mazeSize = 3, there will be 9 rooms")]
     [Range(2, 50)] [SerializeField] private int mazeSize;
     [Tooltip("Number of cases in a side of the room, if roomSize = 6, there will be 36 rooms")]
@@ -21,10 +20,8 @@ public class Maze : MonoBehaviour
     private int iteration = 0;
     private int rowPosition = 0;
     private int columnPosition = 0;
-
     private bool isDataFetched = false;
     private bool isDoneGenerating = false;
-
     private int roomsStillGenerating; //rooms that are still being generated, when 0, everything is done
     public int RoomsStillGenerating
     {
@@ -34,16 +31,18 @@ public class Maze : MonoBehaviour
             roomsStillGenerating = value;
         }
     }
-
     private Room[] mazeRoomsArray;
     public string[ , ] mazeArray;
+    public MazeObject maze = new MazeObject();
 
     #region JSON Serialization classes
 
-    [SerializeField] private TextAsset jsonText;
+    [Tooltip("just for debug")]
+    /*[SerializeField]*/ private TextAsset jsonText;
 
     [Tooltip("just for debug")]
-    [SerializeField] private bool useDebugJSON;
+    /*[SerializeField]*/ private bool useDebugJSON;
+
 
     [System.Serializable]
     public class CaseObject
@@ -82,14 +81,18 @@ public class Maze : MonoBehaviour
 
     #endregion
 
-    private MazeObject maze = new MazeObject();
+    public void SetGenerationInformations(bool _isRandomelyGenerated, int _mazeToGenerateID)
+    {
+        isRandomlyGenerated = _isRandomelyGenerated;
+        mazeToGenerateID = _mazeToGenerateID;
+    }
 
-    private void Start()
+    public void StartMazeGeneration() 
     {
         if (!isRandomlyGenerated)
         {
             if (!useDebugJSON)
-                StartCoroutine(APIManager.GetAllMazeFromAPI(this)); // get the map from the API utils
+                StartCoroutine(APIManager.GetOneMazeFromAPI(mazeToGenerateID, this)); // get the map from the API utils
             else
                 SetMazeValues(""); // shortcut when using DebugJson
         }
@@ -111,14 +114,25 @@ public class Maze : MonoBehaviour
             {
                 GameObject room = Instantiate(roomPrefab, new Vector3( (0 + roomSize) * rowPosition, 0, (0 + roomSize) * columnPosition), Quaternion.Euler(new Vector3(0, 0, 0)));
                 room.transform.parent = gameObject.transform; //set the room as child of the maze object
-                room.GetComponent<Room>().roomSize = roomSize;
-                room.GetComponent<Room>().roomArray = new string [roomSize, roomSize];
-                if(!isRandomlyGenerated)
-                    room.GetComponent<Room>().room = maze.rooms[iteration];
+                Room newlyCreatedRoomScript = room.GetComponent<Room>();
+                newlyCreatedRoomScript.mazeReference = this;
+                newlyCreatedRoomScript.roomSize = roomSize;
+                newlyCreatedRoomScript.roomArray = new string [roomSize, roomSize];
+                if(!isRandomlyGenerated && !GameManager.instance.isEditMode) // do not fill room if not generated and not edit mode
+                {
+                    newlyCreatedRoomScript.room = maze.rooms[iteration];
+                }
+                else if (GameManager.instance.isEditMode) // if is generated but in edit mode
+                {
+                    RoomObject newRoomObject = new RoomObject();
+                    newRoomObject.roomid = iteration;
+                    newlyCreatedRoomScript.room = newRoomObject;
+                    newRoomObject.cases = new List<CaseObject>();
+                    maze.rooms.Add(newRoomObject);
+                }
+                newlyCreatedRoomScript.roomID = iteration;
                 room.transform.localScale = new Vector3(roomSize, 1, roomSize);
-                // Debug.Log(iteration);
-                // Debug.Log("mazeRoomsArray = " + mazeRoomsArray.Length);
-                mazeRoomsArray[iteration] = room.GetComponent<Room>();
+                mazeRoomsArray[iteration] = newlyCreatedRoomScript;
                 iteration++;
                 columnPosition = iteration % mazeSize;
                 if (columnPosition == 0 )
@@ -136,9 +150,12 @@ public class Maze : MonoBehaviour
 
     public void SetMazeValues(string _jsonText)
     {
-        MazeList mazes = (useDebugJSON) ? JsonUtility.FromJson<MazeList>(jsonText.text) : JsonUtility.FromJson<MazeList>(_jsonText);
+        maze = (useDebugJSON) ? JsonUtility.FromJson<MazeObject>(jsonText.text) : JsonUtility.FromJson<MazeObject>(_jsonText);
+        // if (mazeToGenerateID < mazes.mazes.Count )
+        //     maze = mazes.mazes[mazeToGenerateID]; //set the maze as the fetched datas
+        // else
+        //     maze = mazes.mazes[0];
 
-        maze = mazes.mazes[0]; //set the maze as the fetched datas
         mazeSize = (int)Mathf.Round(Mathf.Sqrt(maze.rooms.Count)); // mazeSize is a sqrt of maze.rooms beacause it is supposed to be the number of rooms on one side
         roomSize = (int)Mathf.Round(Mathf.Sqrt(maze.rooms[0].cases.Count)); // same here
         numberOfRooms = maze.rooms.Count;
@@ -179,7 +196,7 @@ public class Maze : MonoBehaviour
         }
         else
         {
-            Print2DStringArray(mazeArray);
+            // Print2DStringArray(mazeArray);
             isDoneGenerating = true;
         }
     }
