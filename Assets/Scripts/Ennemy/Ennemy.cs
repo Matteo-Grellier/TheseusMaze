@@ -16,6 +16,14 @@ public class Ennemy : MonoBehaviour
 
         pathfinding = new Pathfinding();
 
+        // string[,] graph = {
+        //     {"path", "path", "path", "path", "path"},
+        //     {"path", "path", "path", "path", "path"},
+        //     {"path", "path", "wall", "path", "path"},
+        //     {"path", "path", "wall", "wall", "path"},
+        //     {"path", "path", "path", "wall", "path"},
+        // };
+
         string[,] graph = {
             {"path", "path", "path", "wall", "path"},
             {"path", "wall", "path", "wall", "path"},

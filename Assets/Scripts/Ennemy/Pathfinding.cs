@@ -17,11 +17,12 @@ public class Pathfinding : MonoBehaviour
     // private Vector3[] previousVerifyPath;
 
     // Vector A -> Vector B : Key = the current cell (B) and Value = where the current cell came from (A).
-    private Dictionary<Vector3, Vector3> positionNodes = new Dictionary<Vector3, Vector3>(); 
+    private Dictionary<Vector3, Vector3> verifiedNodes = new Dictionary<Vector3, Vector3>(); // Nodes or Edges ?
 
     private List<Vector3> neighbors;
 
     private bool pathFound = false;
+    public Dictionary<Vector3, Vector3> pathNodes;
 
     public IEnumerator GraphSearch(string[,] graph, Vector3 start, Vector3 destination) //array[x][z]
     {
@@ -35,7 +36,7 @@ public class Pathfinding : MonoBehaviour
         {
 
             currentCell = (Vector3) queue.Dequeue();
-            Debug.Log("currentCell" + currentCell); 
+            // Debug.Log("currentCell" + currentCell); 
 
             if(currentCell.x == destination.x && currentCell.z == destination.z) 
             {
@@ -47,12 +48,12 @@ public class Pathfinding : MonoBehaviour
 
             foreach(Vector3 neighbor in neighbors)
             {
-                // Debug.Log("neighbor of " + currentCell + "is " + neighbor);
 
-                if(!positionNodes.ContainsKey(neighbor)) //maybe an error with instance of class ?
+                if(!verifiedNodes.ContainsKey(neighbor)) //maybe an error with instance of class ?
                 {
+                    // Debug.Log("neighbor of " + currentCell + "is " + neighbor);
                     queue.Enqueue(neighbor);
-                    positionNodes.Add(neighbor, currentCell);
+                    verifiedNodes.Add(neighbor, currentCell);
                 }
 
                 // yield return null;
@@ -62,7 +63,7 @@ public class Pathfinding : MonoBehaviour
             yield return null;
         }
 
-        pathFound = true;
+        CreatePath(start, destination);
 
         yield return null;
     }
@@ -99,16 +100,73 @@ public class Pathfinding : MonoBehaviour
         return neighbors;
     }
 
-    // private void CreatePath(string[,] graph, Vector3 start, Vector3 destination) // Idea : To know the vector to go on the center of cells, we can do Vector3 +/* sizeOfCells/2.
+    // private void CreatePath(Vector3 start, Vector3 destination) // Idea : To know the vector to go on the center of cells, we can do Vector3 +/* sizeOfCells/2.
     // {
-        
+
+    //     Dictionary<Vector3, Vector3> reversedPath = new Dictionary<Vector3, Vector3>();
+
+    //     reversedPath.Add(destination, verifiedNodes[destination]);
+
+    //     Vector3 currentNode = destination;
+
+    //     while(currentNode != start)
+    //     {
+    //         // Vector A -> Vector B
+    //         Debug.Log(currentNode + "-->" + verifiedNodes[currentNode]);
+    //         currentNode = verifiedNodes[currentNode];
+    //         reversedPath.Add(currentNode, verifiedNodes[currentNode]);
+    //     }
+
+    //     // pathNodes = pathNodes.Reverse().ToDictionary(x => x.Key, x => x.Value);
+
+    //     pathNodes = new Dictionary<Vector3, Vector3>();
+
+    //     foreach(KeyValuePair<Vector3, Vector3> node in reversedPath.Reverse())
+    //     {
+    //         Debug.Log(node.Key + "==>" + node.Value);
+    //         pathNodes.Add(node.Key, node.Value);
+    //     }
+
+    //     pathFound = true;
     // }
+
+
+    private void CreatePath(Vector3 start, Vector3 destination) // Idea : To know the vector to go on the center of cells, we can do Vector3 +/* sizeOfCells/2.
+    {
+
+        pathNodes = new Dictionary<Vector3, Vector3>();
+
+        pathNodes.Add(destination, verifiedNodes[destination]);
+
+        Vector3 currentNode = destination;
+
+        while(currentNode != start)
+        {
+            // Vector A -> Vector B
+            Debug.Log(currentNode + "-->" + verifiedNodes[currentNode]);
+            currentNode = verifiedNodes[currentNode];
+            pathNodes.Add(currentNode, verifiedNodes[currentNode]);
+        }
+
+        // pathNodes = pathNodes.Reverse().ToDictionary(x => x.Key, x => x.Value);
+
+        // pathNodes = new Dictionary<Vector3, Vector3>();
+
+        // foreach(KeyValuePair<Vector3, Vector3> node in reversedPath.Reverse())
+        // {
+        //     Debug.Log(node.Key + "==>" + node.Value);
+        //     pathNodes.Add(node.Key, node.Value);
+        // }
+
+        pathFound = true;
+    }
 
     public Vector3 GetNextDirection(Vector3 currentPosition)
     {
-        if(!pathFound) return currentPosition;
+        if(!pathFound || !pathNodes.ContainsKey(currentPosition)) return currentPosition;
 
-        // Debug.Log(positionNodes[currentPosition]);
-        return positionNodes[currentPosition];
+        // Debug.Log(verifiedNodes[currentPosition]);
+        // return pathNodes[currentPosition];
+        return pathNodes.FirstOrDefault(x => x.Value == currentPosition).Key;
     }
 }
