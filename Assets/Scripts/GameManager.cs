@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public int mapToGenerateId = 0;
 
     private GameObject saveMapBtn;
-    private Maze mazeReference = null; // will auto get the reference of the ONLY Maze on the scene
+    public Maze mazeReference = null; // will auto get the reference of the ONLY Maze on the scene
     private bool asLaunchedGeneration = false;
 
     private void Awake() 

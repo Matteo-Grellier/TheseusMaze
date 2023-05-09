@@ -126,6 +126,6 @@ public class Pathfinding : MonoBehaviour
 
         // Debug.Log(verifiedNodes[currentPosition]);
         // return pathNodes[currentPosition];
-        return verifiedNodes.FirstOrDefault(x => x.Value == currentPosition).Key;
+        return pathNodes.First(x => x.Value == currentPosition).Key;
     }
 }
