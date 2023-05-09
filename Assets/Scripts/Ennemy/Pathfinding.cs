@@ -100,37 +100,6 @@ public class Pathfinding : MonoBehaviour
         return neighbors;
     }
 
-    // private void CreatePath(Vector3 start, Vector3 destination) // Idea : To know the vector to go on the center of cells, we can do Vector3 +/* sizeOfCells/2.
-    // {
-
-    //     Dictionary<Vector3, Vector3> reversedPath = new Dictionary<Vector3, Vector3>();
-
-    //     reversedPath.Add(destination, verifiedNodes[destination]);
-
-    //     Vector3 currentNode = destination;
-
-    //     while(currentNode != start)
-    //     {
-    //         // Vector A -> Vector B
-    //         Debug.Log(currentNode + "-->" + verifiedNodes[currentNode]);
-    //         currentNode = verifiedNodes[currentNode];
-    //         reversedPath.Add(currentNode, verifiedNodes[currentNode]);
-    //     }
-
-    //     // pathNodes = pathNodes.Reverse().ToDictionary(x => x.Key, x => x.Value);
-
-    //     pathNodes = new Dictionary<Vector3, Vector3>();
-
-    //     foreach(KeyValuePair<Vector3, Vector3> node in reversedPath.Reverse())
-    //     {
-    //         Debug.Log(node.Key + "==>" + node.Value);
-    //         pathNodes.Add(node.Key, node.Value);
-    //     }
-
-    //     pathFound = true;
-    // }
-
-
     private void CreatePath(Vector3 start, Vector3 destination) // Idea : To know the vector to go on the center of cells, we can do Vector3 +/* sizeOfCells/2.
     {
 
@@ -148,16 +117,6 @@ public class Pathfinding : MonoBehaviour
             pathNodes.Add(currentNode, verifiedNodes[currentNode]);
         }
 
-        // pathNodes = pathNodes.Reverse().ToDictionary(x => x.Key, x => x.Value);
-
-        // pathNodes = new Dictionary<Vector3, Vector3>();
-
-        // foreach(KeyValuePair<Vector3, Vector3> node in reversedPath.Reverse())
-        // {
-        //     Debug.Log(node.Key + "==>" + node.Value);
-        //     pathNodes.Add(node.Key, node.Value);
-        // }
-
         pathFound = true;
     }
 
@@ -167,6 +126,6 @@ public class Pathfinding : MonoBehaviour
 
         // Debug.Log(verifiedNodes[currentPosition]);
         // return pathNodes[currentPosition];
-        return pathNodes.FirstOrDefault(x => x.Value == currentPosition).Key;
+        return verifiedNodes.FirstOrDefault(x => x.Value == currentPosition).Key;
     }
 }
