@@ -26,13 +26,13 @@ public class Maze : MonoBehaviour
     private bool isDoneGenerating = false;
 
     private int roomsStillGenerating; //rooms that are still being generated, when 0, everything is done
-    public int RoomsStillGenerating 
-    { 
+    public int RoomsStillGenerating
+    {
         get { return roomsStillGenerating;}
-        set 
-        { 
+        set
+        {
             roomsStillGenerating = value;
-        } 
+        }
     }
 
     private Room[] mazeRoomsArray;
@@ -54,7 +54,7 @@ public class Maze : MonoBehaviour
     }
 
     [System.Serializable]
-    public class RoomObject 
+    public class RoomObject
     {
         public int roomid;
         public int mazeid;
@@ -67,7 +67,7 @@ public class Maze : MonoBehaviour
     }
 
     [System.Serializable]
-    public class MazeObject 
+    public class MazeObject
     {
         public int mazeid;
         public string mazeName;
@@ -84,16 +84,16 @@ public class Maze : MonoBehaviour
 
     private MazeObject maze = new MazeObject();
 
-    private void Start() 
+    private void Start()
     {
-        if (!isRandomlyGenerated) 
+        if (!isRandomlyGenerated)
         {
             if (!useDebugJSON)
                 StartCoroutine(APIManager.GetAllMazeFromAPI(this)); // get the map from the API utils
             else
                 SetMazeValues(""); // shortcut when using DebugJson
         }
-        else 
+        else
         {
             isDataFetched = true; // if is randomely generated, there is no data to fetch
             numberOfRooms = mazeSize * mazeSize;
@@ -117,14 +117,14 @@ public class Maze : MonoBehaviour
                     room.GetComponent<Room>().room = maze.rooms[iteration];
                 room.transform.localScale = new Vector3(roomSize, 1, roomSize);
                 // Debug.Log(iteration);
-                Debug.Log("mazeRoomsArray = " + mazeRoomsArray.Length);
+                // Debug.Log("mazeRoomsArray = " + mazeRoomsArray.Length);
                 mazeRoomsArray[iteration] = room.GetComponent<Room>();
                 iteration++;
                 columnPosition = iteration % mazeSize;
                 if (columnPosition == 0 )
                     rowPosition++;
             }
-            else 
+            else
             {
                 if(roomsStillGenerating == 0)
                 {
@@ -163,7 +163,7 @@ public class Maze : MonoBehaviour
                     innerX = 0;
                     room++;
                 }
-                Debug.Log("mazeArray[" + x + "," + y +"] = roomArray[" + innerX + "," + y + "]" );
+                // Debug.Log("mazeArray[" + x + "," + y +"] = roomArray[" + innerX + "," + y + "]" );
                 mazeArray[x,y] = mazeRoomsArray[room].roomArray[innerX,y];
                 x++;
                 innerX++;
@@ -177,7 +177,7 @@ public class Maze : MonoBehaviour
             }
             yield return null;
         }
-        else 
+        else
         {
             Print2DStringArray(mazeArray);
             isDoneGenerating = true;
@@ -190,7 +190,7 @@ public class Maze : MonoBehaviour
         {
             for (int j = 0; j < matrix.GetLength(1); j++)
             {
-                Debug.Log("2DArray [" + i + "," + j + "] : " + matrix[i,j]);
+                // Debug.Log("2DArray [" + i + "," + j + "] : " + matrix[i,j]);
             }
         }
     }
