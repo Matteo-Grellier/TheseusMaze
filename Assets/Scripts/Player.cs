@@ -11,8 +11,11 @@ public class Player : MonoBehaviour
 
     public float speed = 2f;
 
-    private int previousCase;
-    private int currentCase;
+    private GameObject previousCase;
+    private GameObject currentCase;
+
+    private RaycastHit hit;
+    private bool raycast;
 
     public Vector3 move;
 
@@ -37,6 +40,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        raycast = Physics.Raycast(transform.position, transform.forward, out hit, 2f);
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             takeTrap();
@@ -47,20 +51,25 @@ public class Player : MonoBehaviour
 
     void takeTrap()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 2f))
+
+        if (raycast)
         {
-            Debug.Log(hit.collider.gameObject.GetComponent<Case>().trapObject.activeSelf);
-            if (hit.collider.gameObject.GetComponent<Case>().trapObject.activeSelf && hasTrap == false)
+            GameObject trap = hit.collider.gameObject.GetComponent<Case>().trapObject;
+            GameObject trapPreview = hit.collider.gameObject.GetComponent<Case>().previewObject;
+            // Si il y a un trap et que le joueur n'en a pas
+            if (trap.activeSelf && hasTrap == false)
             {
                 hasTrap = true;
-                hit.collider.gameObject.GetComponent<Case>().trapObject.SetActive(false);
+                trap.SetActive(false);
             }
-            else if (!hit.collider.gameObject.GetComponent<Case>().trapObject.activeSelf && hasTrap == true)
+            // Si pas de trap et que le joueur en a un
+            else if (!trap.activeSelf && hasTrap == true)
             {
-                if (!hit.collider.gameObject.GetComponent<Case>().wallObject.activeSelf)
+                // Si il n'y a pas de mur, de boue ou de gravier
+                if (!hit.collider.gameObject.GetComponent<Case>().wallObject.activeSelf && !hit.collider.gameObject.GetComponent<Case>().mudObject.activeSelf && !hit.collider.gameObject.GetComponent<Case>().gravelObject.activeSelf)
                 {
-                    hit.collider.gameObject.GetComponent<Case>().trapObject.SetActive(true);
+                    trap.SetActive(true);
+                    trapPreview.SetActive(false);
                     hasTrap = false;
                 }
             }
@@ -68,21 +77,32 @@ public class Player : MonoBehaviour
     }
     void showPreviewPlacement()
     {
-        RaycastHit hit;
-        Physics.Raycast(transform.position, transform.forward, out hit, 2f);
-        currentCase = hit.collider.gameObject.GetComponent<Case>().GetInstanceID();
         if (hasTrap == true)
         {
-            if (previousCase == currentCase)
+            currentCase = hit.collider.gameObject.GetComponent<Case>().gameObject;
+            if (currentCase != previousCase)
             {
-                Debug.Log("SUPERRRRRRRRRRRRRR");
-                hit.collider.gameObject.GetComponent<Case>().previewObject.SetActive(true);
+                if (previousCase != null)
+                {
+                    previousCase.GetComponent<Case>().previewObject.SetActive(false);
+                }
+                if (currentCase != null)
+                {
+
+                    if (currentCase.GetComponent<Case>().wallObject.activeSelf || currentCase.GetComponent<Case>().mudObject.activeSelf || currentCase.GetComponent<Case>().gravelObject.activeSelf)
+                    {
+                        // change preview color to red
+                        currentCase.GetComponent<Case>().previewObject.GetComponent<Renderer>().material.color = Color.red;
+                    }
+                    if (currentCase.GetComponent<Case>().trapObject.activeSelf)
+                    {
+                        currentCase.GetComponent<Case>().previewObject.SetActive(false);
+                    }else
+                    {
+                        currentCase.GetComponent<Case>().previewObject.SetActive(true);
+                    }
+                }
                 previousCase = currentCase;
-            }
-            else
-            {
-                Debug.Log("NOOOOOOOOOOOOOOOOoo");
-                hit.collider.gameObject.GetComponent<Case>().previewObject.SetActive(false);
             }
         }
     }
