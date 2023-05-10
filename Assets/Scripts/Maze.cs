@@ -21,7 +21,7 @@ public class Maze : MonoBehaviour
     private int rowPosition = 0;
     private int columnPosition = 0;
     private bool isDataFetched = false;
-    private bool isDoneGenerating = false;
+    public bool isDoneGenerating = false;
     private int roomsStillGenerating; //rooms that are still being generated, when 0, everything is done
     public int RoomsStillGenerating
     {

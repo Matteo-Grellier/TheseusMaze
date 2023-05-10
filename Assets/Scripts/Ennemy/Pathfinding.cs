@@ -21,12 +21,14 @@ public class Pathfinding : MonoBehaviour
 
     private List<Vector3> neighbors;
 
-    private bool pathFound = false;
+    public bool pathFound = false;
+    public bool ispathFindingInProgress = false;
     public Dictionary<Vector3, Vector3> pathNodes;
 
     public IEnumerator GraphSearch(string[,] graph, Vector3 start, Vector3 destination) //array[x][z]
     {
         pathFound = false;
+        ispathFindingInProgress = true;
 
         queue = new Queue();
         queue.Enqueue(start);

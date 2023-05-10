@@ -17,18 +17,22 @@ public class Ennemy : MonoBehaviour
     void Start()
     {
 
+        destination = new Vector3(4, 0, 2);
+        currentGraphPosition = new Vector3(2, 0, 4);
+        transform.position = new Vector3(currentGraphPosition.x, transform.position.y, currentGraphPosition.z);
+
         //Initialize nextGraphPosition to the transform position (to move with pathfinding in the Update method)
         nextGraphPosition = ConvertPositionToGraphPosition(transform.position);
 
         pathfinding = new Pathfinding();
 
-        string[,] graph = {
-            {"path", "path", "path", "path", "path"},
-            {"path", "path", "path", "path", "path"},
-            {"path", "path", "wall", "path", "path"},
-            {"path", "path", "wall", "wall", "path"},
-            {"path", "path", "path", "wall", "path"},
-        };
+        // string[,] graph = {
+        //     {"path", "path", "path", "path", "path"},
+        //     {"path", "path", "path", "path", "path"},
+        //     {"path", "path", "wall", "path", "path"},
+        //     {"path", "path", "wall", "wall", "path"},
+        //     {"path", "path", "path", "wall", "path"},
+        // };
 
         // string[,] graph = {
         //     {"path", "path", "path", "wall", "path"},
@@ -38,17 +42,37 @@ public class Ennemy : MonoBehaviour
         //     {"path", "path", "path", "path", "path"},
         // };
 
-        destination = new Vector3(4, 0, 2);
-        currentGraphPosition = new Vector3(2, 0, 4);
+        // string[,] graph = GameManager.instance.mazeReference.mazeArray;
 
-        StartCoroutine(pathfinding.GraphSearch(graph, currentGraphPosition, destination));
+        // StartCoroutine(pathfinding.GraphSearch(graph, currentGraphPosition, destination));
 
     }
 
     void Update()
     {
-        if(ConvertPositionToGraphPosition(transform.position) == nextGraphPosition 
-        && nextGraphPosition != destination)
+        if(GameManager.instance.mazeReference == null || !GameManager.instance.mazeReference.isDoneGenerating)
+        {
+            Debug.Log("maze array is empty");
+            return;
+        }
+
+        if(!pathfinding.ispathFindingInProgress && destination != ConvertPositionToGraphPosition(transform.position))
+        {
+            string[,] graph = GameManager.instance.mazeReference.mazeArray;
+            Debug.Log(graph[2, 4]);
+            StartCoroutine(pathfinding.GraphSearch(graph, currentGraphPosition, destination)); // Search for a path in the graph
+        }
+       
+        if(pathfinding.pathFound)
+            MoveThroughPath();
+        
+        if(destination == ConvertPositionToGraphPosition(transform.position))
+            pathfinding.ispathFindingInProgress = false;
+    }
+
+    private void MoveThroughPath()
+    {
+        if(ConvertPositionToGraphPosition(transform.position) == nextGraphPosition && nextGraphPosition != destination)
         {
             currentGraphPosition = nextGraphPosition;
             nextGraphPosition = pathfinding.GetNextDirection(currentGraphPosition);
