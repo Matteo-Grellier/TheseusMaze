@@ -16,6 +16,8 @@ public class MenuManager : MonoBehaviour
     {
         mainMenu.SetActive(false);
         savedMapsMenu.SetActive(true);
+        Debug.Log("[get] BtnSavedMaps");
+        StartCoroutine(APIManager.GetAllMazeFromAPI(savedMapsMenu.GetComponent<SavedMapsMenu>()));
     } 
 
     public void BtnEditNewMap()
@@ -30,12 +32,4 @@ public class MenuManager : MonoBehaviour
         savedMapsMenu.SetActive(false);
         mainMenu.SetActive(true);
     } 
-
-    // public void BtnLaunchMap(int mapId)
-    // {
-    //     GameManager.instance.mapToGenerateId = mapId;
-    //     GameManager.instance.isRandomlyGenerated = false;
-    //     GameManager.instance.LoadScene("GameScene");
-    // } 
-
 }

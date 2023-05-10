@@ -719,4 +719,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b40a9a23c6e0060468616920b6fa8c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapID: 0
+  mapBtn: {fileID: 8556898108568584415}
+  mazeID: 0

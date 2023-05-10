@@ -8,6 +8,7 @@ public class SaveMapBtn : MonoBehaviour
 {
     [SerializeField] private GameObject buttons;
     [SerializeField] private TMP_InputField nameInput;
+    private bool isNameSet;
 
     private void Start() 
     {
@@ -16,8 +17,15 @@ public class SaveMapBtn : MonoBehaviour
 
         if (GameManager.instance.isEditingNewlyCreatedMap)
             nameInput.text = "NewMaze";
-        else
+    }
+
+    private void Update() 
+    {
+        if( !isNameSet && GameManager.instance.mazeReference != null)
+        {
             nameInput.text = GameManager.instance.mazeReference.maze.mazeName;
+            isNameSet = true;
+        }
     }
 
     public void BtnSaveMap() 

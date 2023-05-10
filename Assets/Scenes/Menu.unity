@@ -625,6 +625,7 @@ MonoBehaviour:
   isEditingNewlyCreatedMap: 0
   isRandomlyGenerated: 1
   mapToGenerateId: 0
+  mazeReference: {fileID: 0}
 --- !u!4 &307855852
 Transform:
   m_ObjectHideFlags: 0
@@ -1366,6 +1367,7 @@ GameObject:
   m_Component:
   - component: {fileID: 935657256}
   - component: {fileID: 935657257}
+  - component: {fileID: 935657258}
   m_Layer: 5
   m_Name: SavedMapsMenu
   m_TagString: Untagged
@@ -1424,6 +1426,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &935657258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935657255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcbfdf60fb302c14485438698f0af4c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapListReference: {fileID: 553162922}
+  mapHolderBtnRef: {fileID: 7593355495095444542, guid: b53efef9a47d8494ea7732772ee4c45f, type: 3}
+  mapListRef: {fileID: 553162922}
 --- !u!1001 &1019903461
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1546,6 +1563,10 @@ PrefabInstance:
     - target: {fileID: 7593355495095444542, guid: b53efef9a47d8494ea7732772ee4c45f, type: 3}
       propertyPath: m_Name
       value: MapHolderBtn
+      objectReference: {fileID: 0}
+    - target: {fileID: 7593355495095444542, guid: b53efef9a47d8494ea7732772ee4c45f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8116851167240460370, guid: b53efef9a47d8494ea7732772ee4c45f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1945,6 +1966,10 @@ PrefabInstance:
     - target: {fileID: 7593355495095444542, guid: b53efef9a47d8494ea7732772ee4c45f, type: 3}
       propertyPath: m_Name
       value: MapHolderBtn (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7593355495095444542, guid: b53efef9a47d8494ea7732772ee4c45f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8116851167240460370, guid: b53efef9a47d8494ea7732772ee4c45f, type: 3}
       propertyPath: m_AnchorMax.y

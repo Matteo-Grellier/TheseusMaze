@@ -7,8 +7,9 @@ public class APIManager : MonoBehaviour
 {
     private static string APIUrl = "http://86.217.108.20:4000";
 
-    public static IEnumerator GetAllMazeFromAPI(Maze mazeReference)
+    public static IEnumerator GetAllMazeFromAPI(SavedMapsMenu savedMapMenuReference)
     {
+        Debug.Log("[get] api");
         UnityWebRequest www = UnityWebRequest.Get(APIUrl + "/getAllMazes");
         yield return www.SendWebRequest();
 
@@ -16,7 +17,7 @@ public class APIManager : MonoBehaviour
         {
             var jsonDatas = www.downloadHandler.text;
             Debug.Log("Request sent successfully : " + jsonDatas);
-            mazeReference.SetMazeValues(jsonDatas);
+            savedMapMenuReference.FetchDatas(jsonDatas);
         }
         else
         {
