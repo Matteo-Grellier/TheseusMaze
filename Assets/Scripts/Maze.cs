@@ -178,8 +178,10 @@ public class Maze : MonoBehaviour
                     innerX = 0;
                     room++;
                 }
-                // Debug.Log("mazeArray[" + x + "," + y +"] = roomArray[" + innerX + "," + y + "]" );
+                Debug.Log("mazeArray[" + x + "," + y +"] = roomArray[" + innerX + "," + y + "] = " + mazeRoomsArray[room].roomArray[innerX,y] );
                 mazeArray[x,y] = mazeRoomsArray[room].roomArray[innerX,y];
+                Debug.Log("<color=red>[this]</color> mazeArray["+ x + "," + y +"] = " + mazeArray[x,y]);
+                Debug.Log("[test] set");
                 x++;
                 innerX++;
             }
@@ -194,7 +196,7 @@ public class Maze : MonoBehaviour
         }
         else
         {
-            // Print2DStringArray(mazeArray);
+            Print2DStringArray(mazeArray);
             isDoneGenerating = true;
         }
     }
@@ -205,7 +207,8 @@ public class Maze : MonoBehaviour
         {
             for (int j = 0; j < matrix.GetLength(1); j++)
             {
-                // Debug.Log("2DArray [" + i + "," + j + "] : " + matrix[i,j]);
+                Debug.Log("[test] out");
+                Debug.Log("2DArray [" + i + "," + j + "] : " + matrix[i,j]);
             }
         }
     }
