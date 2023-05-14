@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Pathfinding : MonoBehaviour
+public class Pathfinding
 {
     /*
     TODO : IMPROVE CODE WITH CONSTRUCTOR => when we create a pathfinding, we use a constructor with graph, destination and start.
@@ -55,6 +55,8 @@ public class Pathfinding : MonoBehaviour
                     verifiedNodes.Add(neighbor, currentCell);
                 }
             }
+
+            Debug.Log("GRAPH SEARCH HERE");
 
             yield return null;
         }

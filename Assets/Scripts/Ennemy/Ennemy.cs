@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Ennemy : MonoBehaviour
@@ -14,12 +15,17 @@ public class Ennemy : MonoBehaviour
 
     public Vector3 destination;
 
-    void Start()
+    void Start() // Now we can use Start because the Instance is created in gameManager when the maze is generated !
     {
 
-        destination = new Vector3(4, 0, 2);
-        currentGraphPosition = new Vector3(2, 0, 4);
-        transform.position = new Vector3(currentGraphPosition.x, transform.position.y, currentGraphPosition.z);
+        if(GameManager.instance.mazeReference.mazeArray != null)
+        {
+            currentGraphPosition = GetRandomVectorInMaze();
+            transform.position = new Vector3(currentGraphPosition.x, transform.position.y, currentGraphPosition.z);
+            destination = GetRandomVectorInMaze();
+        }
+
+        // destination = new Vector3(4, 0, 2);
 
         //Initialize nextGraphPosition to the transform position (to move with pathfinding in the Update method)
         nextGraphPosition = ConvertPositionToGraphPosition(transform.position);
@@ -48,7 +54,7 @@ public class Ennemy : MonoBehaviour
 
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if(GameManager.instance.mazeReference == null || !GameManager.instance.mazeReference.isDoneGenerating)
         {
@@ -68,6 +74,21 @@ public class Ennemy : MonoBehaviour
         
         if(destination == ConvertPositionToGraphPosition(transform.position))
             pathfinding.ispathFindingInProgress = false;
+    }
+
+    private Vector3 GetRandomVectorInMaze()
+    {
+        int randomX = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(0)-1);
+        int randomZ = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(1)-1);
+
+        while(GameManager.instance.mazeReference.mazeArray[randomX, randomZ] == "wall")
+        {
+            randomX = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(0)-1);
+            randomZ = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(1)-1);
+            Debug.Log("(" + randomX + ", " + randomZ + ")");
+        }
+
+        return new Vector3(randomX, 0, randomZ);
     }
 
     private void MoveThroughPath()

@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
     public Maze mazeReference = null; // will auto get the reference of the ONLY Maze on the scene
     private bool asLaunchedGeneration = false;
 
+    [SerializeField]
+    private GameObject ennemyPrefab;
+    private GameObject ennemy;
+
     private void Awake() 
     {
         DontDestroyOnLoad(this.gameObject); // put the GameManager int he don't destroy on load
@@ -59,6 +63,12 @@ public class GameManager : MonoBehaviour
         }
 
         // Debug.Log("ActiveScene = " + SceneManager.GetActiveScene().name);
+
+        if(ennemy == null && mazeReference.isDoneGenerating)
+        {
+            ennemy = Instantiate(ennemyPrefab);
+            Debug.Log("I CREATE THE ENNEMY" + ennemy);
+        }
     }
 
     // called when changing the active scene
