@@ -18,7 +18,6 @@ public class Room : MonoBehaviour
     private bool isGravelShown = false;
     private bool isMudShown = false;
 
-
     private bool isAfterGenerationCodeExecuted = false;
 
     private Vector3 pos;
@@ -41,9 +40,9 @@ public class Room : MonoBehaviour
         // cases
         if (caseIteration < roomSize * roomSize)
         {
-            // + 0.5f otherwise it will be slightly offcentered, -roomSize/2.0f to place it on the left of the cube wich is CENTERED on 0,0,0 (same for the Z),
-            // divide by 2.0f to get a float (not a rounded int), (-caseRow) beacause caseRow is spositive and should be place under
-            Vector3 newCasePosition = new Vector3((pos.x + 0.5f) - (roomSize/2.0f) + (1 * caseColumn), 0.55f, (pos.z - 0.5f) + (roomSize/2.0f) + (-caseRow) );
+            // + 0.5f otherwise it will be slightly offcentered, -roomSize/2.0f to place it on the left down of the cube wich is CENTERED on 0,0,0 (same for the Z),
+            // divide by 2.0f to get a float (not a rounded int), (-caseRow) beacause caseRow is positive and should be place under
+            Vector3 newCasePosition = new Vector3((pos.x + 0.5f) - (roomSize/2.0f) + (1 * caseColumn), 0.55f, (pos.z + 0.5f) - (roomSize/2.0f) + caseRow );
             GameObject newCase = Instantiate(casePrefab, newCasePosition , Quaternion.Euler(new Vector3(0, 0, 0)));
             newCase.transform.parent = gameObject.transform; //set the case as child of the room
             newCase.GetComponent<Case>().caseId = caseIteration;
@@ -90,7 +89,7 @@ public class Room : MonoBehaviour
                     isWallShown = true;
                     isGravelShown = false;
                     isMudShown = false;
-
+                    roomArray[caseColumn,caseRow] = "wall";
                 }
                 else if(randomNumber == 10)
                 {
@@ -98,7 +97,7 @@ public class Room : MonoBehaviour
                     isTrapShown = true;
                     isGravelShown = false;
                     isMudShown = false;
-
+                    roomArray[caseColumn,caseRow] = "trap";
                 }
                 else if (randomNumber == 11)
                 {
@@ -106,6 +105,7 @@ public class Room : MonoBehaviour
                     isTrapShown = false;
                     isGravelShown = true;
                     isMudShown = false;
+                    roomArray[caseColumn,caseRow] = "gravel";
                 }
                 else if (randomNumber == 12)
                 {
@@ -113,6 +113,7 @@ public class Room : MonoBehaviour
                     isTrapShown = false;
                     isGravelShown = false;
                     isMudShown = true;
+                    roomArray[caseColumn,caseRow] = "mud";
                 }
                 else
                 {
@@ -120,6 +121,7 @@ public class Room : MonoBehaviour
                     isWallShown = false;
                     isGravelShown = false;
                     isMudShown = false;
+                    roomArray[caseColumn,caseRow] = "path";
                 }
                 // Debug.Log( "room " + roomID + " : " + "caseColumn : " + caseColumn + " caseRow : " + caseRow + " value :" + roomArray[caseColumn,caseRow]);
             }

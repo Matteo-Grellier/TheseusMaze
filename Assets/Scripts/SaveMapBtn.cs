@@ -12,19 +12,24 @@ public class SaveMapBtn : MonoBehaviour
 
     private void Start() 
     {
-        if (GameManager.instance.isEditMode)
+        if (GameManager.instance.isEditMode) // if is in edit mode set it active
             buttons.SetActive(true);
 
-        if (GameManager.instance.isEditingNewlyCreatedMap)
+        if (GameManager.instance.isEditingNewlyCreatedMap) // if editing new map the the text = NewMaze
             nameInput.text = "NewMaze";
     }
 
     private void Update() 
     {
-        if( !isNameSet && GameManager.instance.mazeReference != null)
+        // if not editing new map & name not set & mazeReference not null
+        if( !GameManager.instance.isEditingNewlyCreatedMap && !isNameSet && GameManager.instance.mazeReference != null)
         {
-            nameInput.text = GameManager.instance.mazeReference.maze.mazeName;
-            isNameSet = true;
+            if(GameManager.instance.mazeReference.maze.mazeName != "") // if maze not null
+            {
+                Debug.Log("should be good = " + GameManager.instance.mazeReference.maze.mazeName);
+                nameInput.text = GameManager.instance.mazeReference.maze.mazeName; // set name as mazeName
+                isNameSet = true;
+            }
         }
     }
 

@@ -149,10 +149,6 @@ public class Maze : MonoBehaviour
     public void SetMazeValues(string _jsonText)
     {
         maze = (useDebugJSON) ? JsonUtility.FromJson<MazeObject>(jsonText.text) : JsonUtility.FromJson<MazeObject>(_jsonText);
-        // if (mazeToGenerateID < mazes.mazes.Count )
-        //     maze = mazes.mazes[mazeToGenerateID]; //set the maze as the fetched datas
-        // else
-        //     maze = mazes.mazes[0];
 
         mazeSize = (int)Mathf.Round(Mathf.Sqrt(maze.rooms.Count)); // mazeSize is a sqrt of maze.rooms beacause it is supposed to be the number of rooms on one side
         roomSize = (int)Mathf.Round(Mathf.Sqrt(maze.rooms[0].cases.Count)); // same here
@@ -178,18 +174,23 @@ public class Maze : MonoBehaviour
                 {
                     innerX = 0;
                     if ( room + mazeSize < mazeSize * mazeSize)
+                    {
                         room += mazeSize; // because they are stored in y then x
+                    }
                     else
                     {
-                        room = room - ((mazeSize * 3) - 1);
-                        innerY = 0;
+                        Debug.Log("<color=red>DOES IT GOES HERE ?</color>");
+                        if (innerY == (roomSize - 1)) // if at the last line of the room row
+                            room = room - ((mazeSize * 3) - 1); // go to the first room of the next row
+                        else
+                            room = room - (mazeSize * 3); // go to the first room of that row
                     }
                 }
-                // Debug.Log("[maze] mazeArray[" + x + "," + y +"] = mazeRoomsArray[" + room + "]roomArray[" + innerX + "," + innerY + "]" );
-                if (mazeRoomsArray[room].roomArray[innerX,innerY] == null)
-                    Debug.Log("<color=red>mazeRoomsArray[room].roomArray[innerX,innerY] == null</color>");
-                else
-                    Debug.Log("<color=green>not nul it's okay : " + mazeRoomsArray[room].roomArray[innerX,innerY] + "</color>");
+                Debug.Log("[maze] mazeArray[" + x + "," + y +"] = mazeRoomsArray[" + room + "]roomArray[" + innerX + "," + innerY + "] = " + mazeRoomsArray[room].roomArray[innerX,innerY]);
+                // if (mazeRoomsArray[room].roomArray[innerX,innerY] == null)
+                //     Debug.Log("<color=red>mazeRoomsArray["+ room + "].roomArray["+ innerX+","+innerY+"] == null</color>");
+                // else
+                //     Debug.Log("<color=green>not nul it's okay : " + mazeRoomsArray[room].roomArray[innerX,innerY] + "</color>");
                 
                 mazeArray[x,y] = mazeRoomsArray[room].roomArray[innerX,innerY];
                 x++;
@@ -197,9 +198,27 @@ public class Maze : MonoBehaviour
             }
             else
             {
-                innerY++;
                 y++;
                 x = 0;
+                if ( room + mazeSize < mazeSize * mazeSize)
+                {
+                    room += mazeSize; // because they are stored in y then x
+                }
+                else
+                {
+                    Debug.Log("[here] innerY+1 : " + (innerY+1) + " = " + roomSize + " ? && innerX+1 : " + (innerX+1) + " = " + roomSize + " ?");
+                    if ((innerY + 1) == roomSize && (innerX + 1) >= roomSize) // if at the last line of the room row
+                    {
+                        Debug.Log("retour nouvelle ligne");
+                        room = room - ((mazeSize * 3) - 1); // go to the first room of the next row
+                        innerY = 0;
+                    }
+                    else
+                    {
+                        room = room - (mazeSize * 3); // go to the first room of that row
+                        innerY++;
+                    }
+                }
                 innerX = 0;
             }
             yield return null;

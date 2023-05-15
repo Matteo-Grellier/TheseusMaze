@@ -7,6 +7,7 @@ public class MouseLook : MonoBehaviour
     public Transform playerBody;
     public float mouseSensitivity = 100f;
     float xRotation = 0f;
+    private bool isEscapeMode = false;
 
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
@@ -14,6 +15,16 @@ public class MouseLook : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape)) //when click escape camera stop follows
+            isEscapeMode = !isEscapeMode;
+
+        if (isEscapeMode)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0)) // when click on screan, undo escape mode
+                isEscapeMode = !isEscapeMode;
+            return; // if in escape mode, don't do
+        }
+
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
@@ -24,6 +35,7 @@ public class MouseLook : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRotation, 0, 0f);
 
         playerBody.Rotate(Vector3.up * mouseX);
+
 
     }
 }
