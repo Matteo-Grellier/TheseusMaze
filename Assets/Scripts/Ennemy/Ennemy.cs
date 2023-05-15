@@ -7,6 +7,7 @@ public class Ennemy : MonoBehaviour
 {
     public float speed = 10f;
 
+    public bool isMoving = false;
     private Pathfinding pathfinding;
 
     private Vector3 currentGraphPosition;
@@ -51,6 +52,7 @@ public class Ennemy : MonoBehaviour
         
         if(destination == ConvertPositionToGraphPosition(transform.position)) 
         {
+            isMoving = false;
             pathfinding.ispathFindingInProgress = false;
             pathfinding.ClearPathFindingData();
 
@@ -79,6 +81,8 @@ public class Ennemy : MonoBehaviour
 
     private void MoveThroughPath()
     {
+        isMoving = true;
+
         if(ConvertPositionToGraphPosition(transform.position) == nextGraphPosition && nextGraphPosition != destination)
         {
             currentGraphPosition = nextGraphPosition;
@@ -87,6 +91,9 @@ public class Ennemy : MonoBehaviour
         }
         
         transform.position = Vector3.MoveTowards(transform.position, movementDirection, speed * Time.deltaTime);
+        
+        if(movementDirection != transform.position)
+            transform.forward = movementDirection-transform.position;
     }
 
     private Vector3 ConvertGraphPositionToPosition(Vector3 graphPosition, float yPosition)
