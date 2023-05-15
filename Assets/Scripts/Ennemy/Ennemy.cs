@@ -103,6 +103,6 @@ public class Ennemy : MonoBehaviour
 
     private Vector3 ConvertPositionToGraphPosition(Vector3 position)
     {
-        return new Vector3(position.x, 0, position.z);
+        return new Vector3((int)position.x, 0, (int)position.z); // WARNING: This can be create strange movement ?
     }
 }
