@@ -165,35 +165,48 @@ public class Maze : MonoBehaviour
 
     int x = 0;
     int innerX = 0;
+    int innerY = 0;
     int y = 0;
     int room = 0;
     private IEnumerator CreateMazeArray()
     {
-        if (y < roomSize)
+        if (y < mazeSize * roomSize)
         {
             if (x < mazeSize * roomSize)
             {
                 if (innerX >= roomSize)
                 {
                     innerX = 0;
-                    room++;
+                    if ( room + mazeSize < mazeSize * mazeSize)
+                        room += mazeSize; // because they are stored in y then x
+                    else
+                    {
+                        room = room - ((mazeSize * 3) - 1);
+                        innerY = 0;
+                    }
                 }
-                // Debug.Log("mazeArray[" + x + "," + y +"] = roomArray[" + innerX + "," + y + "]" );
-                mazeArray[x,y] = mazeRoomsArray[room].roomArray[innerX,y];
+                // Debug.Log("[maze] mazeArray[" + x + "," + y +"] = mazeRoomsArray[" + room + "]roomArray[" + innerX + "," + innerY + "]" );
+                if (mazeRoomsArray[room].roomArray[innerX,innerY] == null)
+                    Debug.Log("<color=red>mazeRoomsArray[room].roomArray[innerX,innerY] == null</color>");
+                else
+                    Debug.Log("<color=green>not nul it's okay : " + mazeRoomsArray[room].roomArray[innerX,innerY] + "</color>");
+                
+                mazeArray[x,y] = mazeRoomsArray[room].roomArray[innerX,innerY];
                 x++;
                 innerX++;
             }
             else
             {
+                innerY++;
                 y++;
                 x = 0;
-                room = 0;
                 innerX = 0;
             }
             yield return null;
         }
         else
         {
+            Debug.Log("<color=red>[maze] Done Generating </color>");
             // Print2DStringArray(mazeArray);
             isDoneGenerating = true;
         }
@@ -205,7 +218,7 @@ public class Maze : MonoBehaviour
         {
             for (int j = 0; j < matrix.GetLength(1); j++)
             {
-                // Debug.Log("2DArray [" + i + "," + j + "] : " + matrix[i,j]);
+                Debug.Log("2DArray [" + i + "," + j + "] : " + matrix[i,j]);
             }
         }
     }
