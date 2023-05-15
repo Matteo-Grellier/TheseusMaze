@@ -25,33 +25,10 @@ public class Ennemy : MonoBehaviour
             destination = GetRandomVectorInMaze();
         }
 
-        // destination = new Vector3(4, 0, 2);
-
         //Initialize nextGraphPosition to the transform position (to move with pathfinding in the Update method)
         nextGraphPosition = ConvertPositionToGraphPosition(transform.position);
 
         pathfinding = new Pathfinding();
-
-        // string[,] graph = {
-        //     {"path", "path", "path", "path", "path"},
-        //     {"path", "path", "path", "path", "path"},
-        //     {"path", "path", "wall", "path", "path"},
-        //     {"path", "path", "wall", "wall", "path"},
-        //     {"path", "path", "path", "wall", "path"},
-        // };
-
-        // string[,] graph = {
-        //     {"path", "path", "path", "wall", "path"},
-        //     {"path", "wall", "path", "wall", "path"},
-        //     {"path", "path", "path", "path", "path"},
-        //     {"path", "path", "wall", "wall", "wall"},
-        //     {"path", "path", "path", "path", "path"},
-        // };
-
-        // string[,] graph = GameManager.instance.mazeReference.mazeArray;
-
-        // StartCoroutine(pathfinding.GraphSearch(graph, currentGraphPosition, destination));
-
     }
 
     void FixedUpdate()
@@ -84,16 +61,6 @@ public class Ennemy : MonoBehaviour
 
     private Vector3 GetRandomVectorInMaze()
     {
-        // int randomX = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(0)-1);
-        // int randomZ = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(1)-1);
-
-        // while(GameManager.instance.mazeReference.mazeArray[randomX, randomZ] == "wall")
-        // {
-        //     randomX = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(0)-1);
-        //     randomZ = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(1)-1);
-        //     Debug.Log("(" + randomX + ", " + randomZ + ")");
-        // }
-
         int randomX = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(0)-1);
 
         string[] rowsForRandomZ = Enumerable.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(1))

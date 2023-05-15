@@ -32,7 +32,6 @@ public class Pathfinding
 
         queue = new Queue();
         queue.Enqueue(start);
-        Debug.Log("QUEUE COUNT " + queue.Count);
         currentCell = start;
 
         while (queue.Count != 0)
@@ -56,8 +55,6 @@ public class Pathfinding
                     verifiedNodes.Add(neighbor, currentCell);
                 }
             }
-
-            Debug.Log("GRAPH SEARCH HERE");
 
             yield return null;
         }
