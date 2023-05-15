@@ -72,21 +72,40 @@ public class Ennemy : MonoBehaviour
         if(pathfinding.pathFound)
             MoveThroughPath();
         
-        if(destination == ConvertPositionToGraphPosition(transform.position))
+        if(destination == ConvertPositionToGraphPosition(transform.position)) 
+        {
             pathfinding.ispathFindingInProgress = false;
+            pathfinding.ClearPathFindingData();
+
+            currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
+            destination = GetRandomVectorInMaze();
+        }
     }
 
     private Vector3 GetRandomVectorInMaze()
     {
-        int randomX = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(0)-1);
-        int randomZ = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(1)-1);
+        // int randomX = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(0)-1);
+        // int randomZ = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(1)-1);
 
-        while(GameManager.instance.mazeReference.mazeArray[randomX, randomZ] == "wall")
-        {
-            randomX = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(0)-1);
-            randomZ = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(1)-1);
-            Debug.Log("(" + randomX + ", " + randomZ + ")");
-        }
+        // while(GameManager.instance.mazeReference.mazeArray[randomX, randomZ] == "wall")
+        // {
+        //     randomX = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(0)-1);
+        //     randomZ = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(1)-1);
+        //     Debug.Log("(" + randomX + ", " + randomZ + ")");
+        // }
+
+        int randomX = Random.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(0)-1);
+
+        string[] rowsForRandomZ = Enumerable.Range(0, GameManager.instance.mazeReference.mazeArray.GetLength(1))
+                .Select(x => GameManager.instance.mazeReference.mazeArray[randomX, x])
+                .ToArray();
+        
+        IEnumerable<int> allValidZIndex = rowsForRandomZ
+        .Select((value, index) => new { value, index })
+        .Where(item => item.value != "wall")
+        .Select(item => item.index);
+
+        int randomZ = allValidZIndex.ElementAt(Random.Range(0, allValidZIndex.Count()-1));
 
         return new Vector3(randomX, 0, randomZ);
     }

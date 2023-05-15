@@ -32,9 +32,10 @@ public class Pathfinding
 
         queue = new Queue();
         queue.Enqueue(start);
+        Debug.Log("QUEUE COUNT " + queue.Count);
         currentCell = start;
 
-        while (!queue.Equals(null))
+        while (queue.Count != 0)
         {
 
             currentCell = (Vector3) queue.Dequeue();
@@ -123,5 +124,13 @@ public class Pathfinding
         if(!pathFound || !pathNodes.ContainsKey(currentPosition)) return currentPosition;
 
         return pathNodes.First(x => x.Value == currentPosition).Key;
+    }
+
+    public void ClearPathFindingData()
+    {
+        pathNodes.Clear();
+        queue.Clear();
+        verifiedNodes.Clear();
+        neighbors.Clear();
     }
 }
