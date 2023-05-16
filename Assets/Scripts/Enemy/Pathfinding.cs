@@ -57,7 +57,6 @@ public class Pathfinding
             {
                 int currentCost = movementCosts[currentCell] + GetCurrentNodeCost(graph, neighbor);
                 
-                // if(!verifiedNodes.ContainsKey(neighbor)) //maybe an error with instance of class ?
                 if(!movementCosts.ContainsKey(neighbor) || currentCost < movementCosts[neighbor]) //maybe an error with instance of class ?
                 {
                     if(movementCosts.ContainsKey(neighbor))
@@ -65,7 +64,8 @@ public class Pathfinding
                     else
                         movementCosts.Add(neighbor, currentCost);
                         
-                    queue.Enqueue(neighbor, currentCost);
+                    int priority = currentCost + GetEstimatedDistance(destination, neighbor);
+                    queue.Enqueue(neighbor, priority);
 
                     if(verifiedNodes.ContainsKey(neighbor)) 
                         verifiedNodes[neighbor] = currentCell;
@@ -126,6 +126,11 @@ public class Pathfinding
                 return 0;
         }
 
+    }
+
+    private int GetEstimatedDistance(Vector3 firstPosition, Vector3 secondPosition)
+    {
+        return Math.Abs((int)firstPosition.x - (int)secondPosition.x) + Math.Abs((int)firstPosition.y - (int)secondPosition.y);
     }
 
     private void CreatePath(Vector3 start, Vector3 destination)
