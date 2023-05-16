@@ -120,7 +120,7 @@ public class Maze : MonoBehaviour
                 newlyCreatedRoomScript.mazeReference = this;
                 newlyCreatedRoomScript.roomSize = roomSize;
                 newlyCreatedRoomScript.roomArray = new string [roomSize, roomSize];
-                if(!isRandomlyGenerated) // fill room if not randomely generated and not edit mode 
+                if(!isRandomlyGenerated) // fill room if not randomely generated and not edit mode
                 {
                     newlyCreatedRoomScript.room = maze.rooms[iteration];
                 }
@@ -135,7 +135,7 @@ public class Maze : MonoBehaviour
                 else // is generated random
                 {
                     if (!isEndRoomSet)
-                    { 
+                    {
                         int randomNumber = Random.Range(0,8);
                         if(randomNumber == 3 || iteration == numberOfRooms - 1) // if last
                         {
@@ -212,12 +212,12 @@ public class Maze : MonoBehaviour
                             room = room - (mazeSize * 3); // go to the first room of that row
                     }
                 }
-                Debug.Log("[maze] mazeArray[" + x + "," + y +"] = mazeRoomsArray[" + room + "]roomArray[" + innerX + "," + innerY + "] = " + mazeRoomsArray[room].roomArray[innerX,innerY]);
+                // Debug.Log("[maze] mazeArray[" + x + "," + y +"] = mazeRoomsArray[" + room + "]roomArray[" + innerX + "," + innerY + "] = " + mazeRoomsArray[room].roomArray[innerX,innerY]);
                 // if (mazeRoomsArray[room].roomArray[innerX,innerY] == null)
                 //     Debug.Log("<color=red>mazeRoomsArray["+ room + "].roomArray["+ innerX+","+innerY+"] == null</color>");
                 // else
                 //     Debug.Log("<color=green>not nul it's okay : " + mazeRoomsArray[room].roomArray[innerX,innerY] + "</color>");
-                
+
                 mazeArray[x,y] = mazeRoomsArray[room].roomArray[innerX,innerY];
                 x++;
                 innerX++;
@@ -232,7 +232,7 @@ public class Maze : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("[here] innerY+1 : " + (innerY+1) + " = " + roomSize + " ? && innerX+1 : " + (innerX+1) + " = " + roomSize + " ?");
+                    // Debug.Log("[here] innerY+1 : " + (innerY+1) + " = " + roomSize + " ? && innerX+1 : " + (innerX+1) + " = " + roomSize + " ?");
                     if ((innerY + 1) == roomSize && (innerX + 1) >= roomSize) // if at the last line of the room row
                     {
                         Debug.Log("retour nouvelle ligne");
