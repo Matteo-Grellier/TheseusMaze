@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 78887187938855838}
   - component: {fileID: 1534669920393927676}
   m_Layer: 0
-  m_Name: Ennemy
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,7 +187,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: a9f823a46849c863896d8c8b268fe50f, type: 2}
     - target: {fileID: 919132149155446097, guid: 8c93855d0617267bc912558ca99bef29, type: 3}
       propertyPath: m_Name
-      value: ennemyModel
+      value: enemyModel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c93855d0617267bc912558ca99bef29, type: 3}

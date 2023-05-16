@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnnemyAnimationStateController : MonoBehaviour
+public class EnemyAnimationStateController : MonoBehaviour
 {
 
     [SerializeField]
     private Animator animator;
 
     [SerializeField]
-    private Ennemy currentEnemy;
+    private Enemy currentEnemy;
     // Start is called before the first frame update
     void Start()
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Ennemy : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     public float speed = 10f;
 

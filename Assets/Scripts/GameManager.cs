@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
     private bool asLaunchedGeneration = false;
 
     [SerializeField]
-    private GameObject ennemyPrefab;
-    private GameObject ennemy;
+    private GameObject enemyPrefab;
+    private GameObject enemy;
 
     private void Awake() 
     {
@@ -64,10 +64,10 @@ public class GameManager : MonoBehaviour
 
         // Debug.Log("ActiveScene = " + SceneManager.GetActiveScene().name);
 
-        if(ennemy == null && mazeReference.isDoneGenerating)
+        if(enemy == null && mazeReference.isDoneGenerating)
         {
-            ennemy = Instantiate(ennemyPrefab);
-            Debug.Log("I CREATE THE ENNEMY" + ennemy);
+            enemy = Instantiate(enemyPrefab);
+            Debug.Log("I CREATE THE enemy" + enemy);
         }
     }
 

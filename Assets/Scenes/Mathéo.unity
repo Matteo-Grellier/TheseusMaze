@@ -266,7 +266,7 @@ MonoBehaviour:
   isRandomlyGenerated: 1
   mapToGenerateId: 0
   mazeReference: {fileID: 0}
-  ennemyPrefab: {fileID: 78887187938855825, guid: c553ef81a66f073719a066fa0d49b458, type: 3}
+  enemyPrefab: {fileID: 78887187938855825, guid: c553ef81a66f073719a066fa0d49b458, type: 3}
 --- !u!1001 &1843857230
 PrefabInstance:
   m_ObjectHideFlags: 0
