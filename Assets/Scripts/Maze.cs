@@ -112,7 +112,7 @@ public class Maze : MonoBehaviour
         {
             if (iteration < numberOfRooms)
             {
-                GameObject room = Instantiate(roomPrefab, new Vector3( (0 + roomSize) * rowPosition, 0, (0 + roomSize) * columnPosition), Quaternion.Euler(new Vector3(0, 0, 0)));
+                GameObject room = Instantiate(roomPrefab, new Vector3((roomSize/2) + (0 + roomSize) * rowPosition, 0, (roomSize/2) +  (0 + roomSize) * columnPosition), Quaternion.Euler(new Vector3(0, 0, 0)));
                 room.transform.parent = gameObject.transform; //set the room as child of the maze object
                 Room newlyCreatedRoomScript = room.GetComponent<Room>();
                 newlyCreatedRoomScript.mazeReference = this;
