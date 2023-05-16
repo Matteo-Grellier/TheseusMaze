@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     public bool hasTrap = false;
-
     public bool hasKey = false;
 
     public float speed = 2f;
@@ -75,6 +73,7 @@ public class Player : MonoBehaviour
             }
         }
     }
+
     void showPreviewPlacement()
     {
         if (hasTrap == true)

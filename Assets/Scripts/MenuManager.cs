@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MenueManager : MonoBehaviour
+public class MenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject savedMapsMenu;
@@ -16,6 +16,8 @@ public class MenueManager : MonoBehaviour
     {
         mainMenu.SetActive(false);
         savedMapsMenu.SetActive(true);
+        Debug.Log("[get] BtnSavedMaps");
+        StartCoroutine(APIManager.GetAllMazeFromAPI(savedMapsMenu.GetComponent<SavedMapsMenu>()));
     } 
 
     public void BtnEditNewMap()
@@ -30,12 +32,4 @@ public class MenueManager : MonoBehaviour
         savedMapsMenu.SetActive(false);
         mainMenu.SetActive(true);
     } 
-
-    public void BtnLaunchMap(int mapId)
-    {
-        GameManager.instance.mapToGenerateId = mapId;
-        GameManager.instance.isRandomlyGenerated = false;
-        GameManager.instance.LoadScene("GameScene");
-    } 
-
 }
