@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
         {
             currentGraphPosition = GetRandomVectorInMaze();
             transform.position = new Vector3(currentGraphPosition.x, transform.position.y, currentGraphPosition.z);
-            destination = GetRandomVectorInMaze();
+            destination = GetRandomVectorInMaze();            
         }
 
         //Initialize nextGraphPosition to the transform position (to move with pathfinding in the Update method)
@@ -103,6 +103,6 @@ public class Enemy : MonoBehaviour
 
     private Vector3 ConvertPositionToGraphPosition(Vector3 position)
     {
-        return new Vector3((int)position.x, 0, (int)position.z); // WARNING: This can be create strange movement ?
+        return new Vector3(position.x, 0, position.z); // WARNING: TError here (because not 1,1) ?
     }
 }
