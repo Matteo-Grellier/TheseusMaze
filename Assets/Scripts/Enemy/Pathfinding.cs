@@ -73,22 +73,22 @@ public class Pathfinding
         int graphXLength = graph.GetLength(1);
 
         //TODO : Refactor the code to be more readable.
-        if(currentCell.x != 0 && graph[(int)(currentCell.x - 1), (int)currentCell.z] != "wall" )
+        if(currentCell.x-1 > 0 && graph[(int)(currentCell.x - 1), (int)currentCell.z] != "wall" )
         {
             neighbors.Add(currentCell + Vector3.left);
         }
 
-        if(currentCell.x != graphXLength - 1 && graph[(int)(currentCell.x + 1), (int)currentCell.z] != "wall")
+        if(currentCell.x+1 < graphXLength && graph[(int)(currentCell.x + 1), (int)currentCell.z] != "wall")
         {
             neighbors.Add(currentCell + Vector3.right);
         }
 
-        if(currentCell.z != 0 && graph[(int)currentCell.x, (int)(currentCell.z - 1)] != "wall")
+        if(currentCell.z-1 > 0 && graph[(int)currentCell.x, (int)(currentCell.z - 1)] != "wall")
         {
             neighbors.Add(currentCell + Vector3.back);
         }
 
-        if(currentCell.z != graphZLength - 1 && graph[(int)currentCell.x, (int)currentCell.z + 1] != "wall")
+        if(currentCell.z+1 < graphZLength && graph[(int)currentCell.x, (int)currentCell.z + 1] != "wall")
         {
             neighbors.Add(currentCell + Vector3.forward);
         }
