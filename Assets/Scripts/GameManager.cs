@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public int mapToGenerateId = 0;
 
     private GameObject saveMapBtn;
+    public YouWinScreen youWinScreen;
     public Maze mazeReference = null; // will auto get the reference of the ONLY Maze on the scene
     private bool asLaunchedGeneration = false;
 
@@ -50,7 +51,6 @@ public class GameManager : MonoBehaviour
             mazeReference.StartMazeGeneration();
             asLaunchedGeneration = true;
         }
-
         // Debug.Log("ActiveScene = " + SceneManager.GetActiveScene().name);
     }
 
@@ -75,5 +75,13 @@ public class GameManager : MonoBehaviour
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void Win()
+    {
+        if (youWinScreen != null)
+            youWinScreen.WinMenuActivate();
+        else
+            Debug.LogError("YOU WIN SCREEN NOT FOUND");
     }
 }

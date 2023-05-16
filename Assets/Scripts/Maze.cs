@@ -22,6 +22,7 @@ public class Maze : MonoBehaviour
     private int columnPosition = 0;
     private bool isDataFetched = false;
     private bool isDoneGenerating = false;
+    private bool isEndRoomSet = false;
     private int roomsStillGenerating; //rooms that are still being generated, when 0, everything is done
     public int RoomsStillGenerating
     {
@@ -119,7 +120,9 @@ public class Maze : MonoBehaviour
                 newlyCreatedRoomScript.roomSize = roomSize;
                 newlyCreatedRoomScript.roomArray = new string [roomSize, roomSize];
                 if(!isRandomlyGenerated) // fill room if not randomely generated and not edit mode 
+                {
                     newlyCreatedRoomScript.room = maze.rooms[iteration];
+                }
                 else if (GameManager.instance.isEditMode) // if is generated but in edit mode
                 {
                     RoomObject newRoomObject = new RoomObject();
@@ -127,6 +130,18 @@ public class Maze : MonoBehaviour
                     newlyCreatedRoomScript.room = newRoomObject;
                     newRoomObject.cases = new List<CaseObject>();
                     maze.rooms.Add(newRoomObject);
+                }
+                else // is generated random
+                {
+                    if (!isEndRoomSet)
+                    {
+                        int randomNumber = Random.Range(0,8);
+                        if(randomNumber == 3 || iteration == numberOfRooms - 1) // if last
+                        {
+                            newlyCreatedRoomScript.room.isEndRoom = true;
+                            isEndRoomSet = true;
+                        }
+                    }
                 }
                 newlyCreatedRoomScript.roomID = iteration;
                 room.transform.localScale = new Vector3(roomSize, 1, roomSize);

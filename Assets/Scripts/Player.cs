@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private GameObject currentCase;
 
     private RaycastHit hit;
+    private RaycastHit hit2;
     private bool raycast;
 
     public Vector3 move;
@@ -49,8 +50,7 @@ public class Player : MonoBehaviour
 
     void takeTrap()
     {
-
-        if (raycast)
+        if (raycast && hit.collider.gameObject.name == "Case(Clone)") // when click on a case (hopefully with a trap)
         {
             GameObject trap = hit.collider.gameObject.GetComponent<Case>().trapObject;
             GameObject trapPreview = hit.collider.gameObject.GetComponent<Case>().previewObject;
@@ -71,6 +71,14 @@ public class Player : MonoBehaviour
                     hasTrap = false;
                 }
             }
+        }
+
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit2, 2f, LayerMask.GetMask("btn"))) // when click on elevator btn
+        {
+            Debug.Log("<color=purple>" + hit2.collider.gameObject.name + "</color>");
+            EndButton elevatorScript = hit2.collider.gameObject.GetComponent<EndButton>();
+            Debug.Log("<color=green> isPlayerIn = true </color>");
+            elevatorScript.OnClickedByPlayer();
         }
     }
 
