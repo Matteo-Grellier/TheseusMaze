@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Utils;
 
 public class Pathfinding
 {
@@ -11,7 +12,8 @@ public class Pathfinding
     So we can call all methods for the pathfinding (GraphSearch, CreatePath etc...). And maybe we can use the Coroutine in the constructor.
     */
 
-    private Queue queue;
+    private PriorityQueue<Vector3, int> queue;
+    private Dictionary<Vector3, int> movementCosts;
     private Vector3 currentCell;
 
     // private Vector3[] previousVerifyPath;
@@ -30,9 +32,14 @@ public class Pathfinding
         pathFound = false;
         ispathFindingInProgress = true;
 
-        queue = new Queue();
-        queue.Enqueue(start);
+        // queue = new Queue();
+        queue = new PriorityQueue<Vector3, int>();
+        movementCosts = new Dictionary<Vector3, int>();
+
+        queue.Enqueue(start, 0);
         currentCell = start;
+        movementCosts.Add(start, 0);
+        verifiedNodes.Add(start, start);
 
         while (queue.Count != 0)
         {
@@ -48,11 +55,22 @@ public class Pathfinding
 
             foreach(Vector3 neighbor in neighbors)
             {
-
-                if(!verifiedNodes.ContainsKey(neighbor)) //maybe an error with instance of class ?
+                int currentCost = movementCosts[currentCell] + GetCurrentNodeCost(graph, neighbor);
+                
+                // if(!verifiedNodes.ContainsKey(neighbor)) //maybe an error with instance of class ?
+                if(!movementCosts.ContainsKey(neighbor) || currentCost < movementCosts[neighbor]) //maybe an error with instance of class ?
                 {
-                    queue.Enqueue(neighbor);
-                    verifiedNodes.Add(neighbor, currentCell);
+                    if(movementCosts.ContainsKey(neighbor))
+                        movementCosts[neighbor] = currentCost;
+                    else
+                        movementCosts.Add(neighbor, currentCost);
+                        
+                    queue.Enqueue(neighbor, currentCost);
+
+                    if(verifiedNodes.ContainsKey(neighbor)) 
+                        verifiedNodes[neighbor] = currentCell;
+                    else
+                         verifiedNodes.Add(neighbor, currentCell);
                 }
             }
 
@@ -73,7 +91,7 @@ public class Pathfinding
         int graphXLength = graph.GetLength(1);
 
         //TODO : Refactor the code to be more readable.
-        if(currentCell.x-1 > 0 && graph[(int)(currentCell.x - 1), (int)currentCell.z] != "wall" )
+        if(currentCell.x-1 >= 0 && graph[(int)(currentCell.x - 1), (int)currentCell.z] != "wall" )
         {
             neighbors.Add(currentCell + Vector3.left);
         }
@@ -83,7 +101,7 @@ public class Pathfinding
             neighbors.Add(currentCell + Vector3.right);
         }
 
-        if(currentCell.z-1 > 0 && graph[(int)currentCell.x, (int)(currentCell.z - 1)] != "wall")
+        if(currentCell.z-1 >= 0 && graph[(int)currentCell.x, (int)(currentCell.z - 1)] != "wall")
         {
             neighbors.Add(currentCell + Vector3.back);
         }
@@ -94,6 +112,20 @@ public class Pathfinding
         }
 
         return neighbors;
+    }
+
+    private int GetCurrentNodeCost(string[,] graph, Vector3 neighbor)
+    {
+        switch(graph[(int)neighbor.x, (int)neighbor.z])
+        {
+            case "mud":
+                return 3;
+            case "trap":
+                return 6;
+            default:
+                return 0;
+        }
+
     }
 
     private void CreatePath(Vector3 start, Vector3 destination)
