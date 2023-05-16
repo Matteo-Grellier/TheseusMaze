@@ -5,12 +5,17 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public bool hasTrap = false;
+
+	public bool isTrapped = false;
+
     public bool hasKey = false;
 
     public float speed = 2f;
 
     private GameObject previousCase;
     private GameObject currentCase;
+
+	public Animator animator;
 
     private RaycastHit hit;
     private bool raycast;
@@ -26,8 +31,20 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         float x = Input.GetAxis("Horizontal");
+		Debug.Log(x);
 
         float z = Input.GetAxis("Vertical");
+		Debug.Log(z);
+		print(animator.GetBool("Run_Anim"));
+
+		if (x != 0 && !isTrapped || z != 0 && !isTrapped)
+		{
+			animator.SetBool("Run_Anim", true);
+		}
+		else
+		{
+			animator.SetBool("Run_Anim", false);
+		}
 
         velocity = new Vector3(x, 0, z);
 
