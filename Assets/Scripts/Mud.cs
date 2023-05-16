@@ -8,6 +8,7 @@ public class Mud : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             other.gameObject.GetComponent<Player>().speed = 1f;
+			other.gameObject.GetComponent<Player>().animator.speed = 0.5f;
         }
     }
 
@@ -16,6 +17,7 @@ public class Mud : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             other.gameObject.GetComponent<Player>().speed = 5f;
+			other.gameObject.GetComponent<Player>().animator.speed = 1f;
         }
     }
 }
