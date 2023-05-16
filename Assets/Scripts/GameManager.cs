@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         else if (!asLaunchedGeneration && SceneManager.GetActiveScene().name == "EditScene")
         {
             mazeReference = GameObject.Find("Maze").GetComponent<Maze>();
-            mazeReference.SetGenerationInformations(true, 0);
+            mazeReference.SetGenerationInformations(isRandomlyGenerated, mapToGenerateId);
             mazeReference.StartMazeGeneration();
             asLaunchedGeneration = true;
         }
@@ -77,13 +77,15 @@ public class GameManager : MonoBehaviour
         Debug.Log("switching to " + next.name + " Scene");
     }
 
-    public void SaveNewMap()
+    public void SaveNewMap(string mazeName)
     {
+        mazeReference.maze.mazeName = mazeName;
         StartCoroutine(APIManager.PostMazeToAPI(mazeReference.maze));
     }
 
-    public void UpdateMap()
+    public void UpdateMap(string mazeName)
     {
+        mazeReference.maze.mazeName = mazeName;
         StartCoroutine(APIManager.UpdateMazeInAPI(mazeReference.maze.mazeid, mazeReference.maze));
     }
 
