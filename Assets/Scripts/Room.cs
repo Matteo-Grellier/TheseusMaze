@@ -8,16 +8,19 @@ public class Room : MonoBehaviour
     [SerializeField] private GameObject casePrefab;
     public int roomSize;
     public int roomID = 0;
+    public bool isAKeyRoom = false;
 
     private int caseIteration = 0;
     private int caseColumn = 0;
     private int caseRow = 0;
+    private bool keyIsSet = false;
 
     private bool isTrapShown = false;
     private bool isWallShown = false;
     private bool isGravelShown = false;
     private bool isMudShown = false;
     private bool isElevator = false;
+    private bool isKey = false;
 
     private bool isAfterGenerationCodeExecuted = false;
 
@@ -60,6 +63,7 @@ public class Room : MonoBehaviour
                 isMudShown = false;
                 isTrapShown = false;
                 isElevator = false;
+                isKey = false;
                 switch (room.cases[caseIteration].state)
                 {
                     case "wall" :
@@ -90,6 +94,11 @@ public class Room : MonoBehaviour
                         isElevator = true;
                         roomArray[caseColumn,caseRow] = "elevator";
                         break;
+                    case "key" :
+                        isWallShown = false;
+                        isKey = true;
+                        roomArray[caseColumn,caseRow] = "key";
+                        break;
 
                     default :
                         isWallShown = false;
@@ -115,8 +124,19 @@ public class Room : MonoBehaviour
                 isMudShown = false;
                 isTrapShown = false;
                 isElevator = false;
+                isKey = false;
                 int randomNumber = Random.Range(0,30);
 
+                if (isAKeyRoom)
+                {
+                    if (!keyIsSet && randomNumber == 1 || !keyIsSet && caseIteration == (roomSize*roomSize) - 1)// if is 1 or is not set
+                    {
+                        Debug.Log("<color=yellow>[key] Key Case is Set : " + caseIteration +" </color>");
+                        keyIsSet = true;
+                        isKey = true;
+                        roomArray[caseColumn,caseRow] = "key";
+                    }
+                }
                 if (room.isEndRoom == true)
                 {
                     if (caseIteration ==  (roomSize*roomSize) / 2) // to set it in the middle of the room
@@ -125,29 +145,32 @@ public class Room : MonoBehaviour
                         roomArray[caseColumn,caseRow] = "elevator";
                     }
                 }
-                else if (randomNumber >= 0 && randomNumber <= 7)
+                if (!isKey && !room.isEndRoom) // if it's a key case or a end room, no need for all this
                 {
-                    isWallShown = true;
-                    roomArray[caseColumn,caseRow] = "wall";
-                }
-                else if(randomNumber == 10)
-                {
-                    isTrapShown = true;
-                    roomArray[caseColumn,caseRow] = "trap";
-                }
-                else if (randomNumber == 11)
-                {
-                    isGravelShown = true;
-                    roomArray[caseColumn,caseRow] = "gravel";
-                }
-                else if (randomNumber == 12)
-                {
-                    isMudShown = true;
-                    roomArray[caseColumn,caseRow] = "mud";
-                }
-                else
-                {
-                    roomArray[caseColumn,caseRow] = "path";
+                    if (randomNumber >= 0 && randomNumber <= 7)
+                    {
+                        isWallShown = true;
+                        roomArray[caseColumn,caseRow] = "wall";
+                    }
+                    else if(randomNumber == 10)
+                    {
+                        isTrapShown = true;
+                        roomArray[caseColumn,caseRow] = "trap";
+                    }
+                    else if (randomNumber == 11)
+                    {
+                        isGravelShown = true;
+                        roomArray[caseColumn,caseRow] = "gravel";
+                    }
+                    else if (randomNumber == 12)
+                    {
+                        isMudShown = true;
+                        roomArray[caseColumn,caseRow] = "mud";
+                    }
+                    else
+                    {
+                        roomArray[caseColumn,caseRow] = "path";
+                    }
                 }
                 // Debug.Log( "room " + roomID + " : " + "caseColumn : " + caseColumn + " caseRow : " + caseRow + " value :" + roomArray[caseColumn,caseRow]);
             }
@@ -157,6 +180,7 @@ public class Room : MonoBehaviour
             newCaseScript.gravelObject.SetActive(isGravelShown);
             newCaseScript.mudObject.SetActive(isMudShown);
             newCaseScript.elevatorObject.SetActive(isElevator);
+            newCaseScript.keyObject.SetActive(isKey);
 
             if (room.isEndRoom) // if the room is an end room
                 newCaseScript.debugCase.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.black); // set material to black

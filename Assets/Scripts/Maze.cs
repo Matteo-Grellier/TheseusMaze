@@ -23,6 +23,7 @@ public class Maze : MonoBehaviour
     private bool isDataFetched = false;
     private bool isDoneGenerating = false;
     private bool isEndRoomSet = false;
+    private bool isKeyRoomSet = false;
     private int roomsStillGenerating; //rooms that are still being generated, when 0, everything is done
     public int RoomsStillGenerating
     {
@@ -140,6 +141,16 @@ public class Maze : MonoBehaviour
                         {
                             newlyCreatedRoomScript.room.isEndRoom = true;
                             isEndRoomSet = true;
+                        }
+                    }
+                    if(!isKeyRoomSet)
+                    {
+                        int randomNumber = Random.Range(0,5);
+                        if(randomNumber == 1 || iteration == numberOfRooms - 1) // if last
+                        {
+                            Debug.Log("<color=yellow>[key] Key Room Set : " + iteration + " </color>");
+                            newlyCreatedRoomScript.isAKeyRoom = true;
+                            isKeyRoomSet = true;
                         }
                     }
                 }
