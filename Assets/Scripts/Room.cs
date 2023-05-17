@@ -65,7 +65,7 @@ public class Room : MonoBehaviour
                 isElevator = false;
                 isKey = false;
                 switch (room.cases[caseIteration].state)
-                {
+                { 
                     case "wall" :
                         isWallShown = true;
                         roomArray[caseColumn,caseRow] = "wall";

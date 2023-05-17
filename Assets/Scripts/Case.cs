@@ -31,7 +31,7 @@ public class Case : MonoBehaviour
     }
 
     public void CaseClicked()
-    {
+    { 
         if (gameManager.isEditMode == true)
         {
             wallObject.SetActive(!wallObject.gameObject.activeInHierarchy);

@@ -135,7 +135,7 @@ public class Maze : MonoBehaviour
                 else // is generated random
                 {
                     if (!isEndRoomSet)
-                    {
+                    { 
                         int randomNumber = Random.Range(0,8);
                         if(randomNumber == 3 || iteration == numberOfRooms - 1) // if last
                         {
