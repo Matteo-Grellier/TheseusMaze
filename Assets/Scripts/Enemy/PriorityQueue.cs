@@ -1,5 +1,5 @@
 /*
-    WARNING : THIS FILES IS FROM THIS REPO : https://github.com/FyiurAmron/PriorityQueue/blob/main/PriorityQueue.cs
+    WARNING : THIS FILES WAS FROM THIS REPO : https://github.com/FyiurAmron/PriorityQueue/blob/main/PriorityQueue.cs
     REASON : Because Unity doesn't support .NET 6 so we can't use PriorityQueue.... (But WE NEED IT)
 */
 
