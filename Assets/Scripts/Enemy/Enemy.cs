@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
         if(pathfinding.pathFound)
             MoveThroughPath();
         
-        if(destination == ConvertPositionToGraphPosition(transform.position)) 
+        if(destination == ConvertPositionToGraphPosition(transform.position) ||!pathfinding.isFindablePath)
         {
             isMoving = false;
             pathfinding.ispathFindingInProgress = false;

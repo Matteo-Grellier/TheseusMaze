@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Utils;
 
 public class Pathfinding
 {
@@ -11,7 +12,8 @@ public class Pathfinding
     So we can call all methods for the pathfinding (GraphSearch, CreatePath etc...). And maybe we can use the Coroutine in the constructor.
     */
 
-    private Queue queue;
+    private PriorityQueue<Vector3, int> queue;
+    private Dictionary<Vector3, int> movementCosts;
     private Vector3 currentCell;
 
     // private Vector3[] previousVerifyPath;
@@ -22,6 +24,7 @@ public class Pathfinding
     private List<Vector3> neighbors;
 
     public bool pathFound = false;
+    public bool isFindablePath = true; // To prevent an inaccessible path (true by default)
     public bool ispathFindingInProgress = false;
     public Dictionary<Vector3, Vector3> pathNodes;
 
@@ -29,10 +32,16 @@ public class Pathfinding
     {
         pathFound = false;
         ispathFindingInProgress = true;
+        isFindablePath = true;
 
-        queue = new Queue();
-        queue.Enqueue(start);
+        // queue = new Queue();
+        queue = new PriorityQueue<Vector3, int>();
+        movementCosts = new Dictionary<Vector3, int>();
+
+        queue.Enqueue(start, 0);
         currentCell = start;
+        movementCosts.Add(start, 0);
+        verifiedNodes.Add(start, start);
 
         while (queue.Count != 0)
         {
@@ -48,18 +57,36 @@ public class Pathfinding
 
             foreach(Vector3 neighbor in neighbors)
             {
-
-                if(!verifiedNodes.ContainsKey(neighbor)) //maybe an error with instance of class ?
+                int currentCost = movementCosts[currentCell] + GetCurrentNodeCost(graph, neighbor);
+                
+                if(!movementCosts.ContainsKey(neighbor) || currentCost < movementCosts[neighbor]) //maybe an error with instance of class ?
                 {
-                    queue.Enqueue(neighbor);
-                    verifiedNodes.Add(neighbor, currentCell);
+                    if(movementCosts.ContainsKey(neighbor))
+                        movementCosts[neighbor] = currentCost;
+                    else
+                        movementCosts.Add(neighbor, currentCost);
+                        
+                    int priority = currentCost + GetEstimatedDistance(destination, neighbor);
+                    queue.Enqueue(neighbor, priority);
+
+                    if(verifiedNodes.ContainsKey(neighbor)) 
+                        verifiedNodes[neighbor] = currentCell;
+                    else
+                         verifiedNodes.Add(neighbor, currentCell);
                 }
             }
 
             yield return null;
         }
 
-        CreatePath(start, destination);
+        try 
+        {
+            CreatePath(start, destination);
+        }
+        catch (Exception e) 
+        {
+            Debug.LogError("Cannot create path... " + e.Message);
+        }
 
         yield return null;
     }
@@ -72,8 +99,7 @@ public class Pathfinding
         int graphZLength = graph.GetLength(0);
         int graphXLength = graph.GetLength(1);
 
-        //TODO : Refactor the code to be more readable.
-        if(currentCell.x-1 > 0 && graph[(int)(currentCell.x - 1), (int)currentCell.z] != "wall" )
+        if(currentCell.x-1 >= 0 && graph[(int)(currentCell.x - 1), (int)currentCell.z] != "wall" )
         {
             neighbors.Add(currentCell + Vector3.left);
         }
@@ -83,7 +109,7 @@ public class Pathfinding
             neighbors.Add(currentCell + Vector3.right);
         }
 
-        if(currentCell.z-1 > 0 && graph[(int)currentCell.x, (int)(currentCell.z - 1)] != "wall")
+        if(currentCell.z-1 >= 0 && graph[(int)currentCell.x, (int)(currentCell.z - 1)] != "wall")
         {
             neighbors.Add(currentCell + Vector3.back);
         }
@@ -96,29 +122,59 @@ public class Pathfinding
         return neighbors;
     }
 
+    private int GetCurrentNodeCost(string[,] graph, Vector3 neighbor)
+    {
+        switch(graph[(int)neighbor.x, (int)neighbor.z])
+        {
+            case "mud":
+                return 3;
+            case "trap":
+                return 6;
+            default:
+                return 0;
+        }
+
+    }
+
+    private int GetEstimatedDistance(Vector3 firstPosition, Vector3 secondPosition)
+    {
+        return Math.Abs((int)firstPosition.x - (int)secondPosition.x) + Math.Abs((int)firstPosition.y - (int)secondPosition.y);
+    }
+
     private void CreatePath(Vector3 start, Vector3 destination)
     {
 
-        pathNodes = new Dictionary<Vector3, Vector3>();
-
-        pathNodes.Add(destination, verifiedNodes[destination]);
-
-        Vector3 currentNode = destination;
-
-        while(currentNode != start)
+        try
         {
-            // Vector A -> Vector B
-            Debug.Log(currentNode + "-->" + verifiedNodes[currentNode]);
-            currentNode = verifiedNodes[currentNode];
-            pathNodes.Add(currentNode, verifiedNodes[currentNode]);
-        }
+            pathNodes = new Dictionary<Vector3, Vector3>();
 
-        pathFound = true;
+            pathNodes.Add(destination, verifiedNodes[destination]);
+
+            Vector3 currentNode = destination;
+
+            while(currentNode != start)
+            {
+                // Vector A -> Vector B
+                Debug.Log(currentNode + "-->" + verifiedNodes[currentNode]);
+                currentNode = verifiedNodes[currentNode];
+                pathNodes.Add(currentNode, verifiedNodes[currentNode]);
+                // Debug.Log(pathNodes[currentNode] + " " + verifiedNodes[currentNode]);
+            }
+            Debug.Log("Path created !");
+            pathFound = true;
+        }
+        catch (KeyNotFoundException e)
+        {
+            isFindablePath = false;
+            throw new KeyNotFoundException("Key was not found in verifiedNodes.", e);
+        }
     }
 
     public Vector3 GetNextDirection(Vector3 currentPosition)
     {
-        if(!pathFound || !pathNodes.ContainsKey(currentPosition)) return currentPosition;
+        // Debug.Log("GetNextDirection, currentPos " + currentPosition + " " + pathNodes.ContainsKey(currentPosition));
+
+        if(!pathFound ) return currentPosition;
 
         return pathNodes.First(x => x.Value == currentPosition).Key;
     }
@@ -129,5 +185,6 @@ public class Pathfinding
         queue.Clear();
         verifiedNodes.Clear();
         neighbors.Clear();
+        movementCosts.Clear();
     }
 }
