@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 78887187938855839}
   - component: {fileID: 78887187938855838}
   - component: {fileID: 1534669920393927676}
-  m_Layer: 0
+  - component: {fileID: 3638738058545213608}
+  m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c0e9d563a89e6a4db4428a0d1d3acc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 2.5
   isMoving: 0
   destination: {x: 0, y: 0, z: 0}
 --- !u!114 &1534669920393927676
@@ -130,6 +131,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 6403510259212947131}
   currentEnemy: {fileID: 78887187938855838}
+--- !u!135 &3638738058545213608
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78887187938855825}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 7
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &3584192320283251112
 PrefabInstance:
   m_ObjectHideFlags: 0

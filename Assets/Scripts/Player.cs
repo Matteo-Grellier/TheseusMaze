@@ -31,11 +31,11 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         float x = Input.GetAxis("Horizontal");
-		Debug.Log(x);
+		// Debug.Log(x);
 
         float z = Input.GetAxis("Vertical");
-		Debug.Log(z);
-		print(animator.GetBool("Run_Anim"));
+		// Debug.Log(z);
+		// print(animator.GetBool("Run_Anim"));
 
 		if (x != 0 && !isTrapped || z != 0 && !isTrapped)
 		{
