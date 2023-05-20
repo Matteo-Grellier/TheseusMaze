@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public bool hasTrap = false;
 
 	public bool isTrapped = false;
+    public bool isWalkingOnGravel = false;
 
     public bool hasKey = false;
 

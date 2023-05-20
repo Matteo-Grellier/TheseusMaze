@@ -5,7 +5,7 @@ using UnityEngine;
 public class Torchlight : MonoBehaviour
 {
 
-    private bool isLightUp = true;
+    public bool isLightUp = true;
     private float blinkTimeLeft = 0;
 
     // Start is called before the first frame update

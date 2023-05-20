@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
 
     public Vector3 destination;
 
-    private GameObject player;
+    private Player player;
 
     void Start() // Now we can use Start because the Instance is created in gameManager when the maze is generated !
     {
@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
 
         FindThePath();
 
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameManager.instance.player;
     }
 
     void FixedUpdate()
@@ -142,7 +142,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if(player != other.gameObject) return;
+        if(player.gameObject != other.gameObject) return;
 
         RaycastHit hit;
 
@@ -150,52 +150,87 @@ public class Enemy : MonoBehaviour
         LayerMask wallLayerBit = 1 << 13;
         LayerMask layerMaskBits = wallLayerBit | entityLayerBit;
 
+        HandleRaycast();
+
         if(Physics.Raycast(transform.position, player.transform.position-transform.position, out hit, Mathf.Infinity, layerMaskBits)) // Improve Performance with FixedUpdate
         {
             Debug.DrawRay(transform.position, (player.transform.position-transform.position), Color.red);
-            Debug.LogWarning(hit.collider);
+            // Debug.LogWarning(hit.collider);
             
-            if(hit.collider.gameObject == player) // TODO : Create a method for this, to DRY
+            if(hit.collider.gameObject == player.gameObject 
+            && player.GetComponentInChildren<Torchlight>().isLightUp 
+            && player.transform.forward == (player.transform.position-transform.position).normalized)
             {
-                if(!hasDetectedPlayer) 
-                {
-                    Debug.LogWarning("ARE YOU HERE ?");
-                    hasDetectedPlayer = true;
-                }
-
-                if(ConvertPositionToGraphPosition(transform.position) == nextGraphPosition && hasDetectedPlayer && !isSearchingPlayer)
-                {
-                    isMoving = false;
-                    Debug.LogWarning("GO CREATE A NEW PATH");
-                    currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
-                    destination = new Vector3((int)player.transform.position.x, 0, (int)player.transform.position.z);
-                    FindThePath();
-                    isSearchingPlayer = true;
-                    return;
-                }
+                HandlePlayerDetection();
             }
         }
 
-        if(player.GetComponent<Player>().isTrapped)
+        if(player.isTrapped || player.isWalkingOnGravel)
         {
-            if(!hasDetectedPlayer) 
-            {
-                Debug.LogWarning("ARE YOU HERE ?");
-                hasDetectedPlayer = true;
-            }
-
-            if(ConvertPositionToGraphPosition(transform.position) == nextGraphPosition && hasDetectedPlayer && !isSearchingPlayer)
-            {
-                isMoving = false;
-                Debug.LogWarning("GO CREATE A NEW PATH");
-                currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
-                destination = new Vector3((int)player.transform.position.x, 0, (int)player.transform.position.z);
-                FindThePath();
-                isSearchingPlayer = true;
-                return;
-            }
-        } else {
+            HandlePlayerDetection();
+        } 
+        else {
             hasDetectedPlayer = false;
+        }
+    }
+
+    private void HandleRaycast()
+    {
+        RaycastHit hit;
+
+        LayerMask entityLayerBit = 1 << 12;
+        LayerMask wallLayerBit = 1 << 13;
+        LayerMask layerMaskBits = wallLayerBit | entityLayerBit;
+
+        bool raycast = Physics.Raycast(transform.position, player.transform.position-transform.position, out hit, Mathf.Infinity, layerMaskBits);
+        
+        if(raycast) // Improve Performance with FixedUpdate
+        {
+            Debug.DrawRay(transform.position, (player.transform.position-transform.position), Color.red);
+            // Debug.LogWarning(hit.collider);
+
+            bool isHittingPlayer = hit.collider.gameObject == player.gameObject;
+            Torchlight torchlight = player.GetComponentInChildren<Torchlight>();
+
+            bool isPointedByTorchlight = GetIsPointedByTorchlight();
+            
+            if(isHittingPlayer && torchlight.isLightUp && isPointedByTorchlight)
+            {
+                HandlePlayerDetection();
+            }
+        }
+    }
+
+    private bool GetIsPointedByTorchlight()
+    {
+        Vector3 directionFromPlayer = (transform.position-player.transform.position).normalized;
+        Torchlight torchlight = player.GetComponentInChildren<Torchlight>();
+        
+        if(Vector3.Angle(player.transform.forward, directionFromPlayer) < torchlight.GetComponent<Light>().spotAngle / 2)
+        {
+            return true;
+        } 
+
+        return false;
+    }
+
+    private void HandlePlayerDetection()
+    {
+        if(!hasDetectedPlayer) 
+        {
+            Debug.LogWarning("ARE YOU HERE ?");
+            hasDetectedPlayer = true;
+        }
+
+        if(ConvertPositionToGraphPosition(transform.position) == nextGraphPosition && hasDetectedPlayer && !isSearchingPlayer)
+        {
+            isMoving = false;
+            Debug.LogWarning("GO CREATE A NEW PATH");
+            currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
+            destination = new Vector3((int)player.transform.position.x, 0, (int)player.transform.position.z);
+            FindThePath();
+            isSearchingPlayer = true;
+            return;
         }
     }
 }

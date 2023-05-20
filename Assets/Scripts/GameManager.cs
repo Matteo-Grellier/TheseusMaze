@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     private GameObject enemyPrefab;
     private GameObject enemy;
 
+    public Player player;
+
     private void Awake() 
     {
         DontDestroyOnLoad(this.gameObject); // put the GameManager int he don't destroy on load
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
 
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         SceneManager.activeSceneChanged += OnActiveSceneChange; // subscribe to the activeSceneChanged event
     }
 
