@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public int mapToGenerateId = 0;
 
     private GameObject saveMapBtn;
+    public YouWinScreen youWinScreen;
     public Maze mazeReference = null; // will auto get the reference of the ONLY Maze on the scene
     private bool asLaunchedGeneration = false;
 
@@ -64,7 +65,7 @@ public class GameManager : MonoBehaviour
 
         // Debug.Log("ActiveScene = " + SceneManager.GetActiveScene().name);
 
-        if(enemy == null && mazeReference.isDoneGenerating)
+        if(enemy == null && mazeReference.isDoneGenerating && SceneManager.GetActiveScene().name != "EditScene")
         {
             enemy = Instantiate(enemyPrefab);
             Debug.Log("I CREATE THE enemy" + enemy);
@@ -92,5 +93,13 @@ public class GameManager : MonoBehaviour
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void Win()
+    {
+        if (youWinScreen != null)
+            youWinScreen.WinMenuActivate();
+        else
+            Debug.LogError("YOU WIN SCREEN NOT FOUND");
     }
 }

@@ -146,8 +146,8 @@ public class Enemy : MonoBehaviour
 
         RaycastHit hit;
 
-        LayerMask entityLayerBit = 1 << 10;
-        LayerMask wallLayerBit = 1 << 11;
+        LayerMask entityLayerBit = 1 << 12;
+        LayerMask wallLayerBit = 1 << 13;
         LayerMask layerMaskBits = wallLayerBit | entityLayerBit;
 
         if(Physics.Raycast(transform.position, player.transform.position-transform.position, out hit, Mathf.Infinity, layerMaskBits)) // Improve Performance with FixedUpdate

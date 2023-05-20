@@ -17,10 +17,10 @@ TagManager:
   - MudCollider
   - MudTrigger
   - Trap
+  - Clickable
+  - btn
   - Entity
   - Wall
-  - 
-  - 
   - 
   - 
   - 
