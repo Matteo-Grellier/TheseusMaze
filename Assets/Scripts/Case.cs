@@ -9,6 +9,8 @@ public class Case : MonoBehaviour
     public GameObject gravelObject;
     public GameObject mudObject;
     public GameObject trapObject;
+    public GameObject elevatorObject;
+    public GameObject keyObject;
     public GameObject debugCase;
     public GameObject previewObject;
 
@@ -29,7 +31,7 @@ public class Case : MonoBehaviour
     }
 
     public void CaseClicked()
-    {
+    { 
         if (gameManager.isEditMode == true)
         {
             wallObject.SetActive(!wallObject.gameObject.activeInHierarchy);

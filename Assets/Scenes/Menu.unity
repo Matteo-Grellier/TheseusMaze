@@ -625,6 +625,7 @@ MonoBehaviour:
   isEditingNewlyCreatedMap: 0
   isRandomlyGenerated: 1
   mapToGenerateId: 0
+  youWinScreen: {fileID: 0}
   mazeReference: {fileID: 0}
   enemyPrefab: {fileID: 78887187938855825, guid: c553ef81a66f073719a066fa0d49b458, type: 3}
 --- !u!4 &307855852

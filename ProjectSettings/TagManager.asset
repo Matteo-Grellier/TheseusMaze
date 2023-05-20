@@ -17,8 +17,8 @@ TagManager:
   - MudCollider
   - MudTrigger
   - Trap
-  - 
-  - 
+  - Clickable
+  - btn
   - 
   - 
   - 
