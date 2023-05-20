@@ -6,7 +6,9 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float speed = 2.5f; // Look in Unity to change the speed !
-    float elapsedTime = 0f;
+
+    private float visionAngle = 190f;
+    private float visionDistance = 10f;
 
     public bool isMoving = false;
     private bool hasDetectedPlayer = false;
@@ -118,7 +120,7 @@ public class Enemy : MonoBehaviour
         isMoving = true;
 
         if(nextPosition != transform.position)
-            transform.forward = nextPosition-transform.position;
+            transform.forward = (nextPosition-transform.position).normalized;
 
         if(ConvertPositionToGraphPosition(transform.position) == nextGraphPosition && nextGraphPosition != destination)
         {
@@ -182,9 +184,9 @@ public class Enemy : MonoBehaviour
         LayerMask wallLayerBit = 1 << 13;
         LayerMask layerMaskBits = wallLayerBit | entityLayerBit;
 
-        bool raycast = Physics.Raycast(transform.position, player.transform.position-transform.position, out hit, Mathf.Infinity, layerMaskBits);
+        bool isRaycasting = Physics.Raycast(transform.position, player.transform.position-transform.position, out hit, Mathf.Infinity, layerMaskBits);
         
-        if(raycast) // Improve Performance with FixedUpdate
+        if(isRaycasting) // Improve Performance with FixedUpdate
         {
             Debug.DrawRay(transform.position, (player.transform.position-transform.position), Color.red);
             // Debug.LogWarning(hit.collider);
@@ -193,8 +195,11 @@ public class Enemy : MonoBehaviour
             Torchlight torchlight = player.GetComponentInChildren<Torchlight>();
 
             bool isPointedByTorchlight = GetIsPointedByTorchlight();
+            bool isLookingAtPlayer = GetIsLookingAtPlayer();
+
+            Debug.LogWarning(isLookingAtPlayer);
             
-            if(isHittingPlayer && torchlight.isLightUp && isPointedByTorchlight)
+            if(isHittingPlayer && (torchlight.isLightUp && isPointedByTorchlight || isLookingAtPlayer))
             {
                 HandlePlayerDetection();
             }
@@ -207,6 +212,22 @@ public class Enemy : MonoBehaviour
         Torchlight torchlight = player.GetComponentInChildren<Torchlight>();
         
         if(Vector3.Angle(player.transform.forward, directionFromPlayer) < torchlight.GetComponent<Light>().spotAngle / 2)
+        {
+            return true;
+        } 
+
+        return false;
+    }
+
+    private bool GetIsLookingAtPlayer()
+    {
+        Vector3 directionToPlayer = (player.transform.position-transform.position).normalized;
+        
+        float distanceWithPlayer = 
+        Mathf.Abs(player.transform.position.x - transform.position.x) 
+        + Mathf.Abs(player.transform.position.y - transform.position.y);
+        
+        if((Vector3.Angle(transform.forward, directionToPlayer) < visionAngle / 2) && distanceWithPlayer <= visionDistance)
         {
             return true;
         } 
@@ -227,7 +248,7 @@ public class Enemy : MonoBehaviour
             isMoving = false;
             Debug.LogWarning("GO CREATE A NEW PATH");
             currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
-            destination = new Vector3((int)player.transform.position.x, 0, (int)player.transform.position.z);
+            destination = new Vector3(Mathf.Round(player.transform.position.x), 0, Mathf.Round(player.transform.position.z));
             FindThePath();
             isSearchingPlayer = true;
             return;
