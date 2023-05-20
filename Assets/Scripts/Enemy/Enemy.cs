@@ -155,7 +155,7 @@ public class Enemy : MonoBehaviour
             Debug.DrawRay(transform.position, (player.transform.position-transform.position), Color.red);
             Debug.LogWarning(hit.collider);
             
-            if(hit.collider.gameObject == player)
+            if(hit.collider.gameObject == player) // TODO : Create a method for this, to DRY
             {
                 if(!hasDetectedPlayer) 
                 {
