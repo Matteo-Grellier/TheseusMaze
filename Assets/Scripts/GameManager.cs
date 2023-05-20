@@ -19,6 +19,10 @@ public class GameManager : MonoBehaviour
     public Maze mazeReference = null; // will auto get the reference of the ONLY Maze on the scene
     private bool asLaunchedGeneration = false;
 
+    [SerializeField]
+    private GameObject enemyPrefab;
+    private GameObject enemy;
+
     private void Awake() 
     {
         DontDestroyOnLoad(this.gameObject); // put the GameManager int he don't destroy on load
@@ -51,7 +55,21 @@ public class GameManager : MonoBehaviour
             mazeReference.StartMazeGeneration();
             asLaunchedGeneration = true;
         }
+        else if (!asLaunchedGeneration && SceneManager.GetActiveScene().name == "Mathéo")
+        {
+            mazeReference = GameObject.Find("Maze").GetComponent<Maze>();
+            mazeReference.SetGenerationInformations(true, 0);
+            mazeReference.StartMazeGeneration();
+            asLaunchedGeneration = true;
+        }
+
         // Debug.Log("ActiveScene = " + SceneManager.GetActiveScene().name);
+
+        if(enemy == null && mazeReference.isDoneGenerating && SceneManager.GetActiveScene().name != "EditScene")
+        {
+            enemy = Instantiate(enemyPrefab);
+            Debug.Log("I CREATE THE enemy" + enemy);
+        }
     }
 
     // called when changing the active scene

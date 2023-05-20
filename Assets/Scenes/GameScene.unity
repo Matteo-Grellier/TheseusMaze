@@ -353,14 +353,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e407c90d9d6a4aa438277d32891dc358, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   roomPrefab: {fileID: 1732912637463812642, guid: f484120dc79bf764d9265af294fb4d8f, type: 3}
   mazeSize: 4
   roomSize: 7
   maze:
     mazeid: 0
-    mazeName: 
+    mazeName:
     rooms: []
 --- !u!4 &713244740
 Transform:
@@ -375,7 +375,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &750519134
 PrefabInstance:
@@ -447,7 +447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7353626100529670202, guid: f580868fc3cf84280850ccb522fd4883, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7353626100529670202, guid: f580868fc3cf84280850ccb522fd4883, type: 3}
       propertyPath: m_LocalPosition.x
@@ -489,10 +489,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7353626100529670203, guid: f580868fc3cf84280850ccb522fd4883, type: 3}
-      propertyPath: Trap
-      value: 
-      objectReference: {fileID: 1947534659928603013, guid: e757c510b0dd5efa8809b4eeb2b888db, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f580868fc3cf84280850ccb522fd4883, type: 3}
 --- !u!1 &1322357654
