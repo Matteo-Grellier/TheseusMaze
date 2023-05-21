@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     public Player player;
 
-    private void Awake() 
+    private void Awake()
     {
         DontDestroyOnLoad(this.gameObject); // put the GameManager int he don't destroy on load
     }
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
         SceneManager.activeSceneChanged += OnActiveSceneChange; // subscribe to the activeSceneChanged event
     }
 
-    private void Update() 
+    private void Update()
     {
         string nameOfActiveScene = SceneManager.GetActiveScene().name;
 
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("I CREATE THE enemy" + enemy);
         }
 
-        if(isGameOver) 
+        if(isGameOver)
         {
             HandleGameOver();
 
@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
         player.GetComponentInChildren<Camera>().enabled = false;
         enemy.transform.GetChild(0).gameObject.SetActive(true);
         enemy.GetComponentInChildren<Camera>().enabled = true;
-        
+
         StartCoroutine(WaitAndLoadGameOverScene());
     }
 

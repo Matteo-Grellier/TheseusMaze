@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ToolsPanel : MonoBehaviour
@@ -9,16 +10,24 @@ public class ToolsPanel : MonoBehaviour
 
 	public bool movePanel = false;
 
+	public TMP_Text textShowButton;
+
 	private void Update()
 	{
-		// Move panel to right
 		if (movePanel)
 		{
 			transform.position = Vector3.Lerp(transform.position, new Vector3(800, 46.49997f, 0), Time.deltaTime * 5);
+			// Find GameObject
+			textShowButton.text = ">";
+
+
 		}
 		else
 		{
 			transform.position = Vector3.Lerp(transform.position, new Vector3(1370, 46.49997f, 0), Time.deltaTime * 5);
+			textShowButton.text = "<";
+
+
 		}
 
 	}
@@ -51,5 +60,15 @@ public class ToolsPanel : MonoBehaviour
 	public void BtnSetObjectToGravel()
 	{
 		objectToPlace = "Gravel";
+	}
+
+	public void BtnSetObjectToElevator()
+	{
+		objectToPlace = "Elevator";
+	}
+
+	public void BtnSetObjectToKey()
+	{
+		objectToPlace = "Key";
 	}
 }
