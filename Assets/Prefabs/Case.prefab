@@ -108,8 +108,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65ee1cebebf21c644a09458f450925a4, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   parentcase: {fileID: 5329499051267391928}
 --- !u!1 &3125311833335848312
 GameObject:
@@ -175,8 +175,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8023ccf277dbaed438b63300e955615b, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   wallObject: {fileID: 3038629562157154683}
   gravelObject: {fileID: 1457150070438346652}
   mudObject: {fileID: 3722533770181046901}
@@ -549,8 +549,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb5acb8d2c9fae64f9d43a0ab324878b, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5786888602631058139 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 631306837538475207, guid: 79d371fa8c6635a4e9fd5307e014352e, type: 3}
@@ -645,7 +645,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2238624437475408, guid: e757c510b0dd5efa8809b4eeb2b888db, type: 3}
       propertyPath: m_Materials.Array.data[0]
-      value:
+      value: 
       objectReference: {fileID: -8896051167825165466, guid: f249051a3321cc2b2ad5a68aa826bd0f, type: 3}
     - target: {fileID: 1174552029129761599, guid: e757c510b0dd5efa8809b4eeb2b888db, type: 3}
       propertyPath: m_RootOrder
@@ -703,6 +703,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2874144619467205786, guid: e757c510b0dd5efa8809b4eeb2b888db, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -9113646534211321542, guid: f249051a3321cc2b2ad5a68aa826bd0f, type: 3}
     - target: {fileID: 4500409643641689441, guid: e757c510b0dd5efa8809b4eeb2b888db, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -729,8 +733,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7c762c203e443ad78cc461b17f35f59, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8887444776144569665
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -796,7 +800,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: f249051a3321cc2b2ad5a68aa826bd0f, type: 3}
       propertyPath: m_Materials.Array.data[0]
-      value:
+      value: 
       objectReference: {fileID: 2100000, guid: 4bbdd88cc1a4faa1aab14f373331b11c, type: 2}
     - target: {fileID: 919132149155446097, guid: f249051a3321cc2b2ad5a68aa826bd0f, type: 3}
       propertyPath: m_Name
@@ -831,7 +835,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -648587561545988773, guid: b4cc6794b5f7c7040b3f2c328a053759, type: 3}
       propertyPath: endElevatorReference
-      value:
+      value: 
       objectReference: {fileID: 1062308600365343966}
     - target: {fileID: 3865295769124577351, guid: b4cc6794b5f7c7040b3f2c328a053759, type: 3}
       propertyPath: m_Name

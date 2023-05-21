@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
 
     void takeTrap()
     {
-        if (raycast && hit.collider.gameObject.name == "Case(Clone)") // when click on a case (hopefully with a trap)
+        if (raycast && hit.collider.gameObject.name == "Case(Clone)" && !isTrapped) // when click on a case (hopefully with a trap)
         {
             GameObject trap = hit.collider.gameObject.GetComponent<Case>().trapObject;
             GameObject trapPreview = hit.collider.gameObject.GetComponent<Case>().previewObject;
