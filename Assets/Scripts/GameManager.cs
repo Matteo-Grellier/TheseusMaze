@@ -46,6 +46,12 @@ public class GameManager : MonoBehaviour
 
     private void Update() 
     {
+        if(isGameOver) 
+        {
+            player.GetComponentInChildren<Camera>().enabled = false;
+            enemy.GetComponentInChildren<Camera>().enabled = true;
+        }
+
         if (!asLaunchedGeneration && SceneManager.GetActiveScene().name == "GameScene" && mazeReference == null)
         {
             mazeReference = GameObject.Find("Maze").GetComponent<Maze>();

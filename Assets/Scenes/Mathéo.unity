@@ -267,7 +267,9 @@ MonoBehaviour:
   mapToGenerateId: 0
   youWinScreen: {fileID: 0}
   mazeReference: {fileID: 0}
+  isGameOver: 0
   enemyPrefab: {fileID: 78887187938855825, guid: c553ef81a66f073719a066fa0d49b458, type: 3}
+  player: {fileID: 0}
 --- !u!1001 &1843857230
 PrefabInstance:
   m_ObjectHideFlags: 0

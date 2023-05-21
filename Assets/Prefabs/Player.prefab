@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f3dbf61e5be0108982ab89a800f6fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLightUp: 1
 --- !u!1 &6209778332107209413
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,6 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasTrap: 0
   isTrapped: 0
+  isWalkingOnGravel: 0
   hasKey: 0
   speed: 5
   animator: {fileID: 21667160098835140}
