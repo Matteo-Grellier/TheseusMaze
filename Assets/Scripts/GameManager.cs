@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public Maze mazeReference = null; // will auto get the reference of the ONLY Maze on the scene
     private bool asLaunchedGeneration = false;
 
+    public bool isGameOver = false;
+
     [SerializeField]
     private GameObject enemyPrefab;
     private GameObject enemy;

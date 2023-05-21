@@ -9,10 +9,13 @@ public class Enemy : MonoBehaviour
 
     private float visionAngle = 190f;
     private float visionDistance = 10f;
+    private float distanceToCatch = 1f;
 
     public bool isMoving = false;
     private bool hasDetectedPlayer = false;
     private bool isSearchingPlayer = false;
+
+    private bool isCatchingPlayer = true;
 
     private Pathfinding pathfinding;
 
@@ -47,6 +50,12 @@ public class Enemy : MonoBehaviour
         if(GameManager.instance.mazeReference == null || !GameManager.instance.mazeReference.isDoneGenerating)
         {
             Debug.LogWarning("maze array is empty");
+            return;
+        }
+
+        if(GameManager.instance.isGameOver) 
+        {
+            HandleGameOver();
             return;
         }
 
@@ -144,7 +153,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if(player.gameObject != other.gameObject) return;
+        if(player.gameObject != other.gameObject || GameManager.instance.isGameOver) return;
 
         RaycastHit hit;
 
@@ -196,10 +205,14 @@ public class Enemy : MonoBehaviour
 
             bool isPointedByTorchlight = GetIsPointedByTorchlight();
             bool isLookingAtPlayer = GetIsLookingAtPlayer();
+            isCatchingPlayer = GetDistanceWithPlayer() <= distanceToCatch;
 
-            Debug.LogWarning(isLookingAtPlayer);
-            
-            if(isHittingPlayer && (torchlight.isLightUp && isPointedByTorchlight || isLookingAtPlayer))
+            // Debug.LogWarning(isLookingAtPlayer);
+
+            if(isHittingPlayer && isCatchingPlayer)
+            {
+                GameManager.instance.isGameOver = true;
+            } else if(isHittingPlayer && (torchlight.isLightUp && isPointedByTorchlight || isLookingAtPlayer))
             {
                 HandlePlayerDetection();
             }
@@ -223,9 +236,7 @@ public class Enemy : MonoBehaviour
     {
         Vector3 directionToPlayer = (player.transform.position-transform.position).normalized;
         
-        float distanceWithPlayer = 
-        Mathf.Abs(player.transform.position.x - transform.position.x) 
-        + Mathf.Abs(player.transform.position.y - transform.position.y);
+        float distanceWithPlayer = GetDistanceWithPlayer();
         
         if((Vector3.Angle(transform.forward, directionToPlayer) < visionAngle / 2) && distanceWithPlayer <= visionDistance)
         {
@@ -233,6 +244,11 @@ public class Enemy : MonoBehaviour
         } 
 
         return false;
+    }
+
+    private float GetDistanceWithPlayer()
+    {
+        return Mathf.Abs(player.transform.position.x - transform.position.x) + Mathf.Abs(player.transform.position.y - transform.position.y);
     }
 
     private void HandlePlayerDetection()
@@ -253,5 +269,17 @@ public class Enemy : MonoBehaviour
             isSearchingPlayer = true;
             return;
         }
+    }
+
+    private void HandleGameOver()
+    {
+        Debug.LogWarning("I'm here");
+        // player.transform.LookAt(transform, Vector3.forward);
+
+        Vector3 distanceToPlayer = (player.transform.position-transform.position).normalized;
+        Vector3 distanceFromPlayer = (transform.position-player.transform.position).normalized;
+
+        player.transform.forward = new Vector3(distanceFromPlayer.x, 0, distanceFromPlayer.z);
+        transform.forward = new Vector3(distanceToPlayer.x, 0, distanceToPlayer.z);
     }
 }
