@@ -5,16 +5,27 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float speed = 10f;
+    [SerializeField] private float speed = 2.5f; // Look in Unity to change the speed !
+
+    private float visionAngle = 190f;
+    private float visionDistance = 10f;
+    private float distanceToCatch = 1f;
 
     public bool isMoving = false;
+    private bool hasDetectedPlayer = false;
+    private bool isSearchingPlayer = false;
+
+    private bool isCatchingPlayer = true;
+
     private Pathfinding pathfinding;
 
     private Vector3 currentGraphPosition;
     private Vector3 nextGraphPosition;
-    private Vector3 movementDirection = Vector3.zero;
+    private Vector3 nextPosition = Vector3.zero;
 
     public Vector3 destination;
+
+    private Player player;
 
     void Start() // Now we can use Start because the Instance is created in gameManager when the maze is generated !
     {
@@ -29,36 +40,70 @@ public class Enemy : MonoBehaviour
         //Initialize nextGraphPosition to the transform position (to move with pathfinding in the Update method)
         nextGraphPosition = ConvertPositionToGraphPosition(transform.position);
 
-        pathfinding = new Pathfinding();
+        FindThePath();
+
+        player = GameManager.instance.player;
     }
 
     void FixedUpdate()
     {
         if(GameManager.instance.mazeReference == null || !GameManager.instance.mazeReference.isDoneGenerating)
         {
-            Debug.Log("maze array is empty");
+            Debug.LogWarning("maze array is empty");
             return;
         }
 
-        if(!pathfinding.ispathFindingInProgress && destination != ConvertPositionToGraphPosition(transform.position))
+        if(GameManager.instance.isGameOver) 
         {
-            string[,] graph = GameManager.instance.mazeReference.mazeArray;
-            Debug.Log(graph[2, 4]);
-            StartCoroutine(pathfinding.GraphSearch(graph, currentGraphPosition, destination)); // Search for a path in the graph
+            HandleGameOver();
+            return;
         }
+
+        // if(hasDetectedPlayer && isSearchingPlayer)
+        // {
+        //     currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
+        //     FindThePath();
+        //     isSearchingPlayer = false;
+        // } 
+
+
+        // if(isSearchingPlayer && ConvertPositionToGraphPosition(transform.position) == destination)
+        // {
+        //     isSearchingPlayer = false;
+        //     hasDetectedPlayer = false;   
+        //     Debug.LogWarning("FALSY");
+        // }
+
+        if(!pathfinding.ispathFindingInProgress && destination != ConvertPositionToGraphPosition(transform.position))
+            FindThePath();
        
         if(pathfinding.pathFound)
             MoveThroughPath();
-        
-        if(destination == ConvertPositionToGraphPosition(transform.position) ||!pathfinding.isFindablePath)
+               
+        if(destination == ConvertPositionToGraphPosition(transform.position) || !pathfinding.isFindablePath)
         {
+            // transform.position = ConvertGraphPositionToPosition(currentGraphPosition, transform.position.y);
             isMoving = false;
             pathfinding.ispathFindingInProgress = false;
-            pathfinding.ClearPathFindingData();
+            // pathfinding.ClearPathFindingData();
+
+            // Search for a better solution ?
+            isSearchingPlayer = false;
+            hasDetectedPlayer = false; 
 
             currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
             destination = GetRandomVectorInMaze();
+
+            // hasDetectedPlayer = false;
         }
+    }
+
+    private void FindThePath()
+    {
+        string[,] graph = GameManager.instance.mazeReference.mazeArray;
+        // StartCoroutine(pathfinding.GraphSearch(graph, currentGraphPosition, destination)); // Search for a path in the graph
+        pathfinding = new Pathfinding(graph, currentGraphPosition, destination);
+        StartCoroutine(pathfinding.GraphSearch());
     }
 
     private Vector3 GetRandomVectorInMaze()
@@ -83,17 +128,17 @@ public class Enemy : MonoBehaviour
     {
         isMoving = true;
 
+        if(nextPosition != transform.position)
+            transform.forward = (nextPosition-transform.position).normalized;
+
         if(ConvertPositionToGraphPosition(transform.position) == nextGraphPosition && nextGraphPosition != destination)
         {
             currentGraphPosition = nextGraphPosition;
             nextGraphPosition = pathfinding.GetNextDirection(currentGraphPosition);
-            movementDirection = ConvertGraphPositionToPosition(nextGraphPosition, transform.position.y);
+            nextPosition = ConvertGraphPositionToPosition(nextGraphPosition, transform.position.y);
         }
         
-        transform.position = Vector3.MoveTowards(transform.position, movementDirection, speed * Time.deltaTime);
-        
-        if(movementDirection != transform.position)
-            transform.forward = movementDirection-transform.position;
+        transform.position = Vector3.MoveTowards(transform.position, nextPosition, speed * Time.fixedDeltaTime);
     }
 
     private Vector3 ConvertGraphPositionToPosition(Vector3 graphPosition, float yPosition)
@@ -104,5 +149,120 @@ public class Enemy : MonoBehaviour
     private Vector3 ConvertPositionToGraphPosition(Vector3 position)
     {
         return new Vector3(position.x, 0, position.z); // WARNING: TError here (because not 1,1) ?
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(player.gameObject != other.gameObject || GameManager.instance.isGameOver) return;
+
+        HandleRaycast();
+
+        if(player.isTrapped || player.isWalkingOnGravel)
+        {
+            HandlePlayerDetection();
+        } 
+        else {
+            hasDetectedPlayer = false;
+        }
+    }
+
+    private void HandleRaycast()
+    {
+        RaycastHit hit;
+
+        LayerMask entityLayerBit = 1 << 12;
+        LayerMask wallLayerBit = 1 << 13;
+        LayerMask layerMaskBits = wallLayerBit | entityLayerBit;
+
+        bool isRaycasting = Physics.Raycast(transform.position, player.transform.position-transform.position, out hit, Mathf.Infinity, layerMaskBits);
+        
+        if(isRaycasting) // Improve Performance with FixedUpdate
+        {
+            Debug.DrawRay(transform.position, (player.transform.position-transform.position), Color.red);
+            // Debug.LogWarning(hit.collider);
+
+            bool isHittingPlayer = hit.collider.gameObject == player.gameObject;
+            Torchlight torchlight = player.GetComponentInChildren<Torchlight>();
+
+            bool isPointedByTorchlight = GetIsPointedByTorchlight();
+            bool isLookingAtPlayer = GetIsLookingAtPlayer();
+            isCatchingPlayer = GetDistanceWithPlayer() <= distanceToCatch;
+
+            Debug.LogWarning("DISTANCE" + GetDistanceWithPlayer());
+
+            // Debug.LogWarning(isLookingAtPlayer);
+
+            if(isHittingPlayer && isCatchingPlayer)
+            {
+                GameManager.instance.isGameOver = true;
+            } else if(isHittingPlayer && (torchlight.isLightUp && isPointedByTorchlight || isLookingAtPlayer))
+            {
+                HandlePlayerDetection();
+            }
+        }
+    }
+
+    private bool GetIsPointedByTorchlight()
+    {
+        Vector3 directionFromPlayer = (transform.position-player.transform.position).normalized;
+        Torchlight torchlight = player.GetComponentInChildren<Torchlight>();
+        
+        if(Vector3.Angle(player.transform.forward, directionFromPlayer) < torchlight.GetComponent<Light>().spotAngle / 2)
+        {
+            return true;
+        } 
+
+        return false;
+    }
+
+    private bool GetIsLookingAtPlayer()
+    {
+        Vector3 directionToPlayer = (player.transform.position-transform.position).normalized;
+        
+        float distanceWithPlayer = GetDistanceWithPlayer();
+        
+        if((Vector3.Angle(transform.forward, directionToPlayer) < visionAngle / 2) && distanceWithPlayer <= visionDistance)
+        {
+            return true;
+        } 
+
+        return false;
+    }
+
+    private float GetDistanceWithPlayer()
+    {
+        return Mathf.Abs(player.transform.position.x - transform.position.x) + Mathf.Abs(player.transform.position.z - transform.position.z);
+    }
+
+    private void HandlePlayerDetection()
+    {
+        if(!hasDetectedPlayer) 
+        {
+            // Debug.LogWarning("ARE YOU HERE ?");
+            hasDetectedPlayer = true;
+        }
+
+        if(ConvertPositionToGraphPosition(transform.position) == nextGraphPosition && hasDetectedPlayer && !isSearchingPlayer)
+        {
+            isMoving = false;
+            // Debug.LogWarning("GO CREATE A NEW PATH");
+            currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
+            destination = new Vector3(Mathf.Round(player.transform.position.x), 0, Mathf.Round(player.transform.position.z));
+            FindThePath();
+            isSearchingPlayer = true;
+            return;
+        }
+    }
+
+    private void HandleGameOver()
+    {
+        // Debug.LogWarning("I'm here");
+        // player.transform.LookAt(transform, Vector3.forward);
+
+        Vector3 directionToPlayer = (player.transform.position-transform.position).normalized;
+        Vector3 directionFromPlayer = (transform.position-player.transform.position).normalized;
+
+        player.transform.forward = new Vector3(directionFromPlayer.x, 0, directionFromPlayer.z);
+        transform.forward = new Vector3(directionToPlayer.x, 0, directionToPlayer.z);
     }
 }

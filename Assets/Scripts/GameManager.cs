@@ -19,9 +19,13 @@ public class GameManager : MonoBehaviour
     public Maze mazeReference = null; // will auto get the reference of the ONLY Maze on the scene
     private bool asLaunchedGeneration = false;
 
+    public bool isGameOver = false;
+
     [SerializeField]
     private GameObject enemyPrefab;
     private GameObject enemy;
+
+    public Player player;
 
     private void Awake() 
     {
@@ -36,39 +40,53 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
 
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         SceneManager.activeSceneChanged += OnActiveSceneChange; // subscribe to the activeSceneChanged event
     }
 
     private void Update() 
     {
-        if (!asLaunchedGeneration && SceneManager.GetActiveScene().name == "GameScene" && mazeReference == null)
+        string nameOfActiveScene = SceneManager.GetActiveScene().name;
+
+        if(nameOfActiveScene == "GameOverScene") return;
+
+        if(player == null && nameOfActiveScene != "Menu" && nameOfActiveScene != "EditScene")
+        {
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        }
+
+        if(enemy == null && mazeReference && mazeReference.isDoneGenerating && nameOfActiveScene != "EditScene")
+        {
+            enemy = Instantiate(enemyPrefab);
+            Debug.Log("I CREATE THE enemy" + enemy);
+        }
+
+        if(isGameOver) 
+        {
+            HandleGameOver();
+
+        }
+
+        if (!asLaunchedGeneration && nameOfActiveScene == "GameScene" && mazeReference == null)
         {
             mazeReference = GameObject.Find("Maze").GetComponent<Maze>();
             mazeReference.SetGenerationInformations(isRandomlyGenerated, mapToGenerateId);
             mazeReference.StartMazeGeneration();
             asLaunchedGeneration = true;
         }
-        else if (!asLaunchedGeneration && SceneManager.GetActiveScene().name == "EditScene")
+        else if (!asLaunchedGeneration && nameOfActiveScene == "EditScene")
         {
             mazeReference = GameObject.Find("Maze").GetComponent<Maze>();
             mazeReference.SetGenerationInformations(isRandomlyGenerated, mapToGenerateId);
             mazeReference.StartMazeGeneration();
             asLaunchedGeneration = true;
         }
-        else if (!asLaunchedGeneration && SceneManager.GetActiveScene().name == "Mathéo")
+        else if (!asLaunchedGeneration && nameOfActiveScene == "Mathéo")
         {
             mazeReference = GameObject.Find("Maze").GetComponent<Maze>();
             mazeReference.SetGenerationInformations(true, 0);
             mazeReference.StartMazeGeneration();
             asLaunchedGeneration = true;
-        }
-
-        // Debug.Log("ActiveScene = " + SceneManager.GetActiveScene().name);
-
-        if(enemy == null && mazeReference.isDoneGenerating && SceneManager.GetActiveScene().name != "EditScene")
-        {
-            enemy = Instantiate(enemyPrefab);
-            Debug.Log("I CREATE THE enemy" + enemy);
         }
     }
 
@@ -93,6 +111,22 @@ public class GameManager : MonoBehaviour
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    private void HandleGameOver()
+    {
+        player.gameObject.SetActive(false);
+        player.GetComponentInChildren<Camera>().enabled = false;
+        enemy.transform.GetChild(0).gameObject.SetActive(true);
+        enemy.GetComponentInChildren<Camera>().enabled = true;
+        
+        StartCoroutine(WaitAndLoadGameOverScene());
+    }
+
+    private IEnumerator WaitAndLoadGameOverScene()
+    {
+        yield return new WaitForSeconds(3);
+        LoadScene("GameOverScene");
     }
 
     public void Win()

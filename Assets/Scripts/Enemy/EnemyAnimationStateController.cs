@@ -19,6 +19,11 @@ public class EnemyAnimationStateController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(GameManager.instance.isGameOver) {
+            animator.SetBool("isCatchingPlayer", true);
+            return;
+        }
+
         animator.SetBool("isMoving", currentEnemy.isMoving);
     }
 }
