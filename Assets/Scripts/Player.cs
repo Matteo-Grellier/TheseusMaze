@@ -13,8 +13,13 @@ public class Player : MonoBehaviour
 
     public float speed = 2f;
 
+
+
     private GameObject previousCase;
     private GameObject currentCase;
+
+	private GameObject currentFocusTrap;
+	private GameObject previousFocusTrap;
 
 	public Animator animator;
 
@@ -33,11 +38,8 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         float x = Input.GetAxis("Horizontal");
-		// Debug.Log(x);
 
         float z = Input.GetAxis("Vertical");
-		// Debug.Log(z);
-		// print(animator.GetBool("Run_Anim"));
 
 		if (x != 0 && !isTrapped || z != 0 && !isTrapped)
 		{
@@ -62,13 +64,13 @@ public class Player : MonoBehaviour
         {
             takeTrap();
         }
-
+		focusTrap();
         showPreviewPlacement();
     }
 
     void takeTrap()
     {
-        if (raycast && hit.collider.gameObject.name == "Case(Clone)") // when click on a case (hopefully with a trap)
+        if (raycast && hit.collider.gameObject.name == "Case(Clone)" && !isTrapped) // when click on a case (hopefully with a trap)
         {
             GameObject trap = hit.collider.gameObject.GetComponent<Case>().trapObject;
             GameObject trapPreview = hit.collider.gameObject.GetComponent<Case>().previewObject;
@@ -99,6 +101,28 @@ public class Player : MonoBehaviour
             elevatorScript.OnClickedByPlayer();
         }
     }
+
+	void focusTrap()
+	{
+		if (raycast)
+		{
+			currentFocusTrap = hit.collider.gameObject.GetComponent<Case>().trapObject;
+			if (currentFocusTrap != previousFocusTrap)
+			{
+				if (previousFocusTrap != null)
+				{
+					previousFocusTrap.GetComponent<Renderer>().material.color = Color.white;
+				}
+				if (currentFocusTrap != null)
+				{
+					currentFocusTrap.GetComponent<Renderer>().material.color = Color.yellow;
+				}
+				previousFocusTrap = currentFocusTrap;
+			}
+
+		}
+	}
+
 
     void showPreviewPlacement()
     {

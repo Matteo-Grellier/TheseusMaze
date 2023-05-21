@@ -12,8 +12,8 @@ public class Key : MonoBehaviour
         }
     }
 
-	public float amplitude = 100f;
-	public float frequency = 1f;
+	private float amplitude = 0.3f;
+	private float frequency = 1f;
 	public Vector3 posOffset = new Vector3 ();
 	public Vector3 tempPos = new Vector3 ();
 
