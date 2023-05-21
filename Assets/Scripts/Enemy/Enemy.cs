@@ -155,26 +155,7 @@ public class Enemy : MonoBehaviour
     {
         if(player.gameObject != other.gameObject || GameManager.instance.isGameOver) return;
 
-        RaycastHit hit;
-
-        LayerMask entityLayerBit = 1 << 12;
-        LayerMask wallLayerBit = 1 << 13;
-        LayerMask layerMaskBits = wallLayerBit | entityLayerBit;
-
         HandleRaycast();
-
-        if(Physics.Raycast(transform.position, player.transform.position-transform.position, out hit, Mathf.Infinity, layerMaskBits)) // Improve Performance with FixedUpdate
-        {
-            Debug.DrawRay(transform.position, (player.transform.position-transform.position), Color.red);
-            // Debug.LogWarning(hit.collider);
-            
-            if(hit.collider.gameObject == player.gameObject 
-            && player.GetComponentInChildren<Torchlight>().isLightUp 
-            && player.transform.forward == (player.transform.position-transform.position).normalized)
-            {
-                HandlePlayerDetection();
-            }
-        }
 
         if(player.isTrapped || player.isWalkingOnGravel)
         {
@@ -206,6 +187,8 @@ public class Enemy : MonoBehaviour
             bool isPointedByTorchlight = GetIsPointedByTorchlight();
             bool isLookingAtPlayer = GetIsLookingAtPlayer();
             isCatchingPlayer = GetDistanceWithPlayer() <= distanceToCatch;
+
+            Debug.LogWarning("DISTANCE" + GetDistanceWithPlayer());
 
             // Debug.LogWarning(isLookingAtPlayer);
 
@@ -248,21 +231,21 @@ public class Enemy : MonoBehaviour
 
     private float GetDistanceWithPlayer()
     {
-        return Mathf.Abs(player.transform.position.x - transform.position.x) + Mathf.Abs(player.transform.position.y - transform.position.y);
+        return Mathf.Abs(player.transform.position.x - transform.position.x) + Mathf.Abs(player.transform.position.z - transform.position.z);
     }
 
     private void HandlePlayerDetection()
     {
         if(!hasDetectedPlayer) 
         {
-            Debug.LogWarning("ARE YOU HERE ?");
+            // Debug.LogWarning("ARE YOU HERE ?");
             hasDetectedPlayer = true;
         }
 
         if(ConvertPositionToGraphPosition(transform.position) == nextGraphPosition && hasDetectedPlayer && !isSearchingPlayer)
         {
             isMoving = false;
-            Debug.LogWarning("GO CREATE A NEW PATH");
+            // Debug.LogWarning("GO CREATE A NEW PATH");
             currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
             destination = new Vector3(Mathf.Round(player.transform.position.x), 0, Mathf.Round(player.transform.position.z));
             FindThePath();
@@ -273,13 +256,13 @@ public class Enemy : MonoBehaviour
 
     private void HandleGameOver()
     {
-        Debug.LogWarning("I'm here");
+        // Debug.LogWarning("I'm here");
         // player.transform.LookAt(transform, Vector3.forward);
 
-        Vector3 distanceToPlayer = (player.transform.position-transform.position).normalized;
-        Vector3 distanceFromPlayer = (transform.position-player.transform.position).normalized;
+        Vector3 directionToPlayer = (player.transform.position-transform.position).normalized;
+        Vector3 directionFromPlayer = (transform.position-player.transform.position).normalized;
 
-        player.transform.forward = new Vector3(distanceFromPlayer.x, 0, distanceFromPlayer.z);
-        transform.forward = new Vector3(distanceToPlayer.x, 0, distanceToPlayer.z);
+        player.transform.forward = new Vector3(directionFromPlayer.x, 0, directionFromPlayer.z);
+        transform.forward = new Vector3(directionToPlayer.x, 0, directionToPlayer.z);
     }
 }

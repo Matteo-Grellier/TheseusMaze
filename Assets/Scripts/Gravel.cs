@@ -13,6 +13,14 @@ public class Gravel : MonoBehaviour
         player = GameManager.instance.player;
     }
 
+    private void Update()
+    {
+        if(player == null)
+        {
+            player = GameManager.instance.player;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject != player.gameObject) return;

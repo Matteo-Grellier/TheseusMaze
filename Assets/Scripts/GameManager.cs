@@ -46,9 +46,16 @@ public class GameManager : MonoBehaviour
 
     private void Update() 
     {
+        if(player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        }
+
         if(isGameOver) 
         {
+            player.gameObject.SetActive(false);
             player.GetComponentInChildren<Camera>().enabled = false;
+            enemy.transform.GetChild(0).gameObject.SetActive(true);
             enemy.GetComponentInChildren<Camera>().enabled = true;
         }
 

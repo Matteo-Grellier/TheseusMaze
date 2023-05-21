@@ -214,7 +214,7 @@ public class Pathfinding
 
     private int GetEstimatedDistance(Vector3 firstPosition, Vector3 secondPosition)
     {
-        return Math.Abs((int)firstPosition.x - (int)secondPosition.x) + Math.Abs((int)firstPosition.y - (int)secondPosition.y);
+        return Math.Abs((int)firstPosition.x - (int)secondPosition.x) + Math.Abs((int)firstPosition.z - (int)secondPosition.z);
     }
 
     private void CreatePath(Vector3 start, Vector3 destination)
