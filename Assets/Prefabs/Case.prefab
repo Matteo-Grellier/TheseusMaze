@@ -108,8 +108,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65ee1cebebf21c644a09458f450925a4, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   parentcase: {fileID: 5329499051267391928}
 --- !u!1 &3125311833335848312
 GameObject:
@@ -163,8 +163,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0096873, y: 2, z: 1.0096873}
-  m_Center: {x: 0.000000059604645, y: 0.95000005, z: -0.000000059604645}
+  m_Size: {x: 1.0096873, y: 3.9616036, z: 1.0096873}
+  m_Center: {x: 0.000000059604645, y: 1.9308016, z: -0.000000059604645}
 --- !u!114 &5329499051267391928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,8 +175,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8023ccf277dbaed438b63300e955615b, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   wallObject: {fileID: 3038629562157154683}
   gravelObject: {fileID: 1457150070438346652}
   mudObject: {fileID: 3722533770181046901}
@@ -298,7 +298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1608030014090283454, guid: 1381f1fd28c460c188552aed757994c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.711
+      value: 0.004
       objectReference: {fileID: 0}
     - target: {fileID: 1608030014090283454, guid: 1381f1fd28c460c188552aed757994c5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -306,7 +306,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1608030014090283454, guid: 1381f1fd28c460c188552aed757994c5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.78
+      value: 0.002
       objectReference: {fileID: 0}
     - target: {fileID: 1608030014090283454, guid: 1381f1fd28c460c188552aed757994c5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -508,7 +508,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 631306837538475207, guid: 79d371fa8c6635a4e9fd5307e014352e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1396554489934096665, guid: 79d371fa8c6635a4e9fd5307e014352e, type: 3}
       propertyPath: m_Layer
@@ -518,6 +518,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 3155791569123750194, guid: 79d371fa8c6635a4e9fd5307e014352e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4068311410367484408, guid: 79d371fa8c6635a4e9fd5307e014352e, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -525,6 +529,26 @@ PrefabInstance:
     - target: {fileID: 4134976699243192821, guid: 79d371fa8c6635a4e9fd5307e014352e, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469712008761093957, guid: 79d371fa8c6635a4e9fd5307e014352e, type: 3}
+      propertyPath: m_Size.y
+      value: 0.20415176
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469712008761093957, guid: 79d371fa8c6635a4e9fd5307e014352e, type: 3}
+      propertyPath: m_Size.z
+      value: 1.998717
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469712008761093957, guid: 79d371fa8c6635a4e9fd5307e014352e, type: 3}
+      propertyPath: m_Center.x
+      value: -0.053126015
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469712008761093957, guid: 79d371fa8c6635a4e9fd5307e014352e, type: 3}
+      propertyPath: m_Center.y
+      value: 0.0015628834
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469712008761093957, guid: 79d371fa8c6635a4e9fd5307e014352e, type: 3}
+      propertyPath: m_Center.z
+      value: -0.014267464
       objectReference: {fileID: 0}
     - target: {fileID: 7390783682468574476, guid: 79d371fa8c6635a4e9fd5307e014352e, type: 3}
       propertyPath: m_Layer
@@ -549,8 +573,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb5acb8d2c9fae64f9d43a0ab324878b, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5786888602631058139 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 631306837538475207, guid: 79d371fa8c6635a4e9fd5307e014352e, type: 3}
@@ -645,7 +669,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2238624437475408, guid: e757c510b0dd5efa8809b4eeb2b888db, type: 3}
       propertyPath: m_Materials.Array.data[0]
-      value:
+      value: 
       objectReference: {fileID: -8896051167825165466, guid: f249051a3321cc2b2ad5a68aa826bd0f, type: 3}
     - target: {fileID: 1174552029129761599, guid: e757c510b0dd5efa8809b4eeb2b888db, type: 3}
       propertyPath: m_RootOrder
@@ -705,7 +729,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2874144619467205786, guid: e757c510b0dd5efa8809b4eeb2b888db, type: 3}
       propertyPath: m_Mesh
-      value:
+      value: 
       objectReference: {fileID: -9113646534211321542, guid: f249051a3321cc2b2ad5a68aa826bd0f, type: 3}
     - target: {fileID: 4500409643641689441, guid: e757c510b0dd5efa8809b4eeb2b888db, type: 3}
       propertyPath: m_Layer
@@ -733,8 +757,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7c762c203e443ad78cc461b17f35f59, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8887444776144569665
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -800,7 +824,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: f249051a3321cc2b2ad5a68aa826bd0f, type: 3}
       propertyPath: m_Materials.Array.data[0]
-      value:
+      value: 
       objectReference: {fileID: 2100000, guid: 4bbdd88cc1a4faa1aab14f373331b11c, type: 2}
     - target: {fileID: 919132149155446097, guid: f249051a3321cc2b2ad5a68aa826bd0f, type: 3}
       propertyPath: m_Name
@@ -835,7 +859,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -648587561545988773, guid: b4cc6794b5f7c7040b3f2c328a053759, type: 3}
       propertyPath: endElevatorReference
-      value:
+      value: 
       objectReference: {fileID: 1062308600365343966}
     - target: {fileID: 3865295769124577351, guid: b4cc6794b5f7c7040b3f2c328a053759, type: 3}
       propertyPath: m_Name

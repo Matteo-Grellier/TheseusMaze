@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Case : MonoBehaviour
 {
-    [Header("Mandatory References")]
-    public GameObject wallObject;
-    public GameObject gravelObject;
-    public GameObject mudObject;
-    public GameObject trapObject;
-    public GameObject elevatorObject;
-    public GameObject keyObject;
-    public GameObject debugCase;
-    public GameObject previewObject;
+	[Header("Mandatory References")]
+	public GameObject wallObject;
+	public GameObject gravelObject;
+	public GameObject mudObject;
+	public GameObject trapObject;
+	public GameObject elevatorObject;
+	public GameObject keyObject;
+	public GameObject debugCase;
+	public GameObject previewObject;
 
 	public int caseId;
 	public int RoomId;
@@ -22,9 +23,6 @@ public class Case : MonoBehaviour
 	private GameManager gameManager;
 
 	private ToolsPanel toolsPanel;
-
-	private static bool hasAlreadyAnElevator = false;
-	private static bool hasAlreadyAKey = false;
 
 	private void Awake()
 	{
@@ -35,9 +33,9 @@ public class Case : MonoBehaviour
 		gameManager = GameManager.instance;
 	}
 
-    public void CaseClicked()
-    {
-        if (gameManager.isEditMode == true)
+	public void CaseClicked()
+	{
+		if (gameManager.isEditMode == true)
 		{
 			wallObject.SetActive(!wallObject.gameObject.activeInHierarchy);
 		}
@@ -47,7 +45,10 @@ public class Case : MonoBehaviour
 	{
 		if (Input.GetMouseButton(0))
 		{
-			CaseLeftClicked(toolsPanel.objectToPlace);
+			if (!EventSystem.current.IsPointerOverGameObject())
+			{
+				CaseLeftClicked(toolsPanel.objectToPlace);
+			}
 		}
 	}
 
@@ -104,30 +105,22 @@ public class Case : MonoBehaviour
 					caseMazeReference.maze.rooms[RoomId].cases[caseId].state = "path";
 					break;
 				case "Key":
-					if (!hasAlreadyAKey)
-					{
-						hasAlreadyAKey = true;
-						wallObject.SetActive(false);
-						mudObject.SetActive(false);
-						trapObject.SetActive(false);
-						gravelObject.SetActive(false);
-						keyObject.SetActive(true);
-						elevatorObject.SetActive(false);
-						caseMazeReference.maze.rooms[RoomId].cases[caseId].state = "key";
-					}
+					wallObject.SetActive(false);
+					mudObject.SetActive(false);
+					trapObject.SetActive(false);
+					gravelObject.SetActive(false);
+					keyObject.SetActive(true);
+					elevatorObject.SetActive(false);
+					caseMazeReference.maze.rooms[RoomId].cases[caseId].state = "key";
 					break;
 				case "Elevator":
-					if (!hasAlreadyAnElevator)
-					{
-						hasAlreadyAnElevator = true;
-						wallObject.SetActive(false);
-						mudObject.SetActive(false);
-						trapObject.SetActive(false);
-						gravelObject.SetActive(false);
-						keyObject.SetActive(false);
-						elevatorObject.SetActive(true);
-						caseMazeReference.maze.rooms[RoomId].cases[caseId].state = "elevator";
-					}
+					wallObject.SetActive(false);
+					mudObject.SetActive(false);
+					trapObject.SetActive(false);
+					gravelObject.SetActive(false);
+					keyObject.SetActive(false);
+					elevatorObject.SetActive(true);
+					caseMazeReference.maze.rooms[RoomId].cases[caseId].state = "elevator";
 					break;
 			}
 		}

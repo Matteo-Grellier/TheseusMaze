@@ -113,7 +113,7 @@ public class Room : MonoBehaviour
 						break;
 					case "key" :
 						isWallShown = false;
-						isMudShown = true;
+						isMudShown = false;
 						isGravelShown = false;
 						isTrapShown = false;
 						isKey = true;
@@ -122,7 +122,7 @@ public class Room : MonoBehaviour
 						break;
 					case "elevator" :
 						isWallShown = false;
-						isMudShown = true;
+						isMudShown = false;
 						isGravelShown = false;
 						isTrapShown = false;
 						isKey = false;
