@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float speed = 2.5f; // Look in Unity to change the speed !
+    public EnemyAnimationStateController enemyAnimationController;
+
+    public float speed = 2.5f; // Look in Unity to change the speed !
 
     private float visionAngle = 190f;
     private float visionDistance = 10f;
@@ -139,6 +141,7 @@ public class Enemy : MonoBehaviour
         }
         
         transform.position = Vector3.MoveTowards(transform.position, nextPosition, speed * Time.fixedDeltaTime);
+        Debug.LogWarning(speed);
     }
 
     private Vector3 ConvertGraphPositionToPosition(Vector3 graphPosition, float yPosition)
@@ -188,7 +191,7 @@ public class Enemy : MonoBehaviour
             bool isLookingAtPlayer = GetIsLookingAtPlayer();
             isCatchingPlayer = GetDistanceWithPlayer() <= distanceToCatch;
 
-            Debug.LogWarning("DISTANCE" + GetDistanceWithPlayer());
+            // Debug.LogWarning("DISTANCE" + GetDistanceWithPlayer());
 
             // Debug.LogWarning(isLookingAtPlayer);
 
