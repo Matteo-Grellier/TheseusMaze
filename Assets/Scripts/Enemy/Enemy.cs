@@ -61,21 +61,6 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        // if(hasDetectedPlayer && isSearchingPlayer)
-        // {
-        //     currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
-        //     FindThePath();
-        //     isSearchingPlayer = false;
-        // } 
-
-
-        // if(isSearchingPlayer && ConvertPositionToGraphPosition(transform.position) == destination)
-        // {
-        //     isSearchingPlayer = false;
-        //     hasDetectedPlayer = false;   
-        //     Debug.LogWarning("FALSY");
-        // }
-
         if(!pathfinding.ispathFindingInProgress && destination != ConvertPositionToGraphPosition(transform.position))
             FindThePath();
        
@@ -84,10 +69,8 @@ public class Enemy : MonoBehaviour
                
         if(destination == ConvertPositionToGraphPosition(transform.position) || !pathfinding.isFindablePath)
         {
-            // transform.position = ConvertGraphPositionToPosition(currentGraphPosition, transform.position.y);
             isMoving = false;
             pathfinding.ispathFindingInProgress = false;
-            // pathfinding.ClearPathFindingData();
 
             // Search for a better solution ?
             isSearchingPlayer = false;
@@ -96,7 +79,6 @@ public class Enemy : MonoBehaviour
             currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
             destination = GetRandomVectorInMaze();
 
-            // hasDetectedPlayer = false;
         }
     }
 
@@ -191,10 +173,6 @@ public class Enemy : MonoBehaviour
             bool isLookingAtPlayer = GetIsLookingAtPlayer();
             isCatchingPlayer = GetDistanceWithPlayer() <= distanceToCatch;
 
-            // Debug.LogWarning("DISTANCE" + GetDistanceWithPlayer());
-
-            // Debug.LogWarning(isLookingAtPlayer);
-
             if(isHittingPlayer && isCatchingPlayer)
             {
                 GameManager.instance.isGameOver = true;
@@ -248,7 +226,6 @@ public class Enemy : MonoBehaviour
         if(ConvertPositionToGraphPosition(transform.position) == nextGraphPosition && hasDetectedPlayer && !isSearchingPlayer)
         {
             isMoving = false;
-            // Debug.LogWarning("GO CREATE A NEW PATH");
             currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
             destination = new Vector3(Mathf.Round(player.transform.position.x), 0, Mathf.Round(player.transform.position.z));
             FindThePath();
@@ -259,9 +236,6 @@ public class Enemy : MonoBehaviour
 
     private void HandleGameOver()
     {
-        // Debug.LogWarning("I'm here");
-        // player.transform.LookAt(transform, Vector3.forward);
-
         Vector3 directionToPlayer = (player.transform.position-transform.position).normalized;
         Vector3 directionFromPlayer = (transform.position-player.transform.position).normalized;
 

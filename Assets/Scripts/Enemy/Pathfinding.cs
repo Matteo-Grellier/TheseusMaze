@@ -7,11 +7,6 @@ using Utils;
 
 public class Pathfinding
 {
-    /*
-    TODO : IMPROVE CODE WITH CONSTRUCTOR => when we create a pathfinding, we use a constructor with graph, destination and start.
-    So we can call all methods for the pathfinding (GraphSearch, CreatePath etc...). And maybe we can use the Coroutine in the constructor.
-    */
-
     private string[,] graph;
     private Vector3 start;
     private Vector3 destination;
@@ -20,8 +15,6 @@ public class Pathfinding
     private Dictionary<Vector3, int> movementCosts;
     
     private Vector3 currentCell;
-
-    // private Vector3[] previousVerifyPath;
 
     // Vector A -> Vector B : Key = the current cell (B) and Value = where the current cell came from (A).
     private Dictionary<Vector3, Vector3> verifiedNodes = new Dictionary<Vector3, Vector3>(); // Nodes or Edges ?
@@ -73,7 +66,7 @@ public class Pathfinding
             {
                 int currentCost = movementCosts[currentCell] + GetCurrentNodeCost(graph, neighbor);
                 
-                if(!movementCosts.ContainsKey(neighbor) || currentCost < movementCosts[neighbor]) //maybe an error with instance of class ?
+                if(!movementCosts.ContainsKey(neighbor) || currentCost < movementCosts[neighbor])
                 {
                     if(movementCosts.ContainsKey(neighbor))
                         movementCosts[neighbor] = currentCost;
@@ -172,7 +165,6 @@ public class Pathfinding
                 Debug.Log(currentNode + "-->" + verifiedNodes[currentNode]);
                 currentNode = verifiedNodes[currentNode];
                 pathNodes.Add(currentNode, verifiedNodes[currentNode]);
-                // Debug.Log(pathNodes[currentNode] + " " + verifiedNodes[currentNode]);
             }
             Debug.Log("Path created !");
             pathFound = true;
@@ -186,8 +178,6 @@ public class Pathfinding
 
     public Vector3 GetNextDirection(Vector3 currentPosition)
     {
-        // Debug.Log("GetNextDirection, currentPos " + currentPosition + " " + pathNodes.ContainsKey(currentPosition));
-
         if(!pathFound) return currentPosition;
 
         return pathNodes.First(x => x.Value == currentPosition).Key;
