@@ -134,6 +134,7 @@ public class Maze : MonoBehaviour
                 }
                 else // is generated random
                 {
+                    newlyCreatedRoomScript.casesArray = new GameObject [roomSize, roomSize];
                     if (!isEndRoomSet)
                     {
                         int randomNumber = Random.Range(0,8);
@@ -247,13 +248,13 @@ public class Maze : MonoBehaviour
                 }
                 innerX = 0;
             }
-            yield return null;
         }
         else
         {
             Debug.Log("<color=red>[maze] Done Generating </color>");
             // Print2DStringArray(mazeArray);
             isDoneGenerating = true;
+            yield return null;
         }
     }
 
