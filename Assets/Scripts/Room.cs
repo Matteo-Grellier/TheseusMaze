@@ -217,6 +217,7 @@ public class Room : MonoBehaviour
                     Debug.Log("<color=red>currentCase = [" + currentCase.x + "," + currentCase.z + "]</color> + <color=purple>currentDirection = [" + currentDirection.x + "," + currentDirection.z + "]</color> = <color=green>newCaseVector = [" + newCaseVector.x + "," + newCaseVector.z + "]</color>");
                     if (newCaseVector.x <= maxRoomSize && newCaseVector.x >= 0 && newCaseVector.z <= maxRoomSize && newCaseVector.z >= 0) // if inside the bounds of the room
                     {
+                        // insérer ici un code pour vérifier si c'est pas un bordure, sinon ça prépare un tournant et ça remet dans la queue
                         casesArray[(int)newCaseVector.x, (int)newCaseVector.z].GetComponent<Case>().wallObject.SetActive(false);
                         queue.Enqueue(newCaseVector);
                         directionQueue.Enqueue(currentDirection);
@@ -226,9 +227,10 @@ public class Room : MonoBehaviour
                         StopCoroutine(RoomPathGeneration());
                     }
                     break;
-                case 2 : // turning on a side
+                case 2 : // turning on one side
                     if(currentDirection == Vector3.back || currentDirection == Vector3.forward)
                         currentDirection = (Random.Range(0,2) == 0) ? Vector3.right : Vector3.left;
+                    // insérer ici un code pour vérifier si c'est pas un coins, sinon ça ne fait pas et ça remet dans la queue
                     newCaseVector = currentCase + currentDirection;
                     Debug.Log("<color=red>currentCase = [" + currentCase.x + "," + currentCase.z + "]</color> + <color=purple>currentDirection = [" + currentDirection.x + "," + currentDirection.z + "]</color> = <color=green>newCaseVector = [" + newCaseVector.x + "," + newCaseVector.z + "]</color>");
                     if (newCaseVector.x <= maxRoomSize && newCaseVector.x >= 0 && newCaseVector.z <= maxRoomSize && newCaseVector.z >= 0) // if inside the bounds of the room
@@ -239,15 +241,35 @@ public class Room : MonoBehaviour
                     }
                     else if(newCaseVector.x > maxRoomSize || newCaseVector.x < 0 || newCaseVector.z > maxRoomSize || newCaseVector.z < 0)
                     {
-                        // casesArray[(int)newCaseVector.x, (int)newCaseVector.z].GetComponent<Case>().wallObject.SetActive(false);
                         StopCoroutine(RoomPathGeneration());
                     }
                     break;
-                case 3 : // dissociate
-
+                case 3 : // dissociate into two path
+                    newCaseVector = currentCase + currentDirection;
+                    Debug.Log("<color=red>currentCase = [" + currentCase.x + "," + currentCase.z + "]</color> + <color=purple>currentDirection = [" + currentDirection.x + "," + currentDirection.z + "]</color> = <color=green>newCaseVector = [" + newCaseVector.x + "," + newCaseVector.z + "]</color>");
+                    if (newCaseVector.x <= maxRoomSize && newCaseVector.x >= 0 && newCaseVector.z <= maxRoomSize && newCaseVector.z >= 0) // if inside the bounds of the room
+                    {
+                        // one go forward
+                        casesArray[(int)newCaseVector.x, (int)newCaseVector.z].GetComponent<Case>().wallObject.SetActive(false);
+                        queue.Enqueue(newCaseVector);
+                        directionQueue.Enqueue(currentDirection);
+                        // one go to side
+                        if(currentDirection == Vector3.back || currentDirection == Vector3.forward)
+                            currentDirection = (Random.Range(0,2) == 0) ? Vector3.right : Vector3.left;
+                        // insérer ici un code pour vérifier si c'est pas un coins, sinon ça ne fait pas et ça remet dans la queue
+                        newCaseVector = currentCase + currentDirection;
+                        casesArray[(int)newCaseVector.x, (int)newCaseVector.z].GetComponent<Case>().wallObject.SetActive(false);
+                        queue.Enqueue(newCaseVector);
+                        directionQueue.Enqueue(currentDirection);
+                    }
+                    else if(newCaseVector.x > maxRoomSize || newCaseVector.x < 0 || newCaseVector.z > maxRoomSize || newCaseVector.z < 0)
+                    {
+                        StopCoroutine(RoomPathGeneration());
+                    }
                     break;
             }
-            yield return null;
+            // yield return null;
+            yield return new WaitForSeconds(1);
         }
 
         yield return null;
