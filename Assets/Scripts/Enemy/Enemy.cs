@@ -12,8 +12,11 @@ public class Enemy : MonoBehaviour
     private float visionAngle = 190f;
     private float visionDistance = 10f;
     private float distanceToCatch = 1f;
+    private float distanceToListen = 2f;
 
     public bool isMoving = false;
+
+    private bool isPlayerNearby = false;
     private bool hasDetectedPlayer = false;
     private bool isSearchingPlayer = false;
 
@@ -60,6 +63,9 @@ public class Enemy : MonoBehaviour
             HandleGameOver();
             return;
         }
+
+        if(isPlayerNearby)
+            HandleNearbyPlayer();
 
         if(!pathfinding.ispathFindingInProgress && destination != ConvertPositionToGraphPosition(transform.position))
             FindThePath();
@@ -123,7 +129,6 @@ public class Enemy : MonoBehaviour
         }
         
         transform.position = Vector3.MoveTowards(transform.position, nextPosition, speed * Time.fixedDeltaTime);
-        Debug.LogWarning(speed);
     }
 
     private Vector3 ConvertGraphPositionToPosition(Vector3 graphPosition, float yPosition)
@@ -136,13 +141,25 @@ public class Enemy : MonoBehaviour
         return new Vector3(position.x, 0, position.z); // WARNING: TError here (because not 1,1) ?
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(player.gameObject != other.gameObject || GameManager.instance.isGameOver) return;
+        isPlayerNearby = true;
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if(player.gameObject != other.gameObject || GameManager.instance.isGameOver) return;
+        isPlayerNearby = false;
+    }
+
+    private void HandleNearbyPlayer()
+    {
         HandleRaycast();
 
-        if(player.isTrapped || player.isWalkingOnGravel)
+        bool playerMakeSounds = player.GetComponent<Rigidbody>().velocity != Vector3.zero && GetDistanceWithPlayer() <= distanceToListen;
+
+        if(player.isTrapped || player.isWalkingOnGravel || playerMakeSounds)
         {
             HandlePlayerDetection();
         } 
