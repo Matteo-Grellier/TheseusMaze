@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04280609, g: 0.05403389, b: 0.07376439, a: 1}
+  m_IndirectSpecularColor: {r: 0.042806067, g: 0.05403389, b: 0.07376432, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -627,7 +627,9 @@ MonoBehaviour:
   mapToGenerateId: 0
   youWinScreen: {fileID: 0}
   mazeReference: {fileID: 0}
+  isGameOver: 0
   enemyPrefab: {fileID: 78887187938855825, guid: c553ef81a66f073719a066fa0d49b458, type: 3}
+  player: {fileID: 0}
 --- !u!4 &307855852
 Transform:
   m_ObjectHideFlags: 0
@@ -1687,7 +1689,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45.35
+  m_fontSize: 61.7
   m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 1

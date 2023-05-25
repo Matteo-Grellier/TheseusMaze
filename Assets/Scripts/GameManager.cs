@@ -54,11 +54,11 @@ public class GameManager : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         }
 
-        if(enemy == null && mazeReference && mazeReference.isDoneGenerating && nameOfActiveScene != "EditScene")
-        {
-            enemy = Instantiate(enemyPrefab);
-            Debug.Log("I CREATE THE enemy" + enemy);
-        }
+        // if(enemy == null && mazeReference && mazeReference.isDoneGenerating && nameOfActiveScene != "EditScene")
+        // {
+        //     enemy = Instantiate(enemyPrefab);
+        //     Debug.Log("I CREATE THE enemy" + enemy);
+        // }
 
         if(isGameOver) 
         {

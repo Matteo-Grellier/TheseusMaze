@@ -206,7 +206,7 @@ public class Maze : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("<color=red>DOES IT GOES HERE ?</color>");
+                        Debug.LogError("This part of the function should never be called !");
                         if (innerY == (roomSize - 1)) // if at the last line of the room row
                             room = room - ((mazeSize * 3) - 1); // go to the first room of the next row
                         else
@@ -236,7 +236,7 @@ public class Maze : MonoBehaviour
                     // Debug.Log("[here] innerY+1 : " + (innerY+1) + " = " + roomSize + " ? && innerX+1 : " + (innerX+1) + " = " + roomSize + " ?");
                     if ((innerY + 1) == roomSize && (innerX + 1) >= roomSize) // if at the last line of the room row
                     {
-                        Debug.Log("retour nouvelle ligne");
+                        // Debug.Log("retour nouvelle ligne");
                         room = room - ((mazeSize * 3) - 1); // go to the first room of the next row
                         innerY = 0;
                     }
