@@ -287,8 +287,8 @@ public class Room : MonoBehaviour
         {
             if(!IsCaseAPath((int)newCaseVector.x, (int)newCaseVector.z)) // if new case is not a path
             {
-                bool isAboveCaseAPath = true; // they might be outside the bound of the array
-                bool isBelowCaseAPath = true; // they start at true, so if they are not set, it count as a no
+                bool? isAboveCaseAPath = null; // they might be outside the bound of the array
+                bool? isBelowCaseAPath = null; // they start at null, so if they are not set, it's different than
                 if(currentDirection == Vector3.left || currentDirection == Vector3.right) // if turning left or right, the "above" and "below" are up and down
                 {
                     if((int)newCaseVector.z + 1 <= maxRoomSize && (int)newCaseVector.z - 1 >= 0) // if above and below are within the room
@@ -318,7 +318,7 @@ public class Room : MonoBehaviour
                     }
                 }
 
-                if(isAboveCaseAPath == false && isBelowCaseAPath == false) // check if case "above" and "below" the new case are not allready path
+                if(isAboveCaseAPath != true && isBelowCaseAPath != true) // check if case "above" and "below" are not path or are outside bound
                 {
                     Debug.Log("<color=green>path to side !</color>");
                     casesArray[(int)newCaseVector.x, (int)newCaseVector.z].GetComponent<Case>().wallObject.SetActive(false); // set to path
