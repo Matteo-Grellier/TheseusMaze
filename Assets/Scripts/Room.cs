@@ -246,8 +246,11 @@ public class Room : MonoBehaviour
         }
         else if(newCaseVector.x > maxRoomSize || newCaseVector.x < 0 || newCaseVector.z > maxRoomSize || newCaseVector.z < 0) // if new case is outside the room
         {
-            Debug.Log("<color=blue>could not go forward so going on side</color>");
-            TryToPathToSide(currentCase, currentDirection, maxRoomSize, true); // try to path to the side
+            if(isANativePath) // if isn't a native path, it means that it came from a TryToPathToSide so let's not call it again or it will create A LOOP IN THE TIME SPACE CONTINIUM !!!! (wich is bad)
+            {
+                Debug.Log("<color=blue>could not go forward so going on side</color>");
+                TryToPathToSide(currentCase, currentDirection, maxRoomSize, true); // try to path to the side
+            }
         }
     }
 
@@ -306,7 +309,11 @@ public class Room : MonoBehaviour
                 {
                     Debug.Log("<color=green>could not go to a side so going on the other one</color>");
                     TryToPathToSide(currentCase, currentDirection, maxRoomSize, false); // try with the other direction
-                } // else it means that we allready tried and it still doesn't works (meaning both sides are no no) so i guess we stop
+                }
+                else
+                {
+                    TryToPathForward(currentCase, currentDirection, maxRoomSize, false);
+                }
             }
         }
         else if(newCaseVector.x > maxRoomSize || newCaseVector.x < 0 || newCaseVector.z > maxRoomSize || newCaseVector.z < 0) // if new case is outside the room
@@ -315,7 +322,11 @@ public class Room : MonoBehaviour
             {
                 Debug.Log("<color=green>could not go to a side so going on the other one</color>");
                 TryToPathToSide(currentCase, currentDirection, maxRoomSize, false); // try with the other direction
-            } // else it means that we allready tried and it still doesn't works (meaning both sides are no no) so i guess we stop
+            } 
+            else
+            {
+                TryToPathForward(currentCase, currentDirection, maxRoomSize, false);
+            }
         }
     }
 
