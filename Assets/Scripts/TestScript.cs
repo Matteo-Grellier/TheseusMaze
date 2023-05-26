@@ -7,9 +7,9 @@ public class TestScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Vector3 currentDirection = Vector3.back;
-        currentDirection = -currentDirection;
-        Debug.Log("we used Vector3.back = " + Vector3.back);
-        Debug.Log("Vector3.forward = " + Vector3.forward + " currentDirection = " + currentDirection);
+        Vector3 currentDirection = Vector3.forward;
+        currentDirection = new Vector3(currentDirection.z, 0, currentDirection.x);
+        Debug.Log("we used Vector3.forward = " + Vector3.forward);
+        Debug.Log("Vector3.right = " + Vector3.right + " currentDirection = " + currentDirection);
     }
 }
