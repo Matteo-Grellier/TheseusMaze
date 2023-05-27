@@ -15,11 +15,11 @@ public class GameManager : MonoBehaviour
     public int mapToGenerateId = 0;
 
     private GameObject saveMapBtn;
-    public YouWinScreen youWinScreen;
     public Maze mazeReference = null; // will auto get the reference of the ONLY Maze on the scene
     private bool asLaunchedGeneration = false;
 
     public bool isGameOver = false;
+    public bool isWin = false;
 
     [SerializeField]
     private GameObject enemyPrefab;
@@ -131,9 +131,7 @@ public class GameManager : MonoBehaviour
 
     public void Win()
     {
-        if (youWinScreen != null)
-            youWinScreen.WinMenuActivate();
-        else
-            Debug.LogError("YOU WIN SCREEN NOT FOUND");
+        isWin = true;
+        LoadScene("GameOverScene");
     }
 }

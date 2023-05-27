@@ -17,7 +17,7 @@ public class SavedMapsMenu : MonoBehaviour
             Debug.Log("[get] one maze");
             GameObject newMapHolder = Instantiate(mapHolderBtnRef, Vector3.zero, Quaternion.Euler(Vector3.zero), mapListRef.transform);
             newMapHolder.GetComponent<MapHolderBtn>().MazeName = mazeList.mazes[i].mazeName;
-            newMapHolder.GetComponent<MapHolderBtn>().mazeID = mazeList.mazes[i].mazeid;
+            newMapHolder.GetComponent<MapHolderBtn>().MazeId = mazeList.mazes[i].mazeid;
         }
     }
 }

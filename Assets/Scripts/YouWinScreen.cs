@@ -9,7 +9,7 @@ public class YouWinScreen : MonoBehaviour
 
     void Awake()
     {
-        GameManager.instance.youWinScreen = this;
+        // GameManager.instance.youWinScreen = this;
     }
 
     public void WinMenuActivate()
