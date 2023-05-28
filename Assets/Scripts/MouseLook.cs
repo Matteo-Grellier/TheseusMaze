@@ -25,6 +25,16 @@ public class MouseLook : MonoBehaviour
         //     return; // if in escape mode, don't do
         // }
 
+        if(GameManager.instance.isMenu && Cursor.lockState == CursorLockMode.Locked)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Debug.LogWarning("BONSOIR JE SUIS PAS LOCK");
+            return;
+        } else if(!GameManager.instance.isMenu && Cursor.lockState == CursorLockMode.None) {
+            Cursor.lockState = CursorLockMode.Locked;
+            Debug.LogWarning("BONSOIR JE SUIS LOCK");
+        }
+
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 

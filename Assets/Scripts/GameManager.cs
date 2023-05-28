@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public Maze mazeReference = null; // will auto get the reference of the ONLY Maze on the scene
     private bool asLaunchedGeneration = false;
 
+    public bool isMenu = false;
+
     public bool isGameOver = false;
     public bool isWin = false;
 
@@ -41,7 +43,6 @@ public class GameManager : MonoBehaviour
         }
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        SceneManager.activeSceneChanged += OnActiveSceneChange; // subscribe to the activeSceneChanged event
     }
 
     private void Update() 
@@ -61,11 +62,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("I CREATE THE enemy" + enemy);
         }
 
-        if(isGameOver) 
-        {
-            HandleGameOver();
-
-        }
+        if(isGameOver) HandleGameOver();
 
         if (!asLaunchedGeneration && nameOfActiveScene == "GameScene" && mazeReference == null)
         {
@@ -93,7 +90,26 @@ public class GameManager : MonoBehaviour
     // called when changing the active scene
     private void OnActiveSceneChange(Scene current, Scene next)
     {
-        Debug.Log("switching to " + next.name + " Scene");
+        Debug.LogWarning("switching to " + next.name + " Scene");
+
+        string nameOfActiveScene = SceneManager.GetActiveScene().name;
+
+        if(!isMenu && (nameOfActiveScene == "Menu" || nameOfActiveScene == "GameOverScene"))
+             isMenu = true;
+        else if(isMenu && nameOfActiveScene != "Menu" && nameOfActiveScene != "GameOverScene")
+            isMenu = false;
+    }
+
+    private void OnSceneLoading(Scene scene, LoadSceneMode mode)
+    {
+        Debug.LogWarning("Load scene" + scene.name);
+
+        string nameOfActiveScene = SceneManager.GetActiveScene().name;
+
+        if((nameOfActiveScene == "Menu" || nameOfActiveScene == "GameOverScene"))
+             isMenu = true;
+        else if(nameOfActiveScene != "Menu" && nameOfActiveScene != "GameOverScene")
+            isMenu = false;
     }
 
     public void SaveNewMap(string mazeName)
@@ -110,7 +126,9 @@ public class GameManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        SceneManager.sceneLoaded -= OnSceneLoading;
         SceneManager.LoadScene(sceneName);
+        SceneManager.sceneLoaded += OnSceneLoading;
     }
 
     private void HandleGameOver()
@@ -131,6 +149,7 @@ public class GameManager : MonoBehaviour
 
     public void Win()
     {
+        isGameOver = true;
         isWin = true;
         LoadScene("GameOverScene");
     }

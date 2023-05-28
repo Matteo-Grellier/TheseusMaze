@@ -24,19 +24,23 @@ public class PauseMenu : MonoBehaviour
     private void Pause()
     {
         isGamePaused = true;
+        GameManager.instance.isMenu = true;
         Time.timeScale = 0f;
-        pauseMenu.SetActive(false);
+        pauseMenu.SetActive(true);
     }
 
     public void Resume()
     {
         isGamePaused = false;
+        GameManager.instance.isMenu = false;
         Time.timeScale = 1f;
-        pauseMenu.SetActive(true);
+        pauseMenu.SetActive(false);
     }
 
     public void GoToMainMenu()
     {
+        isGamePaused = false;
+        Time.timeScale = 1f;
         GameManager.instance.LoadScene("Menu");
     }
 
