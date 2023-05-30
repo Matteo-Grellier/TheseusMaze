@@ -7,20 +7,14 @@ using Utils;
 
 public class Pathfinding
 {
-    /*
-    TODO : IMPROVE CODE WITH CONSTRUCTOR => when we create a pathfinding, we use a constructor with graph, destination and start.
-    So we can call all methods for the pathfinding (GraphSearch, CreatePath etc...). And maybe we can use the Coroutine in the constructor.
-    */
-
     private string[,] graph;
     private Vector3 start;
     private Vector3 destination;
 
     private PriorityQueue<Vector3, int> queue;
     private Dictionary<Vector3, int> movementCosts;
+    
     private Vector3 currentCell;
-
-    // private Vector3[] previousVerifyPath;
 
     // Vector A -> Vector B : Key = the current cell (B) and Value = where the current cell came from (A).
     private Dictionary<Vector3, Vector3> verifiedNodes = new Dictionary<Vector3, Vector3>(); // Nodes or Edges ?
@@ -40,69 +34,6 @@ public class Pathfinding
 
         // GraphSearch();
     }
-
-    // public IEnumerator GraphSearch(string[,] graph, Vector3 start, Vector3 destination) //array[x][z]
-    // {
-    //     pathFound = false;
-    //     ispathFindingInProgress = true;
-    //     isFindablePath = true;
-
-    //     // queue = new Queue();
-    //     queue = new PriorityQueue<Vector3, int>();
-    //     movementCosts = new Dictionary<Vector3, int>();
-
-    //     queue.Enqueue(start, 0);
-    //     currentCell = start;
-    //     movementCosts.Add(start, 0);
-    //     verifiedNodes.Add(start, start);
-
-    //     while (queue.Count != 0)
-    //     {
-
-    //         currentCell = (Vector3) queue.Dequeue();
-
-    //         if(currentCell.x == destination.x && currentCell.z == destination.z) 
-    //         {
-    //             break;
-    //         }
-
-    //         neighbors = GetNeighborsCells(graph);
-
-    //         foreach(Vector3 neighbor in neighbors)
-    //         {
-    //             int currentCost = movementCosts[currentCell] + GetCurrentNodeCost(graph, neighbor);
-                
-    //             if(!movementCosts.ContainsKey(neighbor) || currentCost < movementCosts[neighbor]) //maybe an error with instance of class ?
-    //             {
-    //                 if(movementCosts.ContainsKey(neighbor))
-    //                     movementCosts[neighbor] = currentCost;
-    //                 else
-    //                     movementCosts.Add(neighbor, currentCost);
-                        
-    //                 int priority = currentCost + GetEstimatedDistance(destination, neighbor);
-    //                 queue.Enqueue(neighbor, priority);
-
-    //                 if(verifiedNodes.ContainsKey(neighbor)) 
-    //                     verifiedNodes[neighbor] = currentCell;
-    //                 else
-    //                      verifiedNodes.Add(neighbor, currentCell);
-    //             }
-    //         }
-
-    //         yield return null;
-    //     }
-
-    //     try 
-    //     {
-    //         CreatePath(start, destination);
-    //     }
-    //     catch (Exception e) 
-    //     {
-    //         Debug.LogError("Cannot create path... " + e.Message);
-    //     }
-
-    //     yield return null;
-    // }
 
     public IEnumerator GraphSearch() //array[x][z]
     {
@@ -135,7 +66,7 @@ public class Pathfinding
             {
                 int currentCost = movementCosts[currentCell] + GetCurrentNodeCost(graph, neighbor);
                 
-                if(!movementCosts.ContainsKey(neighbor) || currentCost < movementCosts[neighbor]) //maybe an error with instance of class ?
+                if(!movementCosts.ContainsKey(neighbor) || currentCost < movementCosts[neighbor])
                 {
                     if(movementCosts.ContainsKey(neighbor))
                         movementCosts[neighbor] = currentCost;
@@ -161,7 +92,7 @@ public class Pathfinding
         }
         catch (Exception e) 
         {
-            Debug.LogError("Cannot create path... " + e.Message);
+            Debug.LogWarning("Cannot create path... " + e.Message);
         }
 
         yield return null;
@@ -234,7 +165,6 @@ public class Pathfinding
                 Debug.Log(currentNode + "-->" + verifiedNodes[currentNode]);
                 currentNode = verifiedNodes[currentNode];
                 pathNodes.Add(currentNode, verifiedNodes[currentNode]);
-                // Debug.Log(pathNodes[currentNode] + " " + verifiedNodes[currentNode]);
             }
             Debug.Log("Path created !");
             pathFound = true;
@@ -248,8 +178,6 @@ public class Pathfinding
 
     public Vector3 GetNextDirection(Vector3 currentPosition)
     {
-        // Debug.Log("GetNextDirection, currentPos " + currentPosition + " " + pathNodes.ContainsKey(currentPosition));
-
         if(!pathFound) return currentPosition;
 
         return pathNodes.First(x => x.Value == currentPosition).Key;

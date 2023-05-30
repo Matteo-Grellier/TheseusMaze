@@ -10,10 +10,17 @@ public class EnemyAnimationStateController : MonoBehaviour
 
     [SerializeField]
     private Enemy currentEnemy;
-    // Start is called before the first frame update
-    void Start()
+
+    public float AnimatorSpeed
     {
-        
+        get
+        {
+            return animator.speed;
+        }
+        set
+        {
+            animator.speed = value;
+        }
     }
 
     // Update is called once per frame
@@ -24,6 +31,9 @@ public class EnemyAnimationStateController : MonoBehaviour
             return;
         }
 
-        animator.SetBool("isMoving", currentEnemy.isMoving);
+        if(currentEnemy.speed > 0)
+            animator.SetBool("isMoving", currentEnemy.isMoving);
+        else 
+            animator.SetBool("isMoving", false);
     }
 }
