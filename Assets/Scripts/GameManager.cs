@@ -41,8 +41,6 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
-
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     private void Update()

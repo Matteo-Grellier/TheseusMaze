@@ -9,6 +9,8 @@ public class MenuManager : MonoBehaviour
 
     public void BtnRandomMap()
     {
+        GameManager.instance.isEditMode = false;
+        GameManager.instance.isEditingNewlyCreatedMap = false;
         GameManager.instance.LoadScene("GameScene");
     } 
     

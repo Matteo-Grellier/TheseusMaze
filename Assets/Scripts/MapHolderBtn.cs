@@ -42,6 +42,7 @@ public class MapHolderBtn : MonoBehaviour
     {
         GameManager.instance.mapToGenerateId = mazeID;
         GameManager.instance.isRandomlyGenerated = false;
+        GameManager.instance.isEditMode = false;
         GameManager.instance.LoadScene("GameScene");
     }
 
