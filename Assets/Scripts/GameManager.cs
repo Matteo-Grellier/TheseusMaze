@@ -39,8 +39,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
-
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        
         SceneManager.activeSceneChanged += OnActiveSceneChange; // subscribe to the activeSceneChanged event
     }
 

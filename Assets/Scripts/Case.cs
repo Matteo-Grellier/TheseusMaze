@@ -40,6 +40,7 @@ public class Case : MonoBehaviour
 			wallObject.SetActive(!wallObject.gameObject.activeInHierarchy);
 		}
 	}
+	
 	// detect if the click is down when passing on the case
 	private void OnMouseOver()
 	{
