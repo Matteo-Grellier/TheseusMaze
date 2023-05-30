@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private GameObject enemyPrefab;
-    private GameObject enemy;
+    public GameObject enemy;
 
     public Player player;
 

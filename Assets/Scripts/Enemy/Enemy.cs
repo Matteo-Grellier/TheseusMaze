@@ -5,13 +5,18 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float speed = 2.5f; // Look in Unity to change the speed !
+    public EnemyAnimationStateController enemyAnimationController;
+
+    public float speed = 2.5f; // Look in Unity to change the speed !
 
     private float visionAngle = 190f;
     private float visionDistance = 10f;
     private float distanceToCatch = 1f;
+    private float distanceToListen = 2f;
 
     public bool isMoving = false;
+
+    private bool isPlayerNearby = false;
     private bool hasDetectedPlayer = false;
     private bool isSearchingPlayer = false;
 
@@ -59,20 +64,8 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        // if(hasDetectedPlayer && isSearchingPlayer)
-        // {
-        //     currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
-        //     FindThePath();
-        //     isSearchingPlayer = false;
-        // } 
-
-
-        // if(isSearchingPlayer && ConvertPositionToGraphPosition(transform.position) == destination)
-        // {
-        //     isSearchingPlayer = false;
-        //     hasDetectedPlayer = false;   
-        //     Debug.LogWarning("FALSY");
-        // }
+        if(isPlayerNearby)
+            HandleNearbyPlayer();
 
         if(!pathfinding.ispathFindingInProgress && destination != ConvertPositionToGraphPosition(transform.position))
             FindThePath();
@@ -82,10 +75,8 @@ public class Enemy : MonoBehaviour
                
         if(destination == ConvertPositionToGraphPosition(transform.position) || !pathfinding.isFindablePath)
         {
-            // transform.position = ConvertGraphPositionToPosition(currentGraphPosition, transform.position.y);
             isMoving = false;
             pathfinding.ispathFindingInProgress = false;
-            // pathfinding.ClearPathFindingData();
 
             // Search for a better solution ?
             isSearchingPlayer = false;
@@ -94,7 +85,6 @@ public class Enemy : MonoBehaviour
             currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
             destination = GetRandomVectorInMaze();
 
-            // hasDetectedPlayer = false;
         }
     }
 
@@ -151,13 +141,25 @@ public class Enemy : MonoBehaviour
         return new Vector3(position.x, 0, position.z); // WARNING: TError here (because not 1,1) ?
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(player.gameObject != other.gameObject || GameManager.instance.isGameOver) return;
+        isPlayerNearby = true;
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if(player.gameObject != other.gameObject || GameManager.instance.isGameOver) return;
+        isPlayerNearby = false;
+    }
+
+    private void HandleNearbyPlayer()
+    {
         HandleRaycast();
 
-        if(player.isTrapped || player.isWalkingOnGravel)
+        bool playerMakeSounds = player.GetComponent<Rigidbody>().velocity != Vector3.zero && GetDistanceWithPlayer() <= distanceToListen;
+
+        if(player.isTrapped || player.isWalkingOnGravel || playerMakeSounds)
         {
             HandlePlayerDetection();
         } 
@@ -187,10 +189,6 @@ public class Enemy : MonoBehaviour
             bool isPointedByTorchlight = GetIsPointedByTorchlight();
             bool isLookingAtPlayer = GetIsLookingAtPlayer();
             isCatchingPlayer = GetDistanceWithPlayer() <= distanceToCatch;
-
-            Debug.LogWarning("DISTANCE" + GetDistanceWithPlayer());
-
-            // Debug.LogWarning(isLookingAtPlayer);
 
             if(isHittingPlayer && isCatchingPlayer)
             {
@@ -245,7 +243,6 @@ public class Enemy : MonoBehaviour
         if(ConvertPositionToGraphPosition(transform.position) == nextGraphPosition && hasDetectedPlayer && !isSearchingPlayer)
         {
             isMoving = false;
-            // Debug.LogWarning("GO CREATE A NEW PATH");
             currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
             destination = new Vector3(Mathf.Round(player.transform.position.x), 0, Mathf.Round(player.transform.position.z));
             FindThePath();
@@ -256,9 +253,6 @@ public class Enemy : MonoBehaviour
 
     private void HandleGameOver()
     {
-        // Debug.LogWarning("I'm here");
-        // player.transform.LookAt(transform, Vector3.forward);
-
         Vector3 directionToPlayer = (player.transform.position-transform.position).normalized;
         Vector3 directionFromPlayer = (transform.position-player.transform.position).normalized;
 
