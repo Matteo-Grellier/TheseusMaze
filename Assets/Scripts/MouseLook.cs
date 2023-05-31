@@ -15,14 +15,24 @@ public class MouseLook : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) //when click escape camera stop follows
-            isEscapeMode = !isEscapeMode;
+        // if (Input.GetKeyDown(KeyCode.Escape)) //when click escape camera stop follows
+        //     isEscapeMode = !isEscapeMode;
 
-        if (isEscapeMode)
+        // if (isEscapeMode)
+        // {
+        //     if (Input.GetKeyDown(KeyCode.Mouse0)) // when click on screan, undo escape mode
+        //         isEscapeMode = !isEscapeMode;
+        //     return; // if in escape mode, don't do
+        // }
+
+        if(GameManager.instance.isMenu && Cursor.lockState == CursorLockMode.Locked)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0)) // when click on screan, undo escape mode
-                isEscapeMode = !isEscapeMode;
-            return; // if in escape mode, don't do
+            Cursor.lockState = CursorLockMode.None;
+            Debug.LogWarning("BONSOIR JE SUIS PAS LOCK");
+            return;
+        } else if(!GameManager.instance.isMenu && Cursor.lockState == CursorLockMode.None) {
+            Cursor.lockState = CursorLockMode.Locked;
+            Debug.LogWarning("BONSOIR JE SUIS LOCK");
         }
 
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;

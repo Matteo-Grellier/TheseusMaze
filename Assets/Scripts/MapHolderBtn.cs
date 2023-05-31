@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class MapHolderBtn : MonoBehaviour
 {
-    [SerializeField] private TMP_Text mapBtn;
+    [SerializeField] private TMP_Text mapNameText;
+    [SerializeField] private TMP_Text mazeIDText;
 
     public int mazeID = 0;
     private string mazeName;
@@ -19,7 +20,21 @@ public class MapHolderBtn : MonoBehaviour
         set 
         {
             mazeName = value;
-            mapBtn.text = mazeName;
+            mapNameText.text = mazeName;
+        }
+    }
+
+    public int MazeId
+    {
+        get
+        {
+            return mazeID;
+        }
+
+        set
+        {
+            mazeID = value;
+            mazeIDText.text = mazeID.ToString();
         }
     }
 
