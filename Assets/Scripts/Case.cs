@@ -40,7 +40,7 @@ public class Case : MonoBehaviour
 			wallObject.SetActive(!wallObject.gameObject.activeInHierarchy);
 		}
 	}
-	
+
 	// detect if the click is down when passing on the case
 	private void OnMouseOver()
 	{
@@ -58,68 +58,36 @@ public class Case : MonoBehaviour
 		print(objectToPlace);
 		if (gameManager.isEditMode == true)
 		{
+			wallObject.SetActive(false);
+			mudObject.SetActive(false);
+			trapObject.SetActive(false);
+			gravelObject.SetActive(false);
+			keyObject.SetActive(false);
+			elevatorObject.SetActive(false);
 			switch (objectToPlace)
 			{
+
 				case "Wall":
 					wallObject.SetActive(true);
-					mudObject.SetActive(false);
-					trapObject.SetActive(false);
-					gravelObject.SetActive(false);
-					keyObject.SetActive(false);
-					elevatorObject.SetActive(false);
 					caseMazeReference.maze.rooms[RoomId].cases[caseId].state = "wall";
 					break;
 				case "Trap":
-					wallObject.SetActive(false);
-					mudObject.SetActive(false);
 					trapObject.SetActive(true);
-					gravelObject.SetActive(false);
-					keyObject.SetActive(false);
-					elevatorObject.SetActive(false);
 					caseMazeReference.maze.rooms[RoomId].cases[caseId].state = "trap";
 					break;
 				case "Mud":
-					wallObject.SetActive(false);
 					mudObject.SetActive(true);
-					trapObject.SetActive(false);
-					gravelObject.SetActive(false);
-					keyObject.SetActive(false);
-					elevatorObject.SetActive(false);
 					caseMazeReference.maze.rooms[RoomId].cases[caseId].state = "mud";
 					break;
 				case "Gravel":
-					wallObject.SetActive(false);
-					mudObject.SetActive(false);
-					trapObject.SetActive(false);
 					gravelObject.SetActive(true);
-					keyObject.SetActive(false);
-					elevatorObject.SetActive(false);
 					caseMazeReference.maze.rooms[RoomId].cases[caseId].state = "gravel";
 					break;
-				case "Path":
-					wallObject.SetActive(false);
-					mudObject.SetActive(false);
-					trapObject.SetActive(false);
-					gravelObject.SetActive(false);
-					keyObject.SetActive(false);
-					elevatorObject.SetActive(false);
-					caseMazeReference.maze.rooms[RoomId].cases[caseId].state = "path";
-					break;
 				case "Key":
-					wallObject.SetActive(false);
-					mudObject.SetActive(false);
-					trapObject.SetActive(false);
-					gravelObject.SetActive(false);
 					keyObject.SetActive(true);
-					elevatorObject.SetActive(false);
 					caseMazeReference.maze.rooms[RoomId].cases[caseId].state = "key";
 					break;
 				case "Elevator":
-					wallObject.SetActive(false);
-					mudObject.SetActive(false);
-					trapObject.SetActive(false);
-					gravelObject.SetActive(false);
-					keyObject.SetActive(false);
 					elevatorObject.SetActive(true);
 					caseMazeReference.maze.rooms[RoomId].cases[caseId].state = "elevator";
 					break;
