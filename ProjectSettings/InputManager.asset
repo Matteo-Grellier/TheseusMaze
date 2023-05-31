@@ -297,7 +297,7 @@ InputManager:
     m_Name: Height
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 
+    negativeButton: left shift
     positiveButton: space
     altNegativeButton: 
     altPositiveButton: 
