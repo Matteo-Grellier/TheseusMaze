@@ -28,11 +28,13 @@ public class MouseLook : MonoBehaviour
         if(GameManager.instance.isMenu && Cursor.lockState == CursorLockMode.Locked)
         {
             Cursor.lockState = CursorLockMode.None;
-            Debug.LogWarning("BONSOIR JE SUIS PAS LOCK");
+            Debug.LogWarning("BONSOIR JE SUIS PAS LOCK", this);
             return;
-        } else if(!GameManager.instance.isMenu && Cursor.lockState == CursorLockMode.None) {
+        } 
+        else if(!GameManager.instance.isMenu && Cursor.lockState == CursorLockMode.None) 
+        {
             Cursor.lockState = CursorLockMode.Locked;
-            Debug.LogWarning("BONSOIR JE SUIS LOCK");
+            Debug.LogWarning("BONSOIR JE SUIS LOCK", this);
         }
 
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
