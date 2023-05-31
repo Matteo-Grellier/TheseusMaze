@@ -32,6 +32,11 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject); // put the GameManager int he don't destroy on load
+        if (instance != null)
+        {
+            Destroy(instance.gameObject);
+            instance = null;
+        }
     }
 
     void Start()
@@ -93,7 +98,7 @@ public class GameManager : MonoBehaviour
         string nameOfActiveScene = SceneManager.GetActiveScene().name;
 
         if(!isMenu && (nameOfActiveScene == "Menu" || nameOfActiveScene == "GameOverScene"))
-             isMenu = true;
+            isMenu = true;
         else if(isMenu && nameOfActiveScene != "Menu" && nameOfActiveScene != "GameOverScene")
             isMenu = false;
     }
@@ -105,7 +110,7 @@ public class GameManager : MonoBehaviour
         string nameOfActiveScene = SceneManager.GetActiveScene().name;
 
         if((nameOfActiveScene == "Menu" || nameOfActiveScene == "GameOverScene"))
-             isMenu = true;
+            isMenu = true;
         else if(nameOfActiveScene != "Menu" && nameOfActiveScene != "GameOverScene")
             isMenu = false;
     }
