@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
+    [Header("Generation Settings")]
+    [SerializeField] private bool onlyUseUpperPath = false;
+    [SerializeField] private bool useDoubleCheckOnSide = false;
+    [SerializeField] private bool useStrictDoubleCheck = false;
+    [SerializeField] private bool forbidCentralCase = false;
+
+    [Header("Public Settings")]
     [SerializeField] private GameObject casePrefab;
     public int roomSize;
     public int roomID = 0;
@@ -192,18 +199,21 @@ public class Room : MonoBehaviour
         casesArray[halfRoomSize, maxRoomSize].GetComponent<Case>().wallObject.SetActive(false);
         queue.Enqueue(new Vector3(halfRoomSize, 0, maxRoomSize));
         directionQueue.Enqueue( Vector3.back);
-        // down
-        casesArray[halfRoomSize, 0].GetComponent<Case>().wallObject.SetActive(false);
-        queue.Enqueue(new Vector3(halfRoomSize, 0, 0));
-        directionQueue.Enqueue(Vector3.forward);
-        // left
-        casesArray[0, halfRoomSize].GetComponent<Case>().wallObject.SetActive(false);
-        queue.Enqueue(new Vector3(0, 0, halfRoomSize));
-        directionQueue.Enqueue(Vector3.right);
-        // right
-        casesArray[maxRoomSize, halfRoomSize].GetComponent<Case>().wallObject.SetActive(false);
-        queue.Enqueue(new Vector3(maxRoomSize, 0, halfRoomSize));
-        directionQueue.Enqueue(Vector3.left);
+        if(!onlyUseUpperPath)
+        {
+            // down
+            casesArray[halfRoomSize, 0].GetComponent<Case>().wallObject.SetActive(false);
+            queue.Enqueue(new Vector3(halfRoomSize, 0, 0));
+            directionQueue.Enqueue(Vector3.forward);
+            // left
+            casesArray[0, halfRoomSize].GetComponent<Case>().wallObject.SetActive(false);
+            queue.Enqueue(new Vector3(0, 0, halfRoomSize));
+            directionQueue.Enqueue(Vector3.right);
+            // right
+            casesArray[maxRoomSize, halfRoomSize].GetComponent<Case>().wallObject.SetActive(false);
+            queue.Enqueue(new Vector3(maxRoomSize, 0, halfRoomSize));
+            directionQueue.Enqueue(Vector3.left);
+        }
         
         while (queue.Count != 0)
         {
@@ -225,8 +235,6 @@ public class Room : MonoBehaviour
             // yield return new WaitForSeconds(6);
         }
         yield return null;
-        // TODO : check if there isn't some multiples walls that are still packed, otherwise, add some more path
-        // TODO : YOU REMOVED THE ENNEMY & YOU LEFT ONLY THE UPPER PATH ON THE FIRST ROOM
     }
 
     /// <param name="isANativePath"> should be true if this was meant to just be a forward path, and false if it was called from a TryPathToSide function (to avoid creating a loop)</param>
@@ -239,10 +247,21 @@ public class Room : MonoBehaviour
         {
             if(!IsCaseAPath(newCaseVector)) // if new case is not a path
             {
-                Debug.Log("<color=blue>path forward !</color>");
-                casesArray[(int)newCaseVector.x, (int)newCaseVector.z].GetComponent<Case>().wallObject.SetActive(false); // set to path
-                queue.Enqueue(newCaseVector); // queue new case
-                directionQueue.Enqueue(currentDirection); // queue same direction
+                if(IsCaseOkayToForwardTo(newCaseVector, currentDirection))
+                {
+                    Debug.Log("<color=blue>path forward !</color>");
+                    casesArray[(int)newCaseVector.x, (int)newCaseVector.z].GetComponent<Case>().wallObject.SetActive(false); // set to path
+                    queue.Enqueue(newCaseVector); // queue new case
+                    directionQueue.Enqueue(currentDirection); // queue same direction
+                }
+                else
+                {
+                    if(isANativePath) // if isn't a native path, it means that it came from a TryToPathToSide so let's not call it again or it will create A LOOP IN THE TIME SPACE CONTINIUM !!!! (wich is bad)
+                    {
+                        Debug.Log("<color=blue>could not go forward so going on side</color>");
+                        TryToPathToSide(currentCase, currentDirection, maxRoomSize, Vector3.zero); // try to path to the side
+                    }
+                }
             }
             else // else don't do anything because it's comming to a path so we stop here
             {
@@ -282,7 +301,7 @@ public class Room : MonoBehaviour
         {
             if(!IsCaseAPath(newCaseVector)) // if new case is not a path
             {
-                if( IsCaseOkayToSidePathTo(newCaseVector, newCurrentDirection) ) // check if case "above" and "below" are not path
+                if(IsCaseOkayToSidePathTo(newCaseVector, newCurrentDirection) ) // check if case "above" and "below" are not path
                 {
                     Debug.Log("<color=green>path to side !</color>");
                     casesArray[(int)newCaseVector.x, (int)newCaseVector.z].GetComponent<Case>().wallObject.SetActive(false); // set to path
@@ -355,26 +374,55 @@ public class Room : MonoBehaviour
     private bool IsCaseOkayToSidePathTo(Vector3 newCaseVector, Vector3 currentDirection)
     {
         bool? isAboveCaseAPath = null; // they might be outside the bound of the array, they start at null, so if they are not set it's different than false
+        bool? isAboveAboveCaseAPath = null;
         bool? isBelowCaseAPath = null;
+        bool? isBelowBelowCaseAPath = null;
 
         Vector3 aboveCasePosition = newCaseVector + new Vector3(currentDirection.z, 0, currentDirection.x); // transform a front in right (does a 90° clockwise)
+        Vector3 aboveAboveCasePosition = newCaseVector + (new Vector3(currentDirection.z, 0, currentDirection.x) * 2);
         Vector3 belowCasePosition = newCaseVector + -(new Vector3(currentDirection.z, 0, currentDirection.x)); // the other side
+        Vector3 belowBelowCasePosition = newCaseVector + -((new Vector3(currentDirection.z, 0, currentDirection.x) *2)); 
+        Debug.Log("[check] newCaseVector=" + newCaseVector + " aboveCasePosition=" + aboveCasePosition + " aboveAboveCasePosition=" + aboveAboveCasePosition + " belowCasePosition=" + belowCasePosition + " belowBelowCasePosition=" + belowBelowCasePosition);
 
         if(IsCaseWithinRoom(aboveCasePosition))
             isAboveCaseAPath = IsCaseAPath(aboveCasePosition);
+        if(IsCaseWithinRoom(aboveAboveCasePosition))
+            isAboveAboveCaseAPath = IsCaseAPath(aboveAboveCasePosition);
         if(IsCaseWithinRoom(belowCasePosition))
             isBelowCaseAPath = IsCaseAPath(belowCasePosition);
+        if(IsCaseWithinRoom(belowBelowCasePosition))
+            isBelowBelowCaseAPath = IsCaseAPath(belowBelowCasePosition);
         
-        if(isAboveCaseAPath != true && isBelowCaseAPath != true) // returns true only the case "above" AND "below" are wall or outside bound
-            return true;
-        else // otherwise return false, because the case is not legit to path to 
-            return false;
+        if (useDoubleCheckOnSide && useStrictDoubleCheck) // if strict DoubleCheck
+        {
+            if(isAboveCaseAPath != true && isBelowCaseAPath != true && isAboveAboveCaseAPath != true && isBelowBelowCaseAPath != true) // returns true only the case "above" AND "below" are wall or outside bound
+                return true;
+            else // otherwise return false, because the case is not legit to path to 
+                return false;
+        }
+        else if (useDoubleCheckOnSide && !useStrictDoubleCheck) // if not strict DoubleCheck
+        {
+            if(isAboveCaseAPath != true && isBelowCaseAPath != true && (isAboveAboveCaseAPath != true || isBelowBelowCaseAPath != true)) // returns true only the case "above" AND "below" are wall or outside bound
+                return true;
+            else // otherwise return false, because the case is not legit to path to 
+                return false;
+        }
+        else // if no DoubleCheck
+        {
+            if(isAboveCaseAPath != true && isBelowCaseAPath != true) // returns true only the case "above" AND "below" are wall or outside bound
+                return true;
+            else // otherwise return false, because the case is not legit to path to 
+                return false;
+        }
     }
 
     /// <summary>This function checks if you should be able to forward here, it checks the cases in front, on left, and in front of the on left</summary>
-    /// <returns>True if all the cases are not paths and false if they all are paths</returns>
+    /// <returns>True if all the cases are not paths and false if they all are paths, or if it's the central case</returns>
     private bool IsCaseOkayToForwardTo(Vector3 newCaseVector, Vector3 currentDirection)
     {
+        if (forbidCentralCase && newCaseVector.x == (roomSize/ 2) && newCaseVector.z == (roomSize/ 2)) // if is central case (and the option active)
+            return false; // quickly end the function, the goal is to avoind aving a central line going from up to down
+
         // they might be outside the bound of the array, they start at null, so if they are not set, it's different than false
         bool? isFrontCaseAPath = null;
         bool? isFirstSideCaseAPath = null; 
