@@ -47,7 +47,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   casePrefab: {fileID: 3125311833335848312, guid: 0c78a448f6b53314a83625ca01ddbeb2, type: 3}
+  materialToCreateShader: {fileID: 4800000, guid: 575a31b8fa6f54e4ab5daac50dad3bd2, type: 3}
   roomSize: 0
+  roomID: 0
+  isAKeyRoom: 0
+  mazeReference: {fileID: 0}
+  room:
+    roomid: 0
+    mazeid: 0
+    leftDoor: 0
+    upDoor: 0
+    rightDoor: 0
+    downDoor: 0
+    isEndRoom: 0
+    cases: []
 --- !u!33 &438305208812492644
 MeshFilter:
   m_ObjectHideFlags: 0
