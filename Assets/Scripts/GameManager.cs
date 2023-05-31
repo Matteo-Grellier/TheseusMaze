@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     public bool isGameOver = false;
     public bool isWin = false;
+    private bool isGameOverHandeled = false;
 
     [SerializeField]
     private GameObject enemyPrefab;
@@ -136,17 +137,22 @@ public class GameManager : MonoBehaviour
 
     private void HandleGameOver()
     {
-        player.gameObject.SetActive(false);
-        player.GetComponentInChildren<Camera>().enabled = false;
-        enemy.transform.GetChild(0).gameObject.SetActive(true);
-        enemy.GetComponentInChildren<Camera>().enabled = true;
+        if (!isGameOverHandeled)
+        {
+            isGameOverHandeled = true;
+            player.gameObject.SetActive(false);
+            player.GetComponentInChildren<Camera>().enabled = false;
+            enemy.transform.GetChild(0).gameObject.SetActive(true);
+            enemy.GetComponentInChildren<Camera>().enabled = true;
 
-        StartCoroutine(WaitAndLoadGameOverScene());
+            StartCoroutine(WaitAndLoadGameOverScene());
+        }
     }
 
     private IEnumerator WaitAndLoadGameOverScene()
     {
         yield return new WaitForSeconds(3);
+        Cursor.lockState = CursorLockMode.None;
         LoadScene("GameOverScene");
     }
 
