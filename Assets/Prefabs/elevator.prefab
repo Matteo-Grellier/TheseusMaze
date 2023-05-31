@@ -121,7 +121,7 @@ MonoBehaviour:
   door: {fileID: 4134976699243192821}
   btnPrefabReference: {fileID: 3865295769124577351, guid: b4cc6794b5f7c7040b3f2c328a053759, type: 3}
   doorUpY: 3
-  doorSpeed: 0.001
+  doorSpeed: 0.01
   isPlayerIn: 0
 --- !u!1 &1396554489934096665
 GameObject:
