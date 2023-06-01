@@ -167,26 +167,9 @@ public class Room : MonoBehaviour
             }
         }
     }
-    // if (isAKeyRoom)
-    //     if (!keyIsSet && randomNumber == 1 || !keyIsSet && caseIteration == (roomSize*roomSize) - 1)// if is 1 or is not set
-    //         Debug.Log("<color=yellow>[key] Key Case is Set : " + caseIteration +" </color>");
-    //         keyIsSet = true;
-    //         isKey = true;
-    //         roomArray[caseColumn,caseRow] = "key";
-    // if (room.isEndRoom == true)
-    //     if (caseIteration ==  (roomSize*roomSize) / 2) // to set it in the middle of the room
-    //         isElevator = true;
-    //         roomArray[caseColumn,caseRow] = "elevator";
-    // if (!isKey && !room.isEndRoom) // if it's a key case or a end room, no need for all this
-    //      sWallShown = true;
-    //          roomArray[caseColumn,caseRow] = "wall";
-    //      isTrapShown = true;
-    //          roomArray[caseColumn,caseRow] = "trap";
-    //      isGravelShown = true;
-    //          roomArray[caseColumn,caseRow] = "gravel";
-    //      isMudShown = true;
-    //          roomArray[caseColumn,caseRow] = "mud";
-    //      roomArray[caseColumn,caseRow] = "path";
+
+#region Path Generation
+    
     private Queue<Vector3> queue;
     private Queue<Vector3> directionQueue;
     private IEnumerator RoomPathGeneration()
@@ -350,6 +333,42 @@ public class Room : MonoBehaviour
         TryToPathToSide(currentCase, currentDirection, maxRoomSize, Vector3.zero);
     } 
 
+    private void SetCaseToPath(Vector3 currentCase)
+    {
+        // casesArray[(int)currentCase.x, (int)currentCase.z].GetComponent<Case>().wallObject.SetActive(false);
+        // int randomNumber = Random.Range(0,2);
+        // if (isAKeyRoom)
+        // {
+        //     if (!keyIsSet && randomNumber == 1 || !keyIsSet && caseIteration == (roomSize*roomSize) - 1)// if is 1 or is not set
+        //     {
+        //         Debug.Log("<color=yellow>[key] Key Case is Set : " + caseIteration +" </color>");
+        //         keyIsSet = true;
+        //         isKey = true;
+        //         roomArray[caseColumn,caseRow] = "key";
+        //     }
+        //     if (room.isEndRoom == true)
+        //     {
+        //         if (caseIteration ==  (roomSize*roomSize) / 2) // to set it in the middle of the room
+        //         {
+        //             isElevator = true;
+        //             roomArray[caseColumn,caseRow] = "elevator";
+        //         }
+        //     }
+        //     if (!isKey && !room.isEndRoom) // if it's a key case or a end room, no need for all this
+        //     {
+        //         sWallShown = true;
+        //             roomArray[caseColumn,caseRow] = "wall";
+        //         isTrapShown = true;
+        //             roomArray[caseColumn,caseRow] = "trap";
+        //         isGravelShown = true;
+        //             roomArray[caseColumn,caseRow] = "gravel";
+        //         isMudShown = true;
+        //             roomArray[caseColumn,caseRow] = "mud";
+        //         roomArray[caseColumn,caseRow] = "path";
+        //     }
+        // }
+    }
+
     /// <summary>check if the case is a path, returns true if the case is a path false if it's not</summary>
     private bool IsCaseAPath(float caseToTestX, float caseToTestZ)
     {
@@ -456,4 +475,7 @@ public class Room : MonoBehaviour
         else // otherwise return false, because the case is not legit to path to 
             return false;
     }
+
+#endregion
+
 }
