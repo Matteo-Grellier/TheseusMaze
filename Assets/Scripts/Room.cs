@@ -185,8 +185,10 @@ public class Room : MonoBehaviour
             {
                 //Debug.Log("room " + roomID + " : " + roomArray[0,0] + " : " + roomArray[1,0] + " : " + roomArray[0,1] + " : " + roomArray[1,1]);
                 isAfterGenerationCodeExecuted = true;
-                if(!isAKeyRoom) //roomID == 0)
+                if(!room.isEndRoom) //roomID == 0)
                     StartCoroutine(RoomPathGeneration()); // room still generating set at the end of the generation
+                else
+                    gameObject.transform.parent.GetComponent<Maze>().RoomsStillGenerating--; // consider the room generation finished
             }
         }
     }
@@ -266,6 +268,7 @@ public class Room : MonoBehaviour
         }
 
         gameObject.transform.parent.GetComponent<Maze>().RoomsStillGenerating--; // do at the end of generation
+        Debug.Log("<color=red>[room] done generating room RoomsStillGenerating=" + gameObject.transform.parent.GetComponent<Maze>().RoomsStillGenerating + "</color>", this);
         yield return null;
     }
 
@@ -273,7 +276,7 @@ public class Room : MonoBehaviour
     private void TryToPathForward(Vector3 currentCase, Vector3 currentDirection, int maxRoomSize, bool isANativePath)
     {
         Vector3 newCaseVector = currentCase + currentDirection;
-        Debug.Log("<color=blue>TryToPathForward</color>" + newCaseVector);
+        // Debug.Log("<color=blue>TryToPathForward</color>" + newCaseVector);
         
         if (newCaseVector.x <= maxRoomSize && newCaseVector.x >= 0 && newCaseVector.z <= maxRoomSize && newCaseVector.z >= 0) // if new case is within the room
         {
@@ -281,8 +284,7 @@ public class Room : MonoBehaviour
             {
                 if(IsCaseOkayToForwardTo(newCaseVector, currentDirection))
                 {
-                    Debug.Log("<color=blue>path forward !</color>");
-                    // casesArray[(int)newCaseVector.x, (int)newCaseVector.z].GetComponent<Case>().wallObject.SetActive(false); // set to path
+                    // Debug.Log("<color=blue>path forward !</color>");
                     SetCaseToPath(newCaseVector); // set to path and maybe traps or stuffs
                     queue.Enqueue(newCaseVector); // queue new case
                     directionQueue.Enqueue(currentDirection); // queue same direction
@@ -291,21 +293,21 @@ public class Room : MonoBehaviour
                 {
                     if(isANativePath) // if isn't a native path, it means that it came from a TryToPathToSide so let's not call it again or it will create A LOOP IN THE TIME SPACE CONTINIUM !!!! (wich is bad)
                     {
-                        Debug.Log("<color=blue>could not go forward so going on side</color>");
+                        // Debug.Log("<color=blue>could not go forward so going on side</color>");
                         TryToPathToSide(currentCase, currentDirection, maxRoomSize, Vector3.zero); // try to path to the side
                     }
                 }
             }
             else // else don't do anything because it's comming to a path so we stop here
             {
-                Debug.Log("<color=blue>it's a path we stoppin here</color>");
+                // Debug.Log("<color=blue>it's a path we stoppin here</color>");
             }
         }
         else if(newCaseVector.x > maxRoomSize || newCaseVector.x < 0 || newCaseVector.z > maxRoomSize || newCaseVector.z < 0) // if new case is outside the room
         {
             if(isANativePath) // if isn't a native path, it means that it came from a TryToPathToSide so let's not call it again or it will create A LOOP IN THE TIME SPACE CONTINIUM !!!! (wich is bad)
             {
-                Debug.Log("<color=blue>could not go forward so going on side</color>");
+                // Debug.Log("<color=blue>could not go forward so going on side</color>");
                 TryToPathToSide(currentCase, currentDirection, maxRoomSize, Vector3.zero); // try to path to the side
             }
         }
@@ -324,54 +326,53 @@ public class Room : MonoBehaviour
         }
         else // if we tried one direction and it wasn't good (never really liked harry styles anyway...)
         {
-            Debug.Log("<color=green>forcedNewDirection was set = </color>" + forcedNewDirection);
+            // Debug.Log("<color=green>forcedNewDirection was set = </color>" + forcedNewDirection);
             newCurrentDirection = forcedNewDirection; // return vector inverse (the other side) (big brain moove i know 🧠)
         }
 
         Vector3 newCaseVector = currentCase + newCurrentDirection;
-        Debug.Log("<color=green>TryToPathToSide</color>" + newCaseVector);
+        // Debug.Log("<color=green>TryToPathToSide</color>" + newCaseVector);
         if (newCaseVector.x <= maxRoomSize && newCaseVector.x >= 0 && newCaseVector.z <= maxRoomSize && newCaseVector.z >= 0) // if new case is within the room
         {
             if(!IsCaseAPath(newCaseVector)) // if new case is not a path
             {
                 if(IsCaseOkayToSidePathTo(newCaseVector, newCurrentDirection) ) // check if case "above" and "below" are not path
                 {
-                    Debug.Log("<color=green>path to side !</color>");
-                    // casesArray[(int)newCaseVector.x, (int)newCaseVector.z].GetComponent<Case>().wallObject.SetActive(false); // set to path
+                    // Debug.Log("<color=green>path to side !</color>");
                     SetCaseToPath(newCaseVector); // set to path and maybe traps or stuffs
                     queue.Enqueue(newCaseVector); // queue new case 
                     directionQueue.Enqueue(newCurrentDirection); // queue new direction
                 }
                 else // if they are allready path it means that twe shouldn't make that case a path
                 {
-                    Debug.Log("<color=green>can't add path here, it would make a corner</color>");
+                    // Debug.Log("<color=green>can't add path here, it would make a corner</color>");
                     if(forcedNewDirection == Vector3.zero) // if first time trying
                     {
-                        Debug.Log("<color=green>could not go to a side so going on the other one</color>");
+                        // Debug.Log("<color=green>could not go to a side so going on the other one</color>");
                         TryToPathToSide(currentCase, currentDirection, maxRoomSize, -newCurrentDirection); // try with the other direction -newCurrentDirection equals vector inverse
                     }
                     else
                     {
-                        Debug.Log("<color=green>could not go both side so going on a straight line from her</color>");
+                        // Debug.Log("<color=green>could not go both side so going on a straight line from her</color>");
                         TryToPathForward(currentCase, currentDirection, maxRoomSize, false); // with the old currentDirection so the forward is not the side we tried to go to
                     }
                 }
             }
             else // else don't do anything because it's comming to a path so we stop here
             {
-                Debug.Log("<color=green>it's a path so we stoppin here</color>");
+                // Debug.Log("<color=green>it's a path so we stoppin here</color>");
             }
         }
         else if(newCaseVector.x > maxRoomSize || newCaseVector.x < 0 || newCaseVector.z > maxRoomSize || newCaseVector.z < 0) // if new case is outside the room
         {
             if(forcedNewDirection == Vector3.zero) // if first time trying
             {
-                Debug.Log("<color=green>could not go to a this side bc out of bound so going on the other one</color>");
+                // Debug.Log("<color=green>could not go to a this side bc out of bound so going on the other one</color>");
                 TryToPathToSide(currentCase, currentDirection, maxRoomSize, -newCurrentDirection); // try with the other direction -newCurrentDirection equals vector inverse
             } 
             else
             {
-                Debug.Log("<color=green>could not go both side so going on a straight line from here</color>");
+                // Debug.Log("<color=green>could not go both side so going on a straight line from here</color>");
                 TryToPathForward(currentCase, currentDirection, maxRoomSize, false);
             }
         }
@@ -379,7 +380,7 @@ public class Room : MonoBehaviour
 
     private void TryToDuplicatePath(Vector3 currentCase, Vector3 currentDirection, int maxRoomSize)
     {
-        Debug.Log("<color=purple>TryToDuplicatePath</color>");
+        // Debug.Log("<color=purple>TryToDuplicatePath</color>");
         TryToPathForward(currentCase, currentDirection, maxRoomSize, true);
         TryToPathToSide(currentCase, currentDirection, maxRoomSize, Vector3.zero);
     } 
@@ -450,7 +451,7 @@ public class Room : MonoBehaviour
         Vector3 aboveAboveCasePosition = newCaseVector + (new Vector3(currentDirection.z, 0, currentDirection.x) * 2);
         Vector3 belowCasePosition = newCaseVector + -(new Vector3(currentDirection.z, 0, currentDirection.x)); // the other side
         Vector3 belowBelowCasePosition = newCaseVector + -((new Vector3(currentDirection.z, 0, currentDirection.x) *2)); 
-        Debug.Log("[check] newCaseVector=" + newCaseVector + " aboveCasePosition=" + aboveCasePosition + " aboveAboveCasePosition=" + aboveAboveCasePosition + " belowCasePosition=" + belowCasePosition + " belowBelowCasePosition=" + belowBelowCasePosition);
+        // Debug.Log("[check] newCaseVector=" + newCaseVector + " aboveCasePosition=" + aboveCasePosition + " aboveAboveCasePosition=" + aboveAboveCasePosition + " belowCasePosition=" + belowCasePosition + " belowBelowCasePosition=" + belowBelowCasePosition);
 
         if(IsCaseWithinRoom(aboveCasePosition))
             isAboveCaseAPath = IsCaseAPath(aboveCasePosition);

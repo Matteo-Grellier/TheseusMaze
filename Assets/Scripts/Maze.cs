@@ -167,6 +167,7 @@ public class Maze : MonoBehaviour
             {
                 if(roomsStillGenerating == 0)
                 {
+                    Debug.Log("<color=red>start maze array generation</color>");
                     StartCoroutine(CreateMazeArray());
                 }
             }
