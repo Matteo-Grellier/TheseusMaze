@@ -10,6 +10,7 @@ public class Room : MonoBehaviour
     [SerializeField] private bool useDoubleCheckOnSide = false;
     [SerializeField] private bool useStrictDoubleCheck = false;
     [SerializeField] private bool forbidCentralCase = false;
+    [Range(5, 50)] [SerializeField] private int maxValueForObjectRandomRange = 5;
 
     [Header("Public Settings")]
     [SerializeField] private GameObject casePrefab;
@@ -126,11 +127,34 @@ public class Room : MonoBehaviour
             }
             else // random
             {
-                isWallShown = true;
-                roomArray[caseColumn,caseRow] = "wall";
-                Maze.CaseObject newCaseObject = new Maze.CaseObject();
-                newCaseObject.cellid = caseIteration;
-                newCaseObject.state = "wall";
+                isElevator = false;
+                isKey = false;
+                isWallShown = false;
+
+                if (room.isEndRoom) // if elevatorRoom
+                {
+                    if (isAKeyRoom && caseIteration == 0) // if is end room and key room, set the first case as the key
+                    {
+                        isKey = true;
+                        roomArray[caseColumn,caseRow] = "key";
+                    }
+                    else if (caseIteration ==  (roomSize*roomSize) / 2) // to set the elevator in the middle of the room
+                    {
+                        isElevator = true;
+                        roomArray[caseColumn,caseRow] = "elevator";
+                    }
+                    else // not the elevator so it's path
+                    {
+                        isWallShown = false;
+                        roomArray[caseColumn,caseRow] = "path";
+                    }
+                }
+                else // if it's not elevator room, it's full walls
+                {
+                    isWallShown = true;
+                    roomArray[caseColumn,caseRow] = "wall";
+                }
+
                 casesArray[caseColumn,caseRow] = newCase;
                 // Debug.Log( "room " + roomID + " : " + "caseColumn : " + caseColumn + " caseRow : " + caseRow + " value :" + roomArray[caseColumn,caseRow]);
             }
@@ -159,11 +183,10 @@ public class Room : MonoBehaviour
         {
             if ( !isAfterGenerationCodeExecuted )
             {
-                gameObject.transform.parent.GetComponent<Maze>().RoomsStillGenerating--;
                 //Debug.Log("room " + roomID + " : " + roomArray[0,0] + " : " + roomArray[1,0] + " : " + roomArray[0,1] + " : " + roomArray[1,1]);
                 isAfterGenerationCodeExecuted = true;
-                // if(roomID == 0) 
-                    StartCoroutine(RoomPathGeneration());
+                if(!isAKeyRoom) //roomID == 0)
+                    StartCoroutine(RoomPathGeneration()); // room still generating set at the end of the generation
             }
         }
     }
@@ -217,6 +240,32 @@ public class Room : MonoBehaviour
             }
             // yield return new WaitForSeconds(6);
         }
+
+        if(isAKeyRoom && !keyIsSet) // if is a key room and key not set
+        {
+            int x = 0;
+            int z = 0;
+            while(!keyIsSet) // while key not set, search through the cases to find a path, and set it's key to true
+            {
+                if(roomArray[x,z] == "path")
+                {
+                    casesArray[x,z].GetComponent<Case>().keyObject.SetActive(true);
+                    keyIsSet = true;
+                    Debug.Log("<color=yellow>[key] key set via lastcheck [" + x + "," + z + "]</color>");
+                }
+                else if ((x + 1) >= roomSize)
+                {
+                    z++;
+                    x = 0;
+                }
+                else
+                {
+                    x++;
+                }
+            }
+        }
+
+        gameObject.transform.parent.GetComponent<Maze>().RoomsStillGenerating--; // do at the end of generation
         yield return null;
     }
 
@@ -233,7 +282,8 @@ public class Room : MonoBehaviour
                 if(IsCaseOkayToForwardTo(newCaseVector, currentDirection))
                 {
                     Debug.Log("<color=blue>path forward !</color>");
-                    casesArray[(int)newCaseVector.x, (int)newCaseVector.z].GetComponent<Case>().wallObject.SetActive(false); // set to path
+                    // casesArray[(int)newCaseVector.x, (int)newCaseVector.z].GetComponent<Case>().wallObject.SetActive(false); // set to path
+                    SetCaseToPath(newCaseVector); // set to path and maybe traps or stuffs
                     queue.Enqueue(newCaseVector); // queue new case
                     directionQueue.Enqueue(currentDirection); // queue same direction
                 }
@@ -287,8 +337,9 @@ public class Room : MonoBehaviour
                 if(IsCaseOkayToSidePathTo(newCaseVector, newCurrentDirection) ) // check if case "above" and "below" are not path
                 {
                     Debug.Log("<color=green>path to side !</color>");
-                    casesArray[(int)newCaseVector.x, (int)newCaseVector.z].GetComponent<Case>().wallObject.SetActive(false); // set to path
-                    queue.Enqueue(newCaseVector); // queue new case
+                    // casesArray[(int)newCaseVector.x, (int)newCaseVector.z].GetComponent<Case>().wallObject.SetActive(false); // set to path
+                    SetCaseToPath(newCaseVector); // set to path and maybe traps or stuffs
+                    queue.Enqueue(newCaseVector); // queue new case 
                     directionQueue.Enqueue(newCurrentDirection); // queue new direction
                 }
                 else // if they are allready path it means that twe shouldn't make that case a path
@@ -335,38 +386,36 @@ public class Room : MonoBehaviour
 
     private void SetCaseToPath(Vector3 currentCase)
     {
-        // casesArray[(int)currentCase.x, (int)currentCase.z].GetComponent<Case>().wallObject.SetActive(false);
-        // int randomNumber = Random.Range(0,2);
-        // if (isAKeyRoom)
-        // {
-        //     if (!keyIsSet && randomNumber == 1 || !keyIsSet && caseIteration == (roomSize*roomSize) - 1)// if is 1 or is not set
-        //     {
-        //         Debug.Log("<color=yellow>[key] Key Case is Set : " + caseIteration +" </color>");
-        //         keyIsSet = true;
-        //         isKey = true;
-        //         roomArray[caseColumn,caseRow] = "key";
-        //     }
-        //     if (room.isEndRoom == true)
-        //     {
-        //         if (caseIteration ==  (roomSize*roomSize) / 2) // to set it in the middle of the room
-        //         {
-        //             isElevator = true;
-        //             roomArray[caseColumn,caseRow] = "elevator";
-        //         }
-        //     }
-        //     if (!isKey && !room.isEndRoom) // if it's a key case or a end room, no need for all this
-        //     {
-        //         sWallShown = true;
-        //             roomArray[caseColumn,caseRow] = "wall";
-        //         isTrapShown = true;
-        //             roomArray[caseColumn,caseRow] = "trap";
-        //         isGravelShown = true;
-        //             roomArray[caseColumn,caseRow] = "gravel";
-        //         isMudShown = true;
-        //             roomArray[caseColumn,caseRow] = "mud";
-        //         roomArray[caseColumn,caseRow] = "path";
-        //     }
-        // }
+        Case caseToSetToPath = casesArray[(int)currentCase.x, (int)currentCase.z].GetComponent<Case>();
+        caseToSetToPath.wallObject.SetActive(false); // wall == false first of all
+        roomArray[(int)currentCase.x,(int)currentCase.z] = "path";
+
+        int randomNumber = Random.Range(1,maxValueForObjectRandomRange + 1); // between 1 and maxValueForObjectRandomRange 
+        if (isAKeyRoom) // add a key
+        {
+            if (!keyIsSet && randomNumber == 1 || !keyIsSet && caseIteration == (roomSize*roomSize) - 1)// if is 1 or is not set
+            {
+                Debug.Log("<color=yellow>[key] Key Case is Set : [" + roomID + "][" + currentCase.x + "," + currentCase.z + "] </color>");
+                keyIsSet = true;
+                caseToSetToPath.keyObject.SetActive(true);
+                roomArray[(int)currentCase.x,(int)currentCase.z] = "key";
+            }
+        }
+        switch(randomNumber)
+        {
+            case 2 : // 1 is for key
+                roomArray[(int)currentCase.x,(int)currentCase.z] = "mud";
+                caseToSetToPath.mudObject.SetActive(true);
+                break;
+            case 3 :
+                roomArray[(int)currentCase.x,(int)currentCase.z] = "trap";
+                caseToSetToPath.trapObject.SetActive(true);
+                break;
+            case 4 :
+                roomArray[(int)currentCase.x,(int)currentCase.z] = "gravel";
+                caseToSetToPath.gravelObject.SetActive(true);
+                break;
+        }
     }
 
     /// <summary>check if the case is a path, returns true if the case is a path false if it's not</summary>

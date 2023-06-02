@@ -46,10 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6de59249213bfd842a92f379d6cd2bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onlyUseUpperPath: 1
+  onlyUseUpperPath: 0
   useDoubleCheckOnSide: 1
   useStrictDoubleCheck: 0
-  forbidCentralCase: 0
+  forbidCentralCase: 1
+  maxValueForObjectRandomRange: 50
   casePrefab: {fileID: 3125311833335848312, guid: 0c78a448f6b53314a83625ca01ddbeb2, type: 3}
   roomSize: 0
   roomID: 0

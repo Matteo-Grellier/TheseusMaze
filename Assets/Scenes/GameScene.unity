@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.042806074, g: 0.054033905, b: 0.07376435, a: 1}
+  m_IndirectSpecularColor: {r: 0.042806067, g: 0.05403389, b: 0.07376432, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -191,6 +191,63 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &325633516
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1508314220403136817, guid: 20da55e3c9ea54742a74a8cf809f969b, type: 3}
+      propertyPath: m_Name
+      value: MazeWalls
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405290240432189070, guid: 20da55e3c9ea54742a74a8cf809f969b, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405290240432189070, guid: 20da55e3c9ea54742a74a8cf809f969b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405290240432189070, guid: 20da55e3c9ea54742a74a8cf809f969b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405290240432189070, guid: 20da55e3c9ea54742a74a8cf809f969b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405290240432189070, guid: 20da55e3c9ea54742a74a8cf809f969b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405290240432189070, guid: 20da55e3c9ea54742a74a8cf809f969b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405290240432189070, guid: 20da55e3c9ea54742a74a8cf809f969b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405290240432189070, guid: 20da55e3c9ea54742a74a8cf809f969b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405290240432189070, guid: 20da55e3c9ea54742a74a8cf809f969b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405290240432189070, guid: 20da55e3c9ea54742a74a8cf809f969b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405290240432189070, guid: 20da55e3c9ea54742a74a8cf809f969b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 20da55e3c9ea54742a74a8cf809f969b, type: 3}
 --- !u!1 &575552143
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,14 +410,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e407c90d9d6a4aa438277d32891dc358, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   roomPrefab: {fileID: 1732912637463812642, guid: f484120dc79bf764d9265af294fb4d8f, type: 3}
   mazeSize: 4
   roomSize: 7
+  isDoneGenerating: 0
   maze:
     mazeid: 0
-    mazeName:
+    mazeName: 
     rooms: []
 --- !u!4 &713244740
 Transform:
@@ -375,7 +433,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &750519134
 PrefabInstance:
@@ -447,7 +505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7353626100529670202, guid: f580868fc3cf84280850ccb522fd4883, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7353626100529670202, guid: f580868fc3cf84280850ccb522fd4883, type: 3}
       propertyPath: m_LocalPosition.x
