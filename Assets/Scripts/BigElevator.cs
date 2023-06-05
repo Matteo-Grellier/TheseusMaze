@@ -20,6 +20,7 @@ public class BigElevator : MonoBehaviour
         {
             Open();
             StopCoroutine(PlaySongThenOpen());
+            // intro.Stop();
         }
     }
 
