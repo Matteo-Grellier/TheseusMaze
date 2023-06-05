@@ -10,7 +10,7 @@ public class SaveMapBtn : MonoBehaviour
     [SerializeField] private TMP_InputField nameInput;
     private bool isNameSet;
 
-    private void Start() 
+    private void Start()
     {
         if (GameManager.instance.isEditMode) // if is in edit mode set it active
             buttons.SetActive(true);
@@ -19,7 +19,7 @@ public class SaveMapBtn : MonoBehaviour
             nameInput.text = "NewMaze";
     }
 
-    private void Update() 
+    private void Update()
     {
         // if not editing new map & name not set & mazeReference not null
         if( !GameManager.instance.isEditingNewlyCreatedMap && !isNameSet && GameManager.instance.mazeReference != null)
@@ -33,11 +33,16 @@ public class SaveMapBtn : MonoBehaviour
         }
     }
 
-    public void BtnSaveMap() 
+    public void BtnSaveMap()
     {
         if (GameManager.instance.isEditingNewlyCreatedMap)
             GameManager.instance.SaveNewMap(nameInput.text);
         else
             GameManager.instance.UpdateMap(nameInput.text);
     }
+
+	public void BtnBackToMenu()
+	{
+		GameManager.instance.LoadScene("Menu");
+	}
 }

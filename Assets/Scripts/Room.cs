@@ -74,46 +74,79 @@ public class Room : MonoBehaviour
                 isElevator = false;
                 isKey = false;
                 switch (room.cases[caseIteration].state)
-                { 
+                {
                     case "wall" :
                         isWallShown = true;
+						isTrapShown = false;
+						isMudShown = false;
+						isGravelShown = false;
+						isKey = false;
+						isElevator = false;
                         roomArray[caseColumn,caseRow] = "wall";
                         break;
                     case "path" :
-                        isWallShown = false;
+						isWallShown = false;
+						isTrapShown = false;
+						isMudShown = false;
+						isGravelShown = false;
+						isKey = false;
+						isElevator = false;
                         roomArray[caseColumn,caseRow] = "path";
                         break;
-                    case "trap" :
-                        isWallShown = false;
-                        isTrapShown = true;
-                        roomArray[caseColumn,caseRow] = "trap";
-                        break;
-                    case "gravel" :
-                        isWallShown = false;
-                        isGravelShown = true;
-                        roomArray[caseColumn,caseRow] = "gravel";
-                        break;
-                    case "mud" :
-                        isWallShown = false;
-                        isMudShown = true;
-                        roomArray[caseColumn,caseRow] = "mud";
-                        break;
-                    case "elevator" :
-                        isWallShown = false;
-                        isElevator = true;
-                        roomArray[caseColumn,caseRow] = "elevator";
-                        break;
-                    case "key" :
-                        isWallShown = false;
-                        isKey = true;
-                        roomArray[caseColumn,caseRow] = "key";
-                        break;
-
-                    default :
-                        isWallShown = false;
-                        // Debug.LogWarning("What the fuck is a " +  room.cases[caseIteration].state + " ???? I put a \"path\" instead ");
-                        roomArray[caseColumn,caseRow] = "path";
-                        break;
+					case "trap" :
+						isWallShown = false;
+						isTrapShown = true;
+						isMudShown = false;
+						isGravelShown = false;
+						isKey = false;
+						isElevator = false;
+						roomArray[caseColumn,caseRow] = "trap";
+						break;
+					case "gravel" :
+						isWallShown = false;
+						isGravelShown = true;
+						isTrapShown = false;
+						isMudShown = false;
+						isKey = false;
+						isElevator = false;
+						roomArray[caseColumn,caseRow] = "gravel";
+						break;
+					case "mud" :
+						isWallShown = false;
+						isMudShown = true;
+						isGravelShown = false;
+						isTrapShown = false;
+						isKey = false;
+						isElevator = false;
+						roomArray[caseColumn,caseRow] = "mud";
+						break;
+					case "key" :
+						isWallShown = false;
+						isMudShown = false;
+						isGravelShown = false;
+						isTrapShown = false;
+						isKey = true;
+						isElevator = false;
+						roomArray[caseColumn,caseRow] = "key";
+						break;
+					case "elevator" :
+						isWallShown = false;
+						isMudShown = false;
+						isGravelShown = false;
+						isTrapShown = false;
+						isKey = false;
+						isElevator = true;
+						roomArray[caseColumn,caseRow] = "elevator";
+						break;
+					default :
+						isWallShown = false;
+						isGravelShown = false;
+						isTrapShown = false;
+						isMudShown = false;
+						isKey = false;
+						isElevator = false;
+						roomArray[caseColumn,caseRow] = "path";
+						break;
                 }
             }
             else if (GameManager.instance.isEditMode && GameManager.instance.isEditingNewlyCreatedMap) // if editing a newly created map set all walls to path

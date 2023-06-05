@@ -15,21 +15,29 @@ public class GameManager : MonoBehaviour
     public int mapToGenerateId = 0;
 
     private GameObject saveMapBtn;
-    public YouWinScreen youWinScreen;
     public Maze mazeReference = null; // will auto get the reference of the ONLY Maze on the scene
     private bool asLaunchedGeneration = false;
 
+    public bool isMenu = false;
+
     public bool isGameOver = false;
+    public bool isWin = false;
+    private bool isGameOverHandeled = false;
 
     [SerializeField]
     private GameObject enemyPrefab;
-    private GameObject enemy;
+    public GameObject enemy;
 
     public Player player;
 
-    private void Awake() 
+    private void Awake()
     {
         DontDestroyOnLoad(this.gameObject); // put the GameManager int he don't destroy on load
+        if (instance != null)
+        {
+            Destroy(instance.gameObject);
+            instance = null;
+        }
     }
 
     void Start()
@@ -43,7 +51,7 @@ public class GameManager : MonoBehaviour
         SceneManager.activeSceneChanged += OnActiveSceneChange; // subscribe to the activeSceneChanged event
     }
 
-    private void Update() 
+    private void Update()
     {
         string nameOfActiveScene = SceneManager.GetActiveScene().name;
 
@@ -60,11 +68,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("I CREATE THE enemy" + enemy);
         }
 
-        if(isGameOver) 
-        {
-            HandleGameOver();
-
-        }
+        if(isGameOver) HandleGameOver();
 
         if (!asLaunchedGeneration && nameOfActiveScene == "GameScene" && mazeReference == null)
         {
@@ -92,7 +96,26 @@ public class GameManager : MonoBehaviour
     // called when changing the active scene
     private void OnActiveSceneChange(Scene current, Scene next)
     {
-        Debug.Log("switching to " + next.name + " Scene");
+        Debug.LogWarning("switching to " + next.name + " Scene");
+
+        string nameOfActiveScene = SceneManager.GetActiveScene().name;
+
+        if(!isMenu && (nameOfActiveScene == "Menu" || nameOfActiveScene == "GameOverScene"))
+            isMenu = true;
+        else if(isMenu && nameOfActiveScene != "Menu" && nameOfActiveScene != "GameOverScene")
+            isMenu = false;
+    }
+
+    private void OnSceneLoading(Scene scene, LoadSceneMode mode)
+    {
+        Debug.LogWarning("Load scene" + scene.name);
+
+        string nameOfActiveScene = SceneManager.GetActiveScene().name;
+
+        if((nameOfActiveScene == "Menu" || nameOfActiveScene == "GameOverScene"))
+            isMenu = true;
+        else if(nameOfActiveScene != "Menu" && nameOfActiveScene != "GameOverScene")
+            isMenu = false;
     }
 
     public void SaveNewMap(string mazeName)
@@ -109,30 +132,36 @@ public class GameManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        SceneManager.sceneLoaded -= OnSceneLoading;
         SceneManager.LoadScene(sceneName);
+        SceneManager.sceneLoaded += OnSceneLoading;
     }
 
     private void HandleGameOver()
     {
-        player.gameObject.SetActive(false);
-        player.GetComponentInChildren<Camera>().enabled = false;
-        enemy.transform.GetChild(0).gameObject.SetActive(true);
-        enemy.GetComponentInChildren<Camera>().enabled = true;
-        
-        StartCoroutine(WaitAndLoadGameOverScene());
+        if (!isGameOverHandeled)
+        {
+            isGameOverHandeled = true;
+            player.gameObject.SetActive(false);
+            player.GetComponentInChildren<Camera>().enabled = false;
+            enemy.transform.GetChild(0).gameObject.SetActive(true);
+            enemy.GetComponentInChildren<Camera>().enabled = true;
+
+            StartCoroutine(WaitAndLoadGameOverScene());
+        }
     }
 
     private IEnumerator WaitAndLoadGameOverScene()
     {
         yield return new WaitForSeconds(3);
+        Cursor.lockState = CursorLockMode.None;
         LoadScene("GameOverScene");
     }
 
     public void Win()
     {
-        if (youWinScreen != null)
-            youWinScreen.WinMenuActivate();
-        else
-            Debug.LogError("YOU WIN SCREEN NOT FOUND");
+        isGameOver = true;
+        isWin = true;
+        LoadScene("GameOverScene");
     }
 }

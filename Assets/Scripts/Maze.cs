@@ -93,6 +93,7 @@ public class Maze : MonoBehaviour
     {
         if (!isRandomlyGenerated)
         {
+            Debug.Log("[bug] randomely generated");
             if (!useDebugJSON)
                 StartCoroutine(APIManager.GetOneMazeFromAPI(mazeToGenerateID, this)); // get the map from the API utils
             else
@@ -100,11 +101,13 @@ public class Maze : MonoBehaviour
         }
         else
         {
+            Debug.Log("[bug] not randomely generated");
             isDataFetched = true; // if is randomely generated, there is no data to fetch
             numberOfRooms = mazeSize * mazeSize;
             roomsStillGenerating = numberOfRooms;
             mazeArray = new string[roomSize * (int)Mathf.Sqrt(numberOfRooms), roomSize * (int)Mathf.Sqrt(numberOfRooms)]; // Sqrt because we need the number of room on one size
             mazeRoomsArray = new Room[numberOfRooms];
+            Debug.Log("[bug] not randomely generated");
         }
     }
 

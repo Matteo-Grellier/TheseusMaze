@@ -9,6 +9,8 @@ public class MenuManager : MonoBehaviour
 
     public void BtnRandomMap()
     {
+        GameManager.instance.isEditMode = false;
+        GameManager.instance.isEditingNewlyCreatedMap = false;
         GameManager.instance.LoadScene("GameScene");
     } 
     
@@ -31,5 +33,14 @@ public class MenuManager : MonoBehaviour
     {
         savedMapsMenu.SetActive(false);
         mainMenu.SetActive(true);
+    }
+
+    public void Quit()
+    {
+        #if UNITY_EDITOR
+	        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+	        Application.Quit();
+        #endif
     } 
 }
