@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Trap
   - Case
+  - Trap
   layers:
   - Default
   - TransparentFX
@@ -13,11 +13,11 @@ TagManager:
   - 
   - Water
   - UI
-  - Ground
-  - MudCollider
-  - MudTrigger
-  - Trap
-  - Clickable
+  - 
+  - 
+  - case
+  - 
+  - 
   - btn
   - Entity
   - Wall

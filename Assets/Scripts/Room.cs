@@ -14,6 +14,7 @@ public class Room : MonoBehaviour
 
     [Header("Public Settings")]
     [SerializeField] private GameObject casePrefab;
+    [SerializeField] private Shader materialToCreateShader;
     public int roomSize;
     public int roomID = 0;
     public bool isAKeyRoom = false;
@@ -44,7 +45,8 @@ public class Room : MonoBehaviour
     private void Awake()
     {
         pos = gameObject.transform.position;
-        roomMaterial = new Material(Shader.Find("Specular"));
+        // roomMaterial = new Material(Shader.Find("Specular"));
+        roomMaterial = new Material(materialToCreateShader);
         roomMaterial.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
     }
 
