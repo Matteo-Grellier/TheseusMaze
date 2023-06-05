@@ -14,6 +14,16 @@ public class BigElevator : MonoBehaviour
         StartCoroutine(PlaySongThenOpen());
     }
 
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Open();
+            StopCoroutine(PlaySongThenOpen());
+            // intro.Stop();
+        }
+    }
+
     IEnumerator PlaySongThenOpen()
     {
         intro.Play();

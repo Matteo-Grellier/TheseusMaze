@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+        
+        SceneManager.activeSceneChanged += OnActiveSceneChange; // subscribe to the activeSceneChanged event
     }
 
     private void Update()
