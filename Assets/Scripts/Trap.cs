@@ -6,6 +6,7 @@ using UnityEngine;
 public class Trap : MonoBehaviour
 {
     [SerializeField] private AudioSource trapSound;
+    [SerializeField] private AudioSource aieSound;
     private Player player;
     private float trapTimer;
 
@@ -25,6 +26,7 @@ public class Trap : MonoBehaviour
             player.isTrapped = true;
             StartCoroutine(Countdown(other, 3f));
             trapSound.Play();
+            aieSound.Play();
         } 
         else if (!other.isTrigger && other.gameObject == GameManager.instance.enemy)
         {
