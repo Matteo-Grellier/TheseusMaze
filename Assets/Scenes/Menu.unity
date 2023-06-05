@@ -514,9 +514,11 @@ MonoBehaviour:
   isRandomlyGenerated: 1
   mapToGenerateId: 0
   mazeReference: {fileID: 0}
+  isMenu: 0
   isGameOver: 0
   isWin: 0
   enemyPrefab: {fileID: 78887187938855825, guid: c553ef81a66f073719a066fa0d49b458, type: 3}
+  enemy: {fileID: 0}
   player: {fileID: 0}
 --- !u!4 &307855852
 Transform:
