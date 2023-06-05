@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
-
+    [SerializeField] private AudioSource trapSound;
     private Player player;
-
     private float trapTimer;
 
     private void Awake() 
@@ -25,9 +24,11 @@ public class Trap : MonoBehaviour
             player.animator.SetBool("Run_Anim", false);
             player.isTrapped = true;
             StartCoroutine(Countdown(other, 3f));
+            trapSound.Play();
         } 
         else if (!other.isTrigger && other.gameObject == GameManager.instance.enemy)
         {
+            trapSound.Play();
             Debug.LogWarning("WTF LES AMIS LES AMIS LES A MIS");
             GameManager.instance.enemy.GetComponent<Enemy>().speed = 0f;
             StartCoroutine(Countdown(other, 1.5f));
