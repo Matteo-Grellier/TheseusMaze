@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class Key : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.tag == "Player")
-        {
-            other.gameObject.GetComponent<Player>().hasKey = true;
-            Destroy(gameObject);
-        }
-    }
 
+	[SerializeField] private AudioSource getKeySound;
+	private bool isKeyTaken = false;
 	private float amplitude = 0.3f;
 	private float frequency = 1f;
 	public Vector3 posOffset = new Vector3 ();
@@ -21,6 +16,26 @@ public class Key : MonoBehaviour
 	{
 		posOffset = transform.position;
 	}
+
+	private void OnTriggerEnter(Collider other) 
+	{
+        if (other.gameObject.tag == "Player")
+        {
+            other.gameObject.GetComponent<Player>().hasKey = true;
+			if (!isKeyTaken)
+			{
+				isKeyTaken = true;
+				StartCoroutine(PlaySongThenDestroyKey());
+			}
+        }
+    }
+
+	IEnumerator PlaySongThenDestroyKey()
+    {
+        getKeySound.Play();
+        yield return new WaitWhile (()=> getKeySound.isPlaying);
+        Destroy(gameObject);
+    }
 
 	void Update ()
 	{

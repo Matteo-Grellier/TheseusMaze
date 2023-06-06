@@ -144,13 +144,13 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(player.gameObject != other.gameObject || GameManager.instance.isGameOver) return;
-        isPlayerNearby = true;
+            isPlayerNearby = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
         if(player.gameObject != other.gameObject || GameManager.instance.isGameOver) return;
-        isPlayerNearby = false;
+            isPlayerNearby = false;
     }
 
     private void HandleNearbyPlayer()

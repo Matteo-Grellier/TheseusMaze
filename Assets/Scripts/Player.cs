@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private AudioSource walkSound;
+    [SerializeField] private AudioSource takeATrapSound;
+
     public bool hasTrap = false;
 
 	public bool isTrapped = false;
@@ -35,6 +38,12 @@ public class Player : MonoBehaviour
 
     Vector3 velocity;
 
+    void Start()
+    {
+        walkSound.volume = 0;
+        walkSound.Play();
+    }
+
     void FixedUpdate()
     {
         float x = Input.GetAxis("Horizontal");
@@ -44,10 +53,12 @@ public class Player : MonoBehaviour
 		if (x != 0 && !isTrapped || z != 0 && !isTrapped)
 		{
 			animator.SetBool("Run_Anim", true);
+            walkSound.volume = 0.6f;
 		}
 		else
 		{
 			animator.SetBool("Run_Anim", false);
+            walkSound.volume = 0;
 		}
 
         velocity = new Vector3(x, 0, z);
@@ -77,6 +88,7 @@ public class Player : MonoBehaviour
             // Si il y a un trap et que le joueur n'en a pas
             if (trap.activeSelf && hasTrap == false)
             {
+                takeATrapSound.Play();
                 hasTrap = true;
                 trap.SetActive(false);
             }
@@ -86,6 +98,7 @@ public class Player : MonoBehaviour
                 // Si il n'y a pas de mur, de boue ou de gravier
                 if (!hit.collider.gameObject.GetComponent<Case>().wallObject.activeSelf && !hit.collider.gameObject.GetComponent<Case>().mudObject.activeSelf && !hit.collider.gameObject.GetComponent<Case>().gravelObject.activeSelf)
                 {
+                    takeATrapSound.Play();
                     trap.SetActive(true);
                     trapPreview.SetActive(false);
                     hasTrap = false;

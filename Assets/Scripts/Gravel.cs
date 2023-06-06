@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Gravel : MonoBehaviour
 {
+    [SerializeField] private AudioSource gravelSound;
     public bool isWalkingOnGravel = false;
-
     private Player player;
 
     private void Start()
@@ -25,6 +25,7 @@ public class Gravel : MonoBehaviour
     {
         if(other.gameObject != player.gameObject) return;
 
+        gravelSound.Play();
         player.isWalkingOnGravel = true;
         //TODO: player sound;
     }

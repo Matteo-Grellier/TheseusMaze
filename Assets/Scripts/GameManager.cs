@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+        
+        SceneManager.activeSceneChanged += OnActiveSceneChange; // subscribe to the activeSceneChanged event
     }
 
     private void Update()
@@ -106,7 +108,7 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoading(Scene scene, LoadSceneMode mode)
     {
-        Debug.LogWarning("Load scene" + scene.name);
+        Debug.Log("Load scene" + scene.name);
 
         string nameOfActiveScene = SceneManager.GetActiveScene().name;
 

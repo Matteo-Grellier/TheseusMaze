@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04280883, g: 0.054036714, b: 0.07376892, a: 1}
+  m_IndirectSpecularColor: {r: 0.042806067, g: 0.05403389, b: 0.07376432, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1221,7 +1221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7348449076267573032, guid: 64999b231322ed74bb71067725d1a6a2, type: 3}
       propertyPath: roomSize
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7348449076267573033, guid: 64999b231322ed74bb71067725d1a6a2, type: 3}
       propertyPath: m_Name
@@ -3612,7 +3612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15e128d081eb4a246b5b23f68a4033e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraSpeed: 0.02
+  cameraSpeed: 0.2
 --- !u!1 &1880124768
 GameObject:
   m_ObjectHideFlags: 0
