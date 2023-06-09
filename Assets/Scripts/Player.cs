@@ -6,6 +6,9 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private AudioSource walkSound;
     [SerializeField] private AudioSource takeATrapSound;
+    [SerializeField] private AudioSource FirstrstTrapSound;
+
+    private bool wasFirstTrapTaken = false;
 
     public bool hasTrap = false;
 
@@ -89,6 +92,11 @@ public class Player : MonoBehaviour
             if (trap.activeSelf && hasTrap == false)
             {
                 takeATrapSound.Play();
+                if (!wasFirstTrapTaken)
+                {
+                    FirstrstTrapSound.Play();
+                    wasFirstTrapTaken = true;
+                }
                 hasTrap = true;
                 trap.SetActive(false);
             }
