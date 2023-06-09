@@ -192,14 +192,14 @@ public class Maze : MonoBehaviour
 
     int x = 0;
     int innerX = 0;
-    int innerY = 0;
-    int y = 0;
+    int innerZ = 0;
+    int z = 0;
     int room = 0;
     private IEnumerator CreateMazeArray()
     {
-        if (y < mazeSize * roomSize)
+        if (z < mazeSize * roomSize) // if Z is full done then it's end of mazeGeneration
         {
-            if (x < mazeSize * roomSize)
+            if (x < mazeSize * roomSize) // if X is bigger than maze cases size then change the Z
             {
                 if (innerX >= roomSize)
                 {
@@ -211,25 +211,25 @@ public class Maze : MonoBehaviour
                     else
                     {
                         Debug.LogError("This part of the function should never be called !");
-                        if (innerY == (roomSize - 1)) // if at the last line of the room row
+                        if (innerZ == (roomSize - 1)) // if at the last line of the room row
                             room = room - ((mazeSize * 3) - 1); // go to the first room of the next row
                         else
                             room = room - (mazeSize * 3); // go to the first room of that row
                     }
                 }
-                // Debug.Log("[maze] mazeArray[" + x + "," + y +"] = mazeRoomsArray[" + room + "]roomArray[" + innerX + "," + innerY + "] = " + mazeRoomsArray[room].roomArray[innerX,innerY]);
-                // if (mazeRoomsArray[room].roomArray[innerX,innerY] == null)
-                //     Debug.Log("<color=red>mazeRoomsArray["+ room + "].roomArray["+ innerX+","+innerY+"] == null</color>");
+                // Debug.Log("[maze] mazeArray[" + x + "," + z +"] = mazeRoomsArray[" + room + "]roomArray[" + innerX + "," + innerZ + "] = " + mazeRoomsArray[room].roomArray[innerX,innerZ]);
+                // if (mazeRoomsArray[room].roomArray[innerX,innerZ] == null)
+                //     Debug.Log("<color=red>mazeRoomsArray["+ room + "].roomArray["+ innerX+","+innerZ+"] == null</color>");
                 // else
-                //     Debug.Log("<color=green>not nul it's okay : " + mazeRoomsArray[room].roomArray[innerX,innerY] + "</color>");
+                //     Debug.Log("<color=green>not nul it's okay : " + mazeRoomsArray[room].roomArray[innerX,innerZ] + "</color>");
 
-                mazeArray[x,y] = mazeRoomsArray[room].roomArray[innerX,innerY];
+                mazeArray[x,z] = mazeRoomsArray[room].roomArray[innerX,innerZ];
                 x++;
                 innerX++;
             }
             else
             {
-                y++;
+                z++;
                 x = 0;
                 if ( room + mazeSize < mazeSize * mazeSize)
                 {
@@ -238,16 +238,16 @@ public class Maze : MonoBehaviour
                 else
                 {
                     // Debug.Log("[here] innerY+1 : " + (innerY+1) + " = " + roomSize + " ? && innerX+1 : " + (innerX+1) + " = " + roomSize + " ?");
-                    if ((innerY + 1) == roomSize && (innerX + 1) >= roomSize) // if at the last line of the room row
+                    if ((innerZ + 1) == roomSize && (innerX + 1) >= roomSize) // if at the last line of the room row
                     {
                         // Debug.Log("retour nouvelle ligne");
                         room = room - ((mazeSize * 3) - 1); // go to the first room of the next row
-                        innerY = 0;
+                        innerZ = 0;
                     }
                     else
                     {
                         room = room - (mazeSize * 3); // go to the first room of that row
-                        innerY++;
+                        innerZ++;
                     }
                 }
                 innerX = 0;
@@ -256,19 +256,19 @@ public class Maze : MonoBehaviour
         else
         {
             Debug.Log("<color=red>[maze] Done Generating </color>");
-            // Print2DStringArray(mazeArray);
+            // Print2DStringArray("EndMaze", mazeArray);
             isDoneGenerating = true;
             yield return null;
         }
     }
 
-    public static void Print2DStringArray(string[,] matrix)
+    public static void Print2DStringArray(string beginingMessage, string[,] matrix)
     {
         for (int i = 0; i < matrix.GetLength(0); i++)
         {
             for (int j = 0; j < matrix.GetLength(1); j++)
             {
-                Debug.Log("2DArray [" + i + "," + j + "] : " + matrix[i,j]);
+                Debug.Log("2DArray : "+ beginingMessage +" [" + i + "," + j + "] : " + matrix[i,j]);
             }
         }
     }

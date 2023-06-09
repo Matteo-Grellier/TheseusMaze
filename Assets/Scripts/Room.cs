@@ -219,6 +219,7 @@ public class Room : MonoBehaviour
             if ( !isAfterGenerationCodeExecuted )
             {
                 //Debug.Log("room " + roomID + " : " + roomArray[0,0] + " : " + roomArray[1,0] + " : " + roomArray[0,1] + " : " + roomArray[1,1]);
+                // Maze.Print2DStringArray("preroom " + roomID, roomArray);
                 isAfterGenerationCodeExecuted = true;
                 if(!room.isEndRoom) //roomID == 0)
                     StartCoroutine(RoomPathGeneration()); // room still generating set at the end of the generation
@@ -240,20 +241,24 @@ public class Room : MonoBehaviour
         int maxRoomSize = roomSize - 1;
         // up
         casesArray[halfRoomSize, maxRoomSize].GetComponent<Case>().wallObject.SetActive(false);
+        roomArray[halfRoomSize,maxRoomSize] = "path";
         queue.Enqueue(new Vector3(halfRoomSize, 0, maxRoomSize));
         directionQueue.Enqueue( Vector3.back);
         if(!onlyUseUpperPath)
         {
             // down
             casesArray[halfRoomSize, 0].GetComponent<Case>().wallObject.SetActive(false);
+            roomArray[halfRoomSize,0] = "path";
             queue.Enqueue(new Vector3(halfRoomSize, 0, 0));
             directionQueue.Enqueue(Vector3.forward);
             // left
             casesArray[0, halfRoomSize].GetComponent<Case>().wallObject.SetActive(false);
+            roomArray[0,halfRoomSize] = "path";
             queue.Enqueue(new Vector3(0, 0, halfRoomSize));
             directionQueue.Enqueue(Vector3.right);
             // right
             casesArray[maxRoomSize, halfRoomSize].GetComponent<Case>().wallObject.SetActive(false);
+            roomArray[maxRoomSize,halfRoomSize] = "path";
             queue.Enqueue(new Vector3(maxRoomSize, 0, halfRoomSize));
             directionQueue.Enqueue(Vector3.left);
         }
@@ -301,7 +306,7 @@ public class Room : MonoBehaviour
                 }
             }
         }
-
+        // Maze.Print2DStringArray("room " + roomID, roomArray);
         gameObject.transform.parent.GetComponent<Maze>().RoomsStillGenerating--; // do at the end of generation
         Debug.Log("<color=red>[room] done generating room RoomsStillGenerating=" + gameObject.transform.parent.GetComponent<Maze>().RoomsStillGenerating + "</color>", this);
         yield return null;
@@ -425,6 +430,7 @@ public class Room : MonoBehaviour
         Case caseToSetToPath = casesArray[(int)currentCase.x, (int)currentCase.z].GetComponent<Case>();
         caseToSetToPath.wallObject.SetActive(false); // wall == false first of all
         roomArray[(int)currentCase.x,(int)currentCase.z] = "path";
+        Debug.Log("[path] room" + roomID + " path to [" + (int)currentCase.x + "," + (int)currentCase.z + "]");
 
         int randomNumber = Random.Range(1,maxValueForObjectRandomRange + 1); // between 1 and maxValueForObjectRandomRange 
         if (isAKeyRoom) // add a key
@@ -452,6 +458,7 @@ public class Room : MonoBehaviour
                 caseToSetToPath.gravelObject.SetActive(true);
                 break;
         }
+        // Maze.Print2DStringArray("[path] room " + roomID, roomArray);
     }
 
     /// <summary>check if the case is a path, returns true if the case is a path false if it's not</summary>

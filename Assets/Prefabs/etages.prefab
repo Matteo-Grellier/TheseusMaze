@@ -231,7 +231,7 @@ MonoBehaviour:
   floorText: {fileID: 8656029586261105560}
   endFloor: -30
   clicSound: {fileID: 1472792579698462766}
-  bellSound: {fileID: 0}
+  bellSound: {fileID: 5595252394776703801}
 --- !u!1 &4595528617125395606
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,7 +459,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 1.01
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -467,23 +467,32 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
+      time: 0.0454579
+      value: 0.7249985
+      inSlope: Infinity
+      outSlope: Infinity
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.4152208
+      value: 0.4856491
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -101.00003
+      outSlope: -101.00003
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

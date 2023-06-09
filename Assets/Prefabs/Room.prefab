@@ -50,7 +50,7 @@ MonoBehaviour:
   useDoubleCheckOnSide: 1
   useStrictDoubleCheck: 0
   forbidCentralCase: 1
-  maxValueForObjectRandomRange: 50
+  maxValueForObjectRandomRange: 30
   casePrefab: {fileID: 3125311833335848312, guid: 0c78a448f6b53314a83625ca01ddbeb2, type: 3}
   materialToCreateShader: {fileID: 4800000, guid: 575a31b8fa6f54e4ab5daac50dad3bd2, type: 3}
   roomSize: 0
