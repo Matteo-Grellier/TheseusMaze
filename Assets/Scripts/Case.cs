@@ -44,7 +44,7 @@ public class Case : MonoBehaviour
 	// detect if the click is down when passing on the case
 	private void OnMouseOver()
 	{
-		if (Input.GetMouseButton(0))
+		if (Input.GetMouseButton(0) && GameManager.instance.isEditMode == true)
 		{
 			if (!EventSystem.current.IsPointerOverGameObject())
 			{
