@@ -16,7 +16,7 @@ public class BigElevator : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.AltGr))
+        if(Input.GetKeyDown(KeyCode.O))
         {
             Open();
             StopCoroutine(PlaySongThenOpen());
