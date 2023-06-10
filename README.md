@@ -23,5 +23,5 @@ Pour réaliser ce jeu nous avons utilisé les technologies suivante :
 # Equipe
 Notre équipe était composé de :
 - ``Mathéo Léger`` alias [@matheoleger](https://github.com/matheoleger)
-- ``Louis Brochard`` [@LBROCHARD](https://github.com/LBROCHARD)
-- ``Mattéo Grellier`` [@Matteo-grellier](https://github.com/Matteo-Grellier)
+- ``Louis Brochard`` alias [@LBROCHARD](https://github.com/LBROCHARD)
+- ``Mattéo Grellier`` alias [@Matteo-grellier](https://github.com/Matteo-Grellier)
