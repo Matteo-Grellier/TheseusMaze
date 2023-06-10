@@ -7,6 +7,12 @@ public class Enemy : MonoBehaviour
 {
     public EnemyAnimationStateController enemyAnimationController;
 
+    [SerializeField] private AudioSource scaryAudioSource; 
+    [SerializeField] private AudioSource screamerAudioSource; 
+    [SerializeField] private AudioSource walkingAudioSource; 
+
+    private bool isPlayedScreamerSound = false;
+
     public float speed = 2.5f; // Look in Unity to change the speed !
 
     private float visionAngle = 190f;
@@ -63,6 +69,12 @@ public class Enemy : MonoBehaviour
             HandleGameOver();
             return;
         }
+
+        if(isMoving)
+            walkingAudioSource.volume = 1;
+        else
+            walkingAudioSource.volume = 0;
+
 
         if(isPlayerNearby)
             HandleNearbyPlayer();
@@ -255,6 +267,15 @@ public class Enemy : MonoBehaviour
     {
         Vector3 directionToPlayer = (player.transform.position-transform.position).normalized;
         Vector3 directionFromPlayer = (transform.position-player.transform.position).normalized;
+
+        walkingAudioSource.volume = 0;
+        scaryAudioSource.volume = 0;
+
+        if(!isPlayedScreamerSound)
+        {
+            screamerAudioSource.PlayDelayed(1.2f);
+            isPlayedScreamerSound = true;
+        }
 
         player.transform.forward = new Vector3(directionFromPlayer.x, 0, directionFromPlayer.z);
         transform.forward = new Vector3(directionToPlayer.x, 0, directionToPlayer.z);
