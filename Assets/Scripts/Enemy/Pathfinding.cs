@@ -31,17 +31,14 @@ public class Pathfinding
         this.graph = graph;
         this.start = start;
         this.destination = destination;
-
-        // GraphSearch();
     }
 
-    public IEnumerator GraphSearch() //array[x][z]
+    public void GraphSearch() //array[x][z]
     {
         pathFound = false;
         ispathFindingInProgress = true;
         isFindablePath = true;
 
-        // queue = new Queue();
         queue = new PriorityQueue<Vector3, int>();
         movementCosts = new Dictionary<Vector3, int>();
 
@@ -79,11 +76,9 @@ public class Pathfinding
                     if(verifiedNodes.ContainsKey(neighbor)) 
                         verifiedNodes[neighbor] = currentCell;
                     else
-                         verifiedNodes.Add(neighbor, currentCell);
+                        verifiedNodes.Add(neighbor, currentCell);
                 }
             }
-
-            yield return null;
         }
 
         try 
@@ -94,17 +89,15 @@ public class Pathfinding
         {
             Debug.LogWarning("Cannot create path... " + e.Message);
         }
-
-        yield return null;
     }
 
-    private List<Vector3> GetNeighborsCells(string[,] graph) 
+    public List<Vector3> GetNeighborsCells(string[,] graph) 
     {
 
         List<Vector3> neighbors = new List<Vector3>();
 
-        int graphZLength = graph.GetLength(0);
-        int graphXLength = graph.GetLength(1);
+        int graphZLength = graph.GetLength(1);
+        int graphXLength = graph.GetLength(0);
 
         if(currentCell.x-1 >= 0 && graph[(int)(currentCell.x - 1), (int)currentCell.z] != "wall" )
         {

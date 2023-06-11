@@ -7,12 +7,18 @@ public class Enemy : MonoBehaviour
 {
     public EnemyAnimationStateController enemyAnimationController;
 
+    [SerializeField] private AudioSource scaryAudioSource; 
+    [SerializeField] private AudioSource screamerAudioSource; 
+    [SerializeField] private AudioSource walkingAudioSource; 
+
+    private bool isPlayedScreamerSound = false;
+
     public float speed = 2.5f; // Look in Unity to change the speed !
 
     private float visionAngle = 190f;
     private float visionDistance = 10f;
     private float distanceToCatch = 1f;
-    private float distanceToListen = 2f;
+    private float distanceToListen = 3f;
 
     public bool isMoving = false;
 
@@ -64,6 +70,12 @@ public class Enemy : MonoBehaviour
             return;
         }
 
+        if(isMoving)
+            walkingAudioSource.volume = 1;
+        else
+            walkingAudioSource.volume = 0;
+
+
         if(isPlayerNearby)
             HandleNearbyPlayer();
 
@@ -82,6 +94,13 @@ public class Enemy : MonoBehaviour
             isSearchingPlayer = false;
             hasDetectedPlayer = false; 
 
+            if(!pathfinding.isFindablePath)
+            {
+                List<Vector3> neighbors = pathfinding.GetNeighborsCells(GameManager.instance.mazeReference.mazeArray);
+                Vector3 newCurrentPosition = neighbors[Random.Range(0, neighbors.Count()-1)];
+                transform.position = Vector3.MoveTowards(transform.position, nextPosition, speed * Time.fixedDeltaTime);
+            }
+
             currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
             destination = GetRandomVectorInMaze();
 
@@ -91,9 +110,8 @@ public class Enemy : MonoBehaviour
     private void FindThePath()
     {
         string[,] graph = GameManager.instance.mazeReference.mazeArray;
-        // StartCoroutine(pathfinding.GraphSearch(graph, currentGraphPosition, destination)); // Search for a path in the graph
         pathfinding = new Pathfinding(graph, currentGraphPosition, destination);
-        StartCoroutine(pathfinding.GraphSearch());
+        pathfinding.GraphSearch();
     }
 
     private Vector3 GetRandomVectorInMaze()
@@ -181,7 +199,6 @@ public class Enemy : MonoBehaviour
         if(isRaycasting) // Improve Performance with FixedUpdate
         {
             Debug.DrawRay(transform.position, (player.transform.position-transform.position), Color.red);
-            // Debug.LogWarning(hit.collider);
 
             bool isHittingPlayer = hit.collider.gameObject == player.gameObject;
             Torchlight torchlight = player.GetComponentInChildren<Torchlight>();
@@ -255,6 +272,15 @@ public class Enemy : MonoBehaviour
     {
         Vector3 directionToPlayer = (player.transform.position-transform.position).normalized;
         Vector3 directionFromPlayer = (transform.position-player.transform.position).normalized;
+
+        walkingAudioSource.volume = 0;
+        scaryAudioSource.volume = 0;
+
+        if(!isPlayedScreamerSound)
+        {
+            screamerAudioSource.PlayDelayed(1.2f);
+            isPlayedScreamerSound = true;
+        }
 
         player.transform.forward = new Vector3(directionFromPlayer.x, 0, directionFromPlayer.z);
         transform.forward = new Vector3(directionToPlayer.x, 0, directionToPlayer.z);
