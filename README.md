@@ -5,7 +5,7 @@ Nous avions le choix entre 3 Sujets.
 Nous avons donc choisi le sujet personnalisé mais basé sur le sujet d’algorithme de Pathfinding. Notre idée c’était d’utiliser le Pathfinding dans le cadre d’un jeu vidéo que nous devions développer à l’aide du Framework Unity (Moteur de jeu) en C#. Ce jeu comprendra une génération aléatoire de labyrinthe (ou avec un éditeur) dans lequel le joueur devra essayer de ne pas se faire attraper par l’IA qui va se déplacer vers lui et dans le labyrinthe grâce à un algorithme de Pathfinding.
 
 # Pour Jouer
-- Vous pouvez télécharger le jeu sur [itch.io](https://chav.itch.io/theseus-maze) ou [ici]()
+- Vous pouvez télécharger le jeu sur [itch.io](https://chav.itch.io/theseus-maze) ou le code source [ici]()
 - Extraire l'archive
 - Lancer ``TheseusMaze.exe``
 
