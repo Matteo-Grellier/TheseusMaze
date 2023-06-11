@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     private float visionAngle = 190f;
     private float visionDistance = 10f;
     private float distanceToCatch = 1f;
-    private float distanceToListen = 2f;
+    private float distanceToListen = 3f;
 
     public bool isMoving = false;
 
@@ -94,6 +94,13 @@ public class Enemy : MonoBehaviour
             isSearchingPlayer = false;
             hasDetectedPlayer = false; 
 
+            if(!pathfinding.isFindablePath)
+            {
+                List<Vector3> neighbors = pathfinding.GetNeighborsCells(GameManager.instance.mazeReference.mazeArray);
+                Vector3 newCurrentPosition = neighbors[Random.Range(0, neighbors.Count()-1)];
+                transform.position = Vector3.MoveTowards(transform.position, nextPosition, speed * Time.fixedDeltaTime);
+            }
+
             currentGraphPosition = ConvertPositionToGraphPosition(transform.position);
             destination = GetRandomVectorInMaze();
 
@@ -103,9 +110,8 @@ public class Enemy : MonoBehaviour
     private void FindThePath()
     {
         string[,] graph = GameManager.instance.mazeReference.mazeArray;
-        // StartCoroutine(pathfinding.GraphSearch(graph, currentGraphPosition, destination)); // Search for a path in the graph
         pathfinding = new Pathfinding(graph, currentGraphPosition, destination);
-        StartCoroutine(pathfinding.GraphSearch());
+        pathfinding.GraphSearch();
     }
 
     private Vector3 GetRandomVectorInMaze()
@@ -193,7 +199,6 @@ public class Enemy : MonoBehaviour
         if(isRaycasting) // Improve Performance with FixedUpdate
         {
             Debug.DrawRay(transform.position, (player.transform.position-transform.position), Color.red);
-            // Debug.LogWarning(hit.collider);
 
             bool isHittingPlayer = hit.collider.gameObject == player.gameObject;
             Torchlight torchlight = player.GetComponentInChildren<Torchlight>();
