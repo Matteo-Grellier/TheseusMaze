@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Case
+  - Trap
   layers:
   - Default
   - TransparentFX
@@ -13,12 +15,12 @@ TagManager:
   - UI
   - 
   - 
+  - case
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - btn
+  - Entity
+  - Wall
   - 
   - 
   - 
